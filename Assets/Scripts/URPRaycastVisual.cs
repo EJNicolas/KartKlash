@@ -7,47 +7,50 @@ public class URPRaycastVisual : MonoBehaviour
 {
     [SerializeField] private Material lineMaterial;
     public XRRayInteractor rayInteractor;
-    Outline o;
+    BotDamageBehaviour bdb;
 
     public Color validColor;
     public Color invalidColor;
+    public bool showLine;
 
     // Start is called before the first frame update
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
+        //lineMaterial = GetComponent<LineRenderer>().material;
+        if (!showLine) GetComponent<XRInteractorLineVisual>().enabled = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         RaycastHit res;
-
         if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
         {
             Vector3 groundPt = res.point; // the coordinate that the ray hits
             // Debug.Log(" coordinates on the ground: " + groundPt);
             if (res.transform.gameObject.layer == 6)
             {
-                Debug.Log("OBJECT");
-                lineMaterial.SetColor("_RayColor", validColor);
-                o = res.transform.gameObject.GetComponent<Outline>();
-                o.OutlineWidth = 8;
+                //Debug.Log("OBJECT");
+                if(lineMaterial != null) lineMaterial.SetColor("_RayColor", validColor);
+                bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
+                bdb.hovering = true;
             }
         }
         else
         {
-            lineMaterial.SetColor("_RayColor", invalidColor);
-            if(o != null)
+            if (lineMaterial != null) lineMaterial.SetColor("_RayColor", invalidColor);
+            if(bdb != null)
             {
-                o.OutlineWidth = 0;
-                o = null;
+                bdb.hovering = false;
+                bdb = null;
             }
         }
     }
 
-    void ShootOutline()
+    public void ShootOutline()
     {
-
+        Debug.Log("pew");
+        if (bdb != null) bdb.OnDamage();
     }
 }

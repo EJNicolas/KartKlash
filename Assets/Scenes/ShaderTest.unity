@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 1173047060}
   - component: {fileID: 1173047064}
   - component: {fileID: 1173047065}
+  - component: {fileID: 1173047066}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1136,6 +1137,23 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1173047066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173047059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fa7689c4b636f4eb14c1fa42b809f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
+  shotTimer: 0
+  shot: 0
+  outline: {fileID: 1173047064}
+  hovering: 0
 --- !u!4 &1398257182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4954338906077999340, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
@@ -1193,6 +1211,7 @@ GameObject:
   - component: {fileID: 1501767405}
   - component: {fileID: 1501767401}
   - component: {fileID: 1501767406}
+  - component: {fileID: 1501767407}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
@@ -1938,6 +1957,23 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1501767407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501767400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fa7689c4b636f4eb14c1fa42b809f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
+  shotTimer: 0
+  shot: 0
+  outline: {fileID: 1501767405}
+  hovering: 0
 --- !u!1 &1668035473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,6 +2221,7 @@ GameObject:
   - component: {fileID: 1774862576}
   - component: {fileID: 1774862580}
   - component: {fileID: 1774862581}
+  - component: {fileID: 1774862582}
   m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -2403,6 +2440,23 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1774862582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774862575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fa7689c4b636f4eb14c1fa42b809f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
+  shotTimer: 0
+  shot: 0
+  outline: {fileID: 1774862580}
+  hovering: 0
 --- !u!1 &2031281659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,7 +2473,7 @@ GameObject:
   - component: {fileID: 2031281666}
   - component: {fileID: 2031281661}
   m_Layer: 0
-  m_Name: Right Shoot
+  m_Name: Right Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2849,8 +2903,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineMaterial: {fileID: 2100000, guid: 2130152740454104794c61dd6c798771, type: 2}
   rayInteractor: {fileID: 2031281664}
-  validColor: {r: 0.9843137, g: 1, b: 0, a: 0}
+  validColor: {r: 0.9843137, g: 1, b: 0, a: 1}
   invalidColor: {r: 1, g: 0, b: 0, a: 0}
+  showLine: 1
+--- !u!1 &2049924784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4954338905675320311, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
+  m_PrefabInstance: {fileID: 186596430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049924789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049924784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5708d93aeb3f9b04f8f08910a78aebac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightController: {fileID: 2108057061}
+  urv: {fileID: 2031281666}
+  shootInterval: 0
+  shot: 0
+--- !u!114 &2108057061 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4954338905711771451, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
+  m_PrefabInstance: {fileID: 186596430}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae26e19cd956134bbdf3c6f65bf393a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2122578389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,7 +2954,7 @@ GameObject:
   - component: {fileID: 2122578396}
   - component: {fileID: 2122578391}
   m_Layer: 0
-  m_Name: Left Shoot
+  m_Name: Left Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3315,5 +3402,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineMaterial: {fileID: 2100000, guid: 5a30b6e37b5de7e4ab1041fcd4086a45, type: 2}
   rayInteractor: {fileID: 2122578394}
-  validColor: {r: 0.9843137, g: 1, b: 0, a: 0}
-  invalidColor: {r: 1, g: 0, b: 0, a: 0}
+  validColor: {r: 0.9843137, g: 1, b: 0, a: 1}
+  invalidColor: {r: 1, g: 0, b: 0, a: 1}
+  showLine: 0
