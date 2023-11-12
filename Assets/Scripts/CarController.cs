@@ -23,18 +23,12 @@ public class CarController : MonoBehaviour
     [Header("Driving Parameters")]
     public float baseAcceleration = 0.5f;
     public float baseReverseAcceleration = 0.5f;
-    //public float baseDeceleration = 0.5f;
-    //public float maxSpeed = 20f;
-    //public float maxReverseSpeed = 10f;
     private float currentSpeed = 0;
     public float turnSpeed = 0.3f;
     public float driftTurnSpeed;
-    //public float driftSpeedReduction;
-    //public float brakeSpeed = 0.5f;
     public bool canDrive = true;
     public bool reverseToggle = false;
     bool stickDownPrevFrame = false;
-
 
     void Start()
     {
