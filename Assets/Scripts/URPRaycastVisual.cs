@@ -9,8 +9,8 @@ public class URPRaycastVisual : MonoBehaviour
     public XRRayInteractor rayInteractor;
     Outline o;
 
-    Color validColor;
-    Color invalidColor;
+    public Color validColor;
+    public Color invalidColor;
 
     // Start is called before the first frame update
     void Start()
@@ -44,5 +44,10 @@ public class URPRaycastVisual : MonoBehaviour
                 o = null;
             }
         }
+    }
+
+    void ShootOutline()
+    {
+
     }
 }
