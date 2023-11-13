@@ -6,23 +6,40 @@ public class Checkpoint : MonoBehaviour
 {
 
     bool crossed;
+    public bool finishLine;
 
-    void Start()
-    {
+    void Start() {
         crossed = false;
     }
 
-    
-    void Update()
-    {
-        
+    private void OnEnable() {
+        RaceManager.CompleteLapEvent += ResetCrossed;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnDisable() {
+        RaceManager.CompleteLapEvent -= ResetCrossed;
+    }
+
+    private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
             crossed = true;
+
+            if (finishLine) {
+                RaceManager.instance.CheckValidCompleteLap();
+            }
         }
+    }
+
+    public bool GetCrossed() {
+        return crossed;
+    }
+
+    public void SetCrossed(bool b) {
+        crossed = b;
+    }
+
+    void ResetCrossed() {
+        crossed = false;
     }
 
 }
