@@ -21,16 +21,27 @@ public class BotController : Entity
     // Update is called once per frame
     void FixedUpdate()
     {
+        UpdateNavigation();
+    }
+
+    void UpdateNavigation()
+    {
+        //navigation
         nma.enabled = true;
         if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance + rdThreshold && currentPoint < listPos.Length)
             currentPoint++;
         if (currentPoint < listPos.Length)
-            nma.SetDestination(new Vector3(listPos[currentPoint].transform.position.x, 
+            nma.SetDestination(new Vector3(listPos[currentPoint].transform.position.x,
                 this.gameObject.transform.position.y,
                 listPos[currentPoint].transform.position.z));
     }
 
     void Shoot()
+    {
+
+    }
+
+    public void TakeDamage()
     {
 
     }
