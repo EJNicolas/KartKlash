@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public enum PlayerType { VR, FPS };
+    public PlayerType currentType;
+
+    [Header("Player References")]
+    public GameObject VRPlayer;
+    public GameObject FPSPlayer;
+    public Transform spawnPosition;
+
+    void Start() {
+        if (currentType == PlayerType.VR) Instantiate(VRPlayer, spawnPosition.position, Quaternion.identity);
+        else Instantiate(FPSPlayer, spawnPosition.position, Quaternion.identity);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
