@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-
+    int checkpointNum;
     bool crossed;
     public bool finishLine;
 
@@ -13,20 +13,16 @@ public class Checkpoint : MonoBehaviour
     }
 
     private void OnEnable() {
-        RaceManager.CompleteLapEvent += ResetCrossed;
+        RaceManager.CompleteLapEvent += ResetCheckpoint;
     }
 
     private void OnDisable() {
-        RaceManager.CompleteLapEvent -= ResetCrossed;
+        RaceManager.CompleteLapEvent -= ResetCheckpoint;
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
-            crossed = true;
-
-            if (finishLine) {
-                RaceManager.instance.CheckValidCompleteLap();
-            }
+            RaceManager.instance.PlayerPassedCheckpoint(checkpointNum);
         }
     }
 
@@ -38,8 +34,18 @@ public class Checkpoint : MonoBehaviour
         crossed = b;
     }
 
-    void ResetCrossed() {
+    public int GetCheckpointNum() {
+        return checkpointNum;
+    }
+
+    public void SetCheckpointNum(int i) {
+        checkpointNum = i;
+    }
+
+    public void ResetCheckpoint() {
         crossed = false;
     }
+
+
 
 }

@@ -9,23 +9,29 @@ public class RaceManager : MonoBehaviour
     public int lapCompletion;
     private int currentLapCount = 0;
     public Checkpoint[] checkpoints;
+    private int expectedCheckpointNumber;
     public static event Action CompleteLapEvent;
     public static event Action CompleteRaceEvent;
 
     void Start() {
         instance = this;
+        InitializeCheckpoints();
     }
 
-    private void OnEnable() {
-        CompleteLapEvent += CompleteLap;
-    }
+    public void PlayerPassedCheckpoint(int checkpointNumber) {
+        if(checkpointNumber == expectedCheckpointNumber) {
+            Debug.Log("player passed through checkpoint " + checkpointNumber);
+            checkpoints[checkpointNumber].SetCrossed(true);
+            expectedCheckpointNumber++;
+        }
 
-    private void OnDisable() {
-        CompleteLapEvent -= CompleteLap;
-    }
-
-    void Update() {
-        
+        if(checkpointNumber == 0) {
+            if (CheckValidCompleteLap()) {
+                CompleteLap();
+                checkpoints[0].SetCrossed(true);
+                expectedCheckpointNumber = 1;
+            }
+        }
     }
 
     public bool CheckValidCompleteLap() {
@@ -33,13 +39,21 @@ public class RaceManager : MonoBehaviour
             if (!checkpoint.GetCrossed()) return false;
         }
 
-        CompleteLap();
         return true;
     }
 
     public void CompleteLap() {
         CompleteLapEvent?.Invoke();
         currentLapCount++;
+        Debug.Log("LAP COMPLETED");
         if (currentLapCount >= lapCompletion) CompleteRaceEvent?.Invoke();
     }
+
+    void InitializeCheckpoints() {
+        expectedCheckpointNumber = 0;
+        for(int i=0; i<checkpoints.Length; i++) {
+            checkpoints[i].SetCheckpointNum(i);
+        }
+    }
+
 }
