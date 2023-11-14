@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a19200ae28b444e8b8249f3e15e2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentType: 1
+  currentType: 0
   VRPlayer: {fileID: 4954338905675320311, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
   FPSPlayer: {fileID: 3002080014597799580, guid: 054786916d9344b4ea56834f9a4e88a1, type: 3}
   spawnPosition: {fileID: 1244625424}
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccbaaeda499d5c4cae4660a189dc4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lapCompletion: 0
+  lapCompletion: 3
   checkpoints:
   - {fileID: 1565061636}
   - {fileID: 2003137589}

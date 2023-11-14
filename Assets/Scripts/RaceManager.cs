@@ -46,7 +46,12 @@ public class RaceManager : MonoBehaviour
         CompleteLapEvent?.Invoke();
         currentLapCount++;
         Debug.Log("LAP COMPLETED");
-        if (currentLapCount >= lapCompletion) CompleteRaceEvent?.Invoke();
+        if (currentLapCount >= lapCompletion) CompleteRace();
+    }
+
+    void CompleteRace() {
+        CompleteRaceEvent?.Invoke();
+        Debug.Log("YOU FINISHED THE RACE");
     }
 
     void InitializeCheckpoints() {
