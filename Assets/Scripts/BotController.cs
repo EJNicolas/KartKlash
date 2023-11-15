@@ -30,6 +30,7 @@ public class BotController : Entity
         nma.enabled = true;
         if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance + rdThreshold && currentPoint < listPos.Length)
             currentPoint++;
+        else if (currentPoint >= listPos.Length) currentPoint = 0;
         if (currentPoint < listPos.Length)
             nma.SetDestination(new Vector3(listPos[currentPoint].transform.position.x,
                 this.gameObject.transform.position.y,
