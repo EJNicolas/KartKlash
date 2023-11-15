@@ -15,7 +15,7 @@ public class BotController : Entity
 
     void Start()
     {
-        currentPoint = 0;
+        currentPoint = listPos.Length;
     }
 
     // Update is called once per frame
