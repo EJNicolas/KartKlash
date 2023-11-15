@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ShootingTest : MonoBehaviour
 {
     public XRController rightController;
-    public URPRaycastVisual urv;
+    public RaycastOutlineVisual rov;
     private bool triggerPressed;
     private float triggerValue;
 
@@ -41,6 +41,6 @@ public class ShootingTest : MonoBehaviour
 
     void TestShoot()
     {
-        if(triggerPressed) urv.ShootOutline();
+        if(triggerPressed) rov.ShootOutline();
     }
 }
