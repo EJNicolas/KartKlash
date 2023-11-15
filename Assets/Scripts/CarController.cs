@@ -75,8 +75,11 @@ public class CarController : MonoBehaviour
 
     void DoTurning()
     {
-        float newRotation = primaryStickValue.x * turnSpeed * Time.deltaTime;
-        transform.Rotate(0, newRotation, 0);
+        if(carRb.velocity.magnitude > 1)
+        {
+            float newRotation = primaryStickValue.x * turnSpeed * Time.deltaTime;
+            transform.Rotate(0, newRotation, 0);
+        }
     }
 
     void DoDrifting()

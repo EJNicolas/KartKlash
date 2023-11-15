@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Transform spawnPosition;
 
     void Start() {
-        if (currentType == PlayerType.VR) Instantiate(VRPlayer, spawnPosition.position, Quaternion.identity);
+        if (currentType == PlayerType.VR) Instantiate(VRPlayer, spawnPosition.position, spawnPosition.rotation);
         else Instantiate(FPSPlayer, spawnPosition.position, Quaternion.identity);
     }
 
