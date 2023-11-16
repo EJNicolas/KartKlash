@@ -3,21 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class URPRaycastVisual : MonoBehaviour
+public class RaycastOutlineVisual : MonoBehaviour
 {
-    [SerializeField] private Material lineMaterial;
     public XRRayInteractor rayInteractor;
     BotDamageBehaviour bdb;
-
-    public Color validColor;
-    public Color invalidColor;
     public bool showLine;
 
     // Start is called before the first frame update
     void Start()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
-        //lineMaterial = GetComponent<LineRenderer>().material;
         if (!showLine) GetComponent<XRInteractorLineVisual>().enabled = false;
     }
 
@@ -32,19 +27,14 @@ public class URPRaycastVisual : MonoBehaviour
             if (res.transform.gameObject.layer == 6)
             {
                 //Debug.Log("OBJECT");
-                if(lineMaterial != null) lineMaterial.SetColor("_RayColor", validColor);
                 bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
                 bdb.hovering = true;
             }
         }
-        else
+        else if (bdb != null)
         {
-            if (lineMaterial != null) lineMaterial.SetColor("_RayColor", invalidColor);
-            if(bdb != null)
-            {
-                bdb.hovering = false;
-                bdb = null;
-            }
+            bdb.hovering = false;
+            bdb = null;
         }
     }
 
