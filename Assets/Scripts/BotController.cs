@@ -20,6 +20,7 @@ public class BotController : Entity
         NORMAL,
         FAST
     }
+
     RubberbandState rs = RubberbandState.NORMAL;
     bool stateChanged = false;
 
@@ -87,21 +88,21 @@ public class BotController : Entity
 
         switch (rs)
         {
-            case RubberbandState.FAST:
+            case RubberbandState.FAST: //speed up if behind
                 Debug.Log(this.gameObject.name + ", Speeding Up");
                 nma.speed = defaultSpeed + (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 nma.angularSpeed = defaultAngular * angularRubberbandFactor;
                 nma.acceleration = defaultAccel + (accelRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 return;
 
-            case RubberbandState.NORMAL:
+            case RubberbandState.NORMAL: //revert to normal
                 Debug.Log(this.gameObject.name + ", Returning to Normal");
                 nma.speed = defaultSpeed;
                 nma.angularSpeed = defaultAngular;
                 nma.acceleration = defaultAccel;
                 return;
 
-            case RubberbandState.SLOW:
+            case RubberbandState.SLOW: //slow down if ahead
                 Debug.Log(this.gameObject.name + ", Slowing Down");
                 nma.speed = defaultSpeed - (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 return;
