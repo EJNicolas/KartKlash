@@ -836,7 +836,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   nma: {fileID: 4813285327349035499}
+  rm: {fileID: 0}
   rdThreshold: 0
+  rubberbandThreshold: 1
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -851,7 +853,7 @@ NavMeshAgent:
   m_Acceleration: 75
   avoidancePriority: 50
   m_AngularSpeed: 180
-  m_StoppingDistance: 25
+  m_StoppingDistance: 15
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
