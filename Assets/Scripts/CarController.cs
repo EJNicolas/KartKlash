@@ -7,6 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CarController : MonoBehaviour
 {
     [Header("Player Components")]
+    public GameObject VRPlayer;
+    public GameObject carParent;
     public XRController leftController;
     public XRController rightController;
     public Rigidbody carRb;
@@ -30,14 +32,14 @@ public class CarController : MonoBehaviour
     public bool reverseToggle = false;
     bool stickDownPrevFrame = false;
 
-    void Start()
-    {
-        
+    void Start() {
+        transform.parent = null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        VRPlayer.transform.position = this.transform.position;
         ReadControllerInputs();
     }
 
@@ -59,17 +61,7 @@ public class CarController : MonoBehaviour
 
         carRb.AddForce(transform.forward * gripValue * currentSpeed);
 
-        //if (carRb.velocity.magnitude > maxSpeed && carRb.velocity.z > 0) {   //cap forward movement speed
-        //    carRb.AddForce(-transform.forward * gripValue * currentSpeed);
-        //    Debug.Log("max forward speed");
-        //}
-        //else if (carRb.velocity.magnitude > maxReverseSpeed && carRb.velocity.z < 0) { //cap reverse movement speed
-        //    carRb.AddForce(transform.forward * gripValue * currentSpeed);
-        //    Debug.Log("max back speed");
-        //}
-
         if (!triggerPressed) DoTurning();
-
 
     }
 
@@ -79,6 +71,7 @@ public class CarController : MonoBehaviour
         {
             float newRotation = primaryStickValue.x * turnSpeed * Time.deltaTime;
             transform.Rotate(0, newRotation, 0);
+            VRPlayer.transform.Rotate(0, newRotation, 0);
         }
     }
 
@@ -88,6 +81,7 @@ public class CarController : MonoBehaviour
         {
             float newRotation = primaryStickValue.x * driftTurnSpeed * Time.deltaTime;
             transform.Rotate(0, newRotation, 0);
+            VRPlayer.transform.Rotate(0, newRotation, 0);
         }
         
     }
@@ -123,32 +117,5 @@ public class CarController : MonoBehaviour
         //}
 
     }
-
-    //old method just for reference
-    //    void DoMovement()
-    //{
-    //    //grip is accelerate
-    //    if (gripPressed)
-    //    {   
-    //        if(carRb.velocity.magnitude > maxSpeed)
-    //        {
-    //            carRb.AddForce(-transform.forward * gripValue * currentSpeed);
-    //        }
-    //        else
-    //        { 
-    //            currentSpeed += baseAcceleration;
-    //        }
-
-    //        carRb.AddForce(transform.forward * gripValue * currentSpeed);
-
-    //        if(!triggerPressed) DoTurning();
-    //    }
-    //    else
-    //    {
-    //        //if (currentSpeed > 0) currentSpeed -= baseDeceleration;
-    //        //else if (currentSpeed < 0) currentSpeed = 0;
-    //    }
-
-    //}
 
 }
