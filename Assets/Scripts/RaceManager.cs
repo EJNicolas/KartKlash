@@ -8,8 +8,6 @@ public class RaceManager : MonoBehaviour
     public static RaceManager instance;
     public int lapCompletion;
     private int currentLapCount = 0;
-    public int checkpointsPassed = 0;
-
     public Checkpoint[] checkpoints;
     private int expectedCheckpointNumber;
     public static event Action CompleteLapEvent;
@@ -25,7 +23,6 @@ public class RaceManager : MonoBehaviour
             Debug.Log("player passed through checkpoint " + checkpointNumber);
             checkpoints[checkpointNumber].SetCrossed(true);
             expectedCheckpointNumber++;
-            checkpointsPassed++;
         }
 
         if(checkpointNumber == 0) {
@@ -63,4 +60,5 @@ public class RaceManager : MonoBehaviour
             checkpoints[i].SetCheckpointNum(i);
         }
     }
+
 }
