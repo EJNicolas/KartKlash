@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3946211406175194810}
+  - component: {fileID: 7343945634930059717}
   - component: {fileID: 5885172982264662278}
+  - component: {fileID: 4074961130068855704}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -36,6 +38,30 @@ Transform:
   m_Father: {fileID: 4954338905675320310}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7343945634930059717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967960274438419877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23b638c3237ec14897422f540b51b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VRPlayer: {fileID: 4954338905675320311}
+  carParent: {fileID: 967960274438419877}
+  leftController: {fileID: 4954338905697139942}
+  rightController: {fileID: 4954338905711771451}
+  carRb: {fileID: 4074961130068855704}
+  carBoxCollider: {fileID: 5885172982264662278}
+  baseAcceleration: 100
+  baseReverseAcceleration: 30
+  turnSpeed: 30
+  driftTurnSpeed: 80
+  canDrive: 1
+  reverseToggle: 0
 --- !u!65 &5885172982264662278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49,6 +75,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.99, y: 1, z: 4.38}
   m_Center: {x: 0, y: 0.81, z: 0}
+--- !u!54 &4074961130068855704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967960274438419877}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 1.3
+  m_AngularDrag: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &1143900506429007725
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,8 +726,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4954338905675320310}
   - component: {fileID: 4954338905675320305}
-  - component: {fileID: 5493146283583170553}
-  - component: {fileID: 8992087808989412036}
   m_Layer: 0
   m_Name: VRPlayer
   m_TagString: Player
@@ -727,44 +767,6 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 4954338906077999341}
   m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.1176
---- !u!114 &5493146283583170553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4954338905675320311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23b638c3237ec14897422f540b51b0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftController: {fileID: 4954338905697139942}
-  rightController: {fileID: 4954338905711771451}
-  carRb: {fileID: 8992087808989412036}
-  carBoxCollider: {fileID: 5885172982264662278}
-  baseAcceleration: 100
-  baseReverseAcceleration: 30
-  turnSpeed: 30
-  driftTurnSpeed: 80
-  canDrive: 1
-  reverseToggle: 0
---- !u!54 &8992087808989412036
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4954338905675320311}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1.3
-  m_AngularDrag: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!1 &4954338905697139940
 GameObject:
   m_ObjectHideFlags: 0
