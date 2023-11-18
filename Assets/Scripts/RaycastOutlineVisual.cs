@@ -29,6 +29,7 @@ public class RaycastOutlineVisual : MonoBehaviour
                 //Debug.Log("OBJECT");
                 bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
                 bdb.hovering = true;
+                bdb.hitLocation = res.point;
             }
         }
         else if (bdb != null)

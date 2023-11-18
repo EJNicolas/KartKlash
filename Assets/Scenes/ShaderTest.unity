@@ -1154,6 +1154,8 @@ MonoBehaviour:
   shot: 0
   outline: {fileID: 1173047064}
   hovering: 0
+  shotParticle: {fileID: 318857835175648327, guid: cb6123ce79a8eec46a4c808c333269ad, type: 3}
+  hitLocation: {x: 0, y: 0, z: 0}
 --- !u!4 &1398257182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4954338906077999340, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
@@ -1974,6 +1976,8 @@ MonoBehaviour:
   shot: 0
   outline: {fileID: 1501767405}
   hovering: 0
+  shotParticle: {fileID: 318857835175648327, guid: cb6123ce79a8eec46a4c808c333269ad, type: 3}
+  hitLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &1668035473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,6 +2461,8 @@ MonoBehaviour:
   shot: 0
   outline: {fileID: 1774862580}
   hovering: 0
+  shotParticle: {fileID: 0}
+  hitLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &2031281659
 GameObject:
   m_ObjectHideFlags: 0

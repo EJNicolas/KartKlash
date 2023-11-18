@@ -18,9 +18,17 @@ public class BotDamageBehaviour : MonoBehaviour
     public Outline outline;
     public bool hovering;
 
+    [Header("Particles")]
+    public ParticleSystem shotParticle;
+    GameObject player;
+    public Vector3 hitLocation;
+    bool particleFired = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         //bc = GetComponent<BotController>();
         outline = GetComponent<Outline>();
 
@@ -59,6 +67,7 @@ public class BotDamageBehaviour : MonoBehaviour
 
     public void OnDamage()
     {
+        if(!shot) EmitShotParticle();
         ShootHighlight();
         //bc.TakeDamage();
     }
@@ -66,5 +75,12 @@ public class BotDamageBehaviour : MonoBehaviour
     void ShootHighlight()
     {
         if (!shot) shotTimer = 0;
+    }
+
+    void EmitShotParticle()
+    {
+        Vector3 targetDir = this.transform.position - player.transform.position;
+        ParticleSystem ps = Instantiate(shotParticle, hitLocation, Quaternion.LookRotation(targetDir));
+        ps.Play();
     }
 }
