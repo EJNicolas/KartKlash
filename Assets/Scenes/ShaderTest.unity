@@ -2461,7 +2461,7 @@ MonoBehaviour:
   shot: 0
   outline: {fileID: 1774862580}
   hovering: 0
-  shotParticle: {fileID: 0}
+  shotParticle: {fileID: 318857835175648327, guid: cb6123ce79a8eec46a4c808c333269ad, type: 3}
   hitLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &2031281659
 GameObject:
