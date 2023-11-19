@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
     private bool gripPressed;
     private float gripValue;
     private Vector2 primaryStickValue;
+    private bool primaryStickDown;
     private bool primaryStickPressed;
 
     [Header("Driving Parameters")]
@@ -41,13 +42,14 @@ public class CarController : MonoBehaviour
     {
         VRPlayer.transform.position = this.transform.position;
         ReadControllerInputs();
+        ToggleReverse();
     }
 
     void FixedUpdate()
     {
         DoAccelAndReverse();
         DoDrifting();
-        ToggleReverse();
+        
     }
 
     void DoAccelAndReverse()
@@ -87,10 +89,9 @@ public class CarController : MonoBehaviour
     }
 
     void ToggleReverse() {
-        if (primaryStickPressed && stickDownPrevFrame != primaryStickPressed) {
+        if (primaryStickPressed) {
             reverseToggle = !reverseToggle;
         }
-
     }
 
     void ReadControllerInputs()
@@ -108,9 +109,16 @@ public class CarController : MonoBehaviour
         //if (gripValue >= 0.1f) Debug.Log($"Grip Pressed, value {gripValue}");
 
         leftController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out primaryStickValue);
-        stickDownPrevFrame = primaryStickPressed;
-        leftController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out primaryStickPressed);
-        
+        stickDownPrevFrame = primaryStickDown;
+        leftController.inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out primaryStickDown);
+
+        //primaryStickPressed true only when button is pressed down the first time
+        if(primaryStickDown && !stickDownPrevFrame) {
+            primaryStickPressed = true;
+        } else if(primaryStickDown && stickDownPrevFrame) {
+            primaryStickPressed = false;
+        }
+
         //if(leftStickValue != Vector2.zero)
         //{
         //    Debug.Log($"Left Stick Value:, value {leftStickValue} ");
