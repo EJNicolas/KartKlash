@@ -36,12 +36,13 @@ public class Weapon : MonoBehaviour
     private void PickUpWeapon(XRBaseInteractor interactor)
     {
         interactor.GetComponent<MeshHidder>().Hide();
+        interactor.GetComponent<XRInteractorLineVisual>().enabled = false;
     }
  
     private void DropWeapon(XRBaseInteractor interactor)
     {
         interactor.GetComponent<MeshHidder>().Show();
-
+        interactor.GetComponent<XRInteractorLineVisual>().enabled = true;
     }
 
     protected virtual void StartShooting(XRBaseInteractor interactor)
