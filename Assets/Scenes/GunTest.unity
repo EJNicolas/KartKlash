@@ -785,11 +785,9 @@ MonoBehaviour:
   bulletSpawn: {fileID: 752427153}
   recoilForce: 2
   damage: 5
-  fireRate: 2
   rayInteractor: {fileID: 752427158}
-  bdb: {fileID: 0}
+  fireRate: 2
   bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
-  showLine: 1
 --- !u!114 &752427155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3666,22 +3664,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4954338905675320311, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
   m_PrefabInstance: {fileID: 186596430}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2049924789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049924784}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5708d93aeb3f9b04f8f08910a78aebac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightController: {fileID: 2031281665}
-  rov: {fileID: 2031281666}
-  shootInterval: 0
-  shot: 0
 --- !u!114 &2049924792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,8 +4090,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_ValidColorGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0.9843137, g: 1, b: 0, a: 1}
+    key1: {r: 0.9843137, g: 1, b: 0, a: 0}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4138,7 +4120,7 @@ MonoBehaviour:
   m_InvalidColorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0, a: 0}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4166,8 +4148,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   m_BlockedColorGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    key1: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    key0: {r: 1, g: 0, b: 0.627451, a: 1}
+    key1: {r: 1, g: 0, b: 0.627451, a: 0}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

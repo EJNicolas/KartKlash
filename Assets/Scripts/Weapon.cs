@@ -18,10 +18,18 @@ public class Weapon : MonoBehaviour
     private Rigidbody rigidBody;
     private XRGrabInteractable interactableWeapon;
 
+    [Header("Raycast")]
+    public XRRayInteractor rayInteractor;
+    BotDamageBehaviour bdb;
+    //public bool showLine;
+
     protected virtual void Awake()
     {
         interactableWeapon = GetComponent<XRGrabInteractable>();
         rigidBody = GetComponent<Rigidbody>();
+
+        rayInteractor = GetComponent<XRRayInteractor>();
+
         SetupInteractableWeaponEvents();
     }
 
@@ -33,16 +41,40 @@ public class Weapon : MonoBehaviour
         interactableWeapon.onDeactivate.AddListener(StopShooting);
     }
 
+    void FixedUpdate()
+    {
+        RaycastHit res;
+        if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
+        {
+            Vector3 groundPt = res.point; // the coordinate that the ray hits
+            // Debug.Log(" coordinates on the ground: " + groundPt);
+            if (res.transform.gameObject.layer == 6)
+            {
+                //Debug.Log("OBJECT");
+                bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
+                bdb.hovering = true;
+                bdb.hitLocation = res.point;
+            }
+        }
+        else if (bdb != null)
+        {
+            bdb.hovering = false;
+            bdb = null;
+        }
+    }
+
     private void PickUpWeapon(XRBaseInteractor interactor)
     {
-        interactor.GetComponent<MeshHidder>().Hide();
-        interactor.GetComponent<XRInteractorLineVisual>().enabled = false;
+        //interactor.GetComponent<MeshHidder>().Hide();
+        rayInteractor.enabled = true;
+        GetComponent<XRInteractorLineVisual>().enabled = true;
     }
  
     private void DropWeapon(XRBaseInteractor interactor)
     {
-        interactor.GetComponent<MeshHidder>().Show();
-        interactor.GetComponent<XRInteractorLineVisual>().enabled = true;
+        //interactor.GetComponent<MeshHidder>().Show();
+        rayInteractor.enabled = false;
+        GetComponent<XRInteractorLineVisual>().enabled = false;
     }
 
     protected virtual void StartShooting(XRBaseInteractor interactor)
@@ -57,6 +89,7 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Shoot()
     {
+        if (bdb != null) bdb.OnDamage();
         ApplyRecoil();
     }
 
