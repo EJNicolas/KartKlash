@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour
     [Header("Raycast")]
     public XRRayInteractor rayInteractor;
     BotDamageBehaviour bdb;
-    //public bool showLine;
+    public WeaponOutline weaponOutline;
 
     protected virtual void Awake()
     {
@@ -68,6 +68,7 @@ public class Weapon : MonoBehaviour
         //interactor.GetComponent<MeshHidder>().Hide();
         rayInteractor.enabled = true;
         GetComponent<XRInteractorLineVisual>().enabled = true;
+        weaponOutline.lineActive = false;
     }
  
     private void DropWeapon(XRBaseInteractor interactor)
@@ -75,6 +76,7 @@ public class Weapon : MonoBehaviour
         //interactor.GetComponent<MeshHidder>().Show();
         rayInteractor.enabled = false;
         GetComponent<XRInteractorLineVisual>().enabled = false;
+        weaponOutline.lineActive = true;
     }
 
     protected virtual void StartShooting(XRBaseInteractor interactor)
