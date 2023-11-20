@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastProjectile : MonoBehaviour
+public class RaycastProjectile : Projectile
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Launch()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Launch();
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward, out hit))
+        {
+            ITakeDamage[] damageTakers = hit.collider.GetComponentsInParent<ITakeDamage>();
+            foreach (var taker in damageTakers)
+            {
+                taker.TakeDamage(weapon, this, hit.point);
+            }
+        }
     }
 }
