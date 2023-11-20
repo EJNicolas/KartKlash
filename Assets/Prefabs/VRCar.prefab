@@ -586,14 +586,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VRPlayer: {fileID: 0}
+  carParent: {fileID: 0}
   leftController: {fileID: 0}
   rightController: {fileID: 0}
   carRb: {fileID: 3802580825895211018}
   carBoxCollider: {fileID: 3802580825895211017}
   baseAcceleration: 100
   baseReverseAcceleration: 30
-  turnSpeed: 30
-  driftTurnSpeed: 80
+  driftAcceleration: 60
+  turnSpeed: 40
+  driftTurnSpeed: 60
   canDrive: 1
   reverseToggle: 0
 --- !u!54 &3802580825895211018
