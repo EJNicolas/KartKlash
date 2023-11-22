@@ -40,6 +40,16 @@ public class CarController : MonoBehaviour
         transform.parent = null;
     }
 
+    private void OnEnable() {
+        RaceManager.StartRaceEvent += StartRace;
+        RaceManager.CompleteRaceEvent += EndRace;
+    }
+
+    private void OnDisable() {
+        RaceManager.StartRaceEvent -= StartRace;
+        RaceManager.CompleteRaceEvent -= EndRace;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -51,9 +61,11 @@ public class CarController : MonoBehaviour
 
     void FixedUpdate()
     {
-        DoAccelAndReverse();
-        DoDrifting();
-        
+        if (canDrive) {
+            DoAccelAndReverse();
+            DoDrifting();
+        }
+            
     }
 
     void DoAccelAndReverse()
@@ -137,6 +149,14 @@ public class CarController : MonoBehaviour
         //    Debug.Log($"Left Stick Value:, value {leftStickValue} ");
         //}
 
+    }
+
+    void StartRace() {
+        canDrive = true;
+    }
+
+    void EndRace() {
+        canDrive = false;
     }
 
 }

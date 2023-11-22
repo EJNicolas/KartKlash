@@ -12,6 +12,7 @@ public class RaceManager : MonoBehaviour
 
     public Checkpoint[] checkpoints;
     private int expectedCheckpointNumber;
+    public static event Action StartRaceEvent;
     public static event Action CompleteLapEvent;
     public static event Action CompleteRaceEvent;
 
