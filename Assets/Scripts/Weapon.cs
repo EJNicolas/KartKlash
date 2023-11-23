@@ -27,7 +27,6 @@ public class Weapon : MonoBehaviour
     {
         interactableWeapon = GetComponent<XRGrabInteractable>();
         rigidBody = GetComponent<Rigidbody>();
-
         rayInteractor = GetComponent<XRRayInteractor>();
 
         SetupInteractableWeaponEvents();
@@ -68,6 +67,8 @@ public class Weapon : MonoBehaviour
         //interactor.GetComponent<MeshHidder>().Hide();
         rayInteractor.enabled = true;
         GetComponent<XRInteractorLineVisual>().enabled = true;
+
+        weaponOutline = interactor.GetComponent<WeaponOutline>();
         weaponOutline.lineActive = false;
     }
  
@@ -76,7 +77,9 @@ public class Weapon : MonoBehaviour
         //interactor.GetComponent<MeshHidder>().Show();
         rayInteractor.enabled = false;
         GetComponent<XRInteractorLineVisual>().enabled = false;
+
         weaponOutline.lineActive = true;
+        weaponOutline = null;
     }
 
     protected virtual void StartShooting(XRBaseInteractor interactor)

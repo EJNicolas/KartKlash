@@ -19,7 +19,7 @@ public class Rifle : Weapon
     private void Start()
     {
         fireRate = bdp.shotInterval;
-        wait = new WaitForSeconds(1 / fireRate);
+        wait = new WaitForSeconds(fireRate);
     }
 
     protected override void StartShooting(XRBaseInteractor interactor)
