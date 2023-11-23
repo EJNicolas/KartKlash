@@ -199,9 +199,9 @@ GameObject:
   - component: {fileID: 4954338905697139943}
   - component: {fileID: 4954338905697139942}
   - component: {fileID: 3823902809476710784}
-  - component: {fileID: 2236330395333739300}
   - component: {fileID: 8859373884657114616}
   - component: {fileID: 2470943109023422418}
+  - component: {fileID: 3638167499138240477}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
@@ -355,20 +355,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &2236330395333739300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4954338905697139940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf9e689a1e9b9d45a349237e7fe1daa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rayInteractor: {fileID: 0}
-  showLine: 1
 --- !u!114 &8859373884657114616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +608,20 @@ MonoBehaviour:
   m_TranslateSpeed: 1
   m_AnchorRotateReferenceFrame: {fileID: 0}
   m_AnchorRotationMode: 0
+--- !u!114 &3638167499138240477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4954338905697139940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a9cca20b1d4db4785f7a203de8528a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineActive: 0
+  gun: {fileID: 0}
 --- !u!1 &4954338905711771449
 GameObject:
   m_ObjectHideFlags: 0

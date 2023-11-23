@@ -22,7 +22,6 @@ public class BotDamageBehaviour : MonoBehaviour
     public ParticleSystem shotParticle;
     GameObject player;
     public Vector3 hitLocation;
-    bool particleFired = false;
 
     // Start is called before the first frame update
     void Start()
