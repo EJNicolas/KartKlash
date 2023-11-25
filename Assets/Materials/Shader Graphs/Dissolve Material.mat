@@ -99,12 +99,12 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _CutoffHeight: -20
+    - _CutoffHeight: 20
     - _Cutoff_Height: 20
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeWidth: 0.05
+    - _EdgeWidth: 0.5
     - _Edge_Width: 0.25
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0

@@ -10,15 +10,21 @@ public class GameManager : MonoBehaviour
     [Header("Player References")]
     public GameObject VRPlayer;
     public GameObject FPSPlayer;
+    GameObject player;
     public Transform spawnPosition;
 
     void Start() {
-        if (currentType == PlayerType.VR) Instantiate(VRPlayer, spawnPosition.position, spawnPosition.rotation);
-        else Instantiate(FPSPlayer, spawnPosition.position, Quaternion.identity);
+        if (currentType == PlayerType.VR) player = Instantiate(VRPlayer, spawnPosition.position, spawnPosition.rotation);
+        else player = Instantiate(FPSPlayer, spawnPosition.position, Quaternion.identity);
     }
 
     void Update()
     {
         
+    }
+
+    void TransitionToNextScene()
+    {
+        if (currentType == PlayerType.VR) player.GetComponentInChildren<SceneTransitionBehaviour>().TransitionOut();
     }
 }

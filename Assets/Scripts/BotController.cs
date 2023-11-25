@@ -81,28 +81,28 @@ public class BotController : Entity
         else if (checkpointsPassed - rm.checkpointsPassed > rubberbandThreshold) rs = RubberbandState.SLOW;
         else rs = RubberbandState.NORMAL;
 
-        Debug.Log(this.gameObject.name + ", rb value:" + (checkpointsPassed - rm.checkpointsPassed));
+        //Debug.Log(this.gameObject.name + ", rb value:" + (checkpointsPassed - rm.checkpointsPassed));
 
         stateChanged = true;
 
         switch (rs)
         {
             case RubberbandState.FAST:
-                Debug.Log(this.gameObject.name + ", Speeding Up");
+                //Debug.Log(this.gameObject.name + ", Speeding Up");
                 nma.speed = defaultSpeed + (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 nma.angularSpeed = defaultAngular * angularRubberbandFactor;
                 nma.acceleration = defaultAccel + (accelRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 return;
 
             case RubberbandState.NORMAL:
-                Debug.Log(this.gameObject.name + ", Returning to Normal");
+                //Debug.Log(this.gameObject.name + ", Returning to Normal");
                 nma.speed = defaultSpeed;
                 nma.angularSpeed = defaultAngular;
                 nma.acceleration = defaultAccel;
                 return;
 
             case RubberbandState.SLOW:
-                Debug.Log(this.gameObject.name + ", Slowing Down");
+                //Debug.Log(this.gameObject.name + ", Slowing Down");
                 nma.speed = defaultSpeed - (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
                 return;
 
