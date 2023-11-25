@@ -13,7 +13,6 @@ public class BotController : Entity
     public float rdThreshold;
     public int currentPoint, checkpointsPassed;
     public int rubberbandThreshold;
-
     enum RubberbandState
     {
         SLOW,
@@ -26,11 +25,14 @@ public class BotController : Entity
     //navmeshagent fields
     private float defaultSpeed, defaultAngular, defaultAccel;
     public float speedRubberbandAmount, angularRubberbandFactor, accelRubberbandAmount;
+    public bool raceStarted = false;
 
     //public GameObject trackedObj; //player
 
     void Start()
     {
+        RaceManager.StartRaceEvent += ()=>{ raceStarted = true; };
+
         currentPoint = listPos.Length;
 
         //nma fields
@@ -48,7 +50,7 @@ public class BotController : Entity
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateNavigation();
+        if (raceStarted) UpdateNavigation();
     }
 
     void UpdateNavigation()
