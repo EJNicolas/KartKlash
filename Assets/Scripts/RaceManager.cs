@@ -12,6 +12,7 @@ public class RaceManager : MonoBehaviour
 
     public Checkpoint[] checkpoints;
     private int expectedCheckpointNumber;
+    public static event Action BeginCountdownEvent;
     public static event Action StartRaceEvent;
     public static event Action CompleteLapEvent;
     public static event Action CompleteRaceEvent;
@@ -19,6 +20,8 @@ public class RaceManager : MonoBehaviour
     void Start() {
         instance = this;
         InitializeCheckpoints();
+        BeginCountdown();
+        
     }
 
     public void PlayerPassedCheckpoint(int checkpointNumber) {
@@ -49,13 +52,11 @@ public class RaceManager : MonoBehaviour
     public void CompleteLap() {
         CompleteLapEvent?.Invoke();
         currentLapCount++;
-        Debug.Log("LAP COMPLETED");
         if (currentLapCount >= lapCompletion) CompleteRace();
     }
 
     void CompleteRace() {
         CompleteRaceEvent?.Invoke();
-        Debug.Log("YOU FINISHED THE RACE");
     }
 
     void InitializeCheckpoints() {
@@ -63,5 +64,29 @@ public class RaceManager : MonoBehaviour
         for(int i=0; i<checkpoints.Length; i++) {
             checkpoints[i].SetCheckpointNum(i);
         }
+    }
+
+    void BeginRace() {
+        StartRaceEvent?.Invoke();
+    }
+
+    void BeginCountdown() {
+        BeginCountdownEvent?.Invoke();
+        StartCoroutine(CountdownRoutine());
+    }
+
+    IEnumerator CountdownRoutine() {
+        yield return new WaitForSeconds(0.5f);
+        //Debug.Log("3");
+
+        yield return new WaitForSeconds(1f);
+        //Debug.Log("2");
+
+        yield return new WaitForSeconds(1f);
+        //Debug.Log("1");
+
+        yield return new WaitForSeconds(1f);
+        //Debug.Log("GO!");
+        BeginRace();
     }
 }
