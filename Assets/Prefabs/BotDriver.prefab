@@ -122,10 +122,12 @@ MonoBehaviour:
   rdThreshold: 0
   currentPoint: 0
   checkpointsPassed: 0
-  rubberbandThreshold: 1
+  rubberbandThreshold: 2
+  resumeDelay: 0.25
   speedRubberbandAmount: 0
   angularRubberbandFactor: 0
   accelRubberbandAmount: 0
+  raceStarted: 0
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0

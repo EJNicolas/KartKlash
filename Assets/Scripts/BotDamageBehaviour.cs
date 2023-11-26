@@ -28,7 +28,7 @@ public class BotDamageBehaviour : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        //bc = GetComponent<BotController>();
+        bc = GetComponent<BotController>();
         outline = GetComponent<Outline>();
 
         //carry over scriptableobject values
@@ -68,7 +68,7 @@ public class BotDamageBehaviour : MonoBehaviour
     {
         if(!shot) EmitShotParticle();
         ShootHighlight();
-        //bc.TakeDamage();
+        bc.TakeDamage();
     }
 
     void ShootHighlight()

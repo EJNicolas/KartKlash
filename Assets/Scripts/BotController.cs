@@ -22,6 +22,9 @@ public class BotController : Entity
     RubberbandState rs = RubberbandState.NORMAL;
     bool stateChanged = false;
 
+    [Header("Damage")]
+    [Range(0.1f, 1f)] public float resumeDelay;
+
     //navmeshagent fields
     private float defaultSpeed, defaultAngular, defaultAccel;
     public float speedRubberbandAmount, angularRubberbandFactor, accelRubberbandAmount;
@@ -31,7 +34,8 @@ public class BotController : Entity
 
     void Start()
     {
-        RaceManager.StartRaceEvent += ()=>{ raceStarted = true; };
+        nma.isStopped = true;
+        RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
 
         currentPoint = listPos.Length;
 
@@ -45,18 +49,19 @@ public class BotController : Entity
         if (accelRubberbandAmount == 0) accelRubberbandAmount = 2;
 
         rm = FindAnyObjectByType<RaceManager>();
+
+        if (resumeDelay < 0.1f) resumeDelay = 0.1f;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (raceStarted) UpdateNavigation();
+        UpdateNavigation();
     }
 
     void UpdateNavigation()
     {
         //navigation
-        nma.enabled = true;
         if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance + rdThreshold && currentPoint < listPos.Length)
         {
             currentPoint++;
@@ -123,6 +128,13 @@ public class BotController : Entity
 
     public void TakeDamage()
     {
+        nma.isStopped = true;
+        StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
+    }
 
+    IEnumerator ResumeAgentAfterDelay(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        nma.isStopped = false;
     }
 }
