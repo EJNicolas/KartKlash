@@ -11,6 +11,7 @@ public class CarController : MonoBehaviour
     public GameObject carParent;
     public XRController leftController;
     public XRController rightController;
+    public VRHand drivingHand;
     public Rigidbody carRb;
     public BoxCollider carBoxCollider;
 
@@ -51,16 +52,15 @@ public class CarController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         VRPlayer.transform.position = this.transform.position;
         ReadControllerInputs();
         ToggleReverse();
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
+        ChangeHandModels();
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (canDrive) {
             DoAccelAndReverse();
             DoDrifting();
@@ -117,8 +117,13 @@ public class CarController : MonoBehaviour
         }
     }
 
-    void ReadControllerInputs()
-    {
+    void ChangeHandModels() {
+        if (triggerPressed) drivingHand.SetClosedHand();
+        else if (gripPressed) drivingHand.SetPointingHand();
+        else drivingHand.SetOpenHand();
+    }
+
+    void ReadControllerInputs() {
         //get & print the trigger value
         leftController.inputDevice.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
         if (triggerValue != 0) triggerPressed = true;
