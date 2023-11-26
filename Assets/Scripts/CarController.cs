@@ -72,8 +72,8 @@ public class CarController : MonoBehaviour
     {
 
         if (gripPressed) {
-            if (triggerPressed) currentSpeed = driftAcceleration;
-            else if (reverseToggle) currentSpeed = -baseReverseAcceleration;
+            if (reverseToggle) currentSpeed = -baseReverseAcceleration; 
+            else if (triggerPressed) currentSpeed = driftAcceleration;
             else currentSpeed = baseAcceleration;
         }
         else currentSpeed = 0;
@@ -108,6 +108,8 @@ public class CarController : MonoBehaviour
     void ToggleReverse() {
         if (primaryStickPressed) {
             reverseToggle = !reverseToggle;
+            if (reverseToggle) drivingHand.SetDrivingText("Reverse");
+            else drivingHand.SetDrivingText("Drive");
         }
     }
     

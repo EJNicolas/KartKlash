@@ -2236,6 +2236,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2849657122809742773, guid: baa9c9681bf0eb748be68e6614754447, type: 3}
     - target: {fileID: 1942364229231560710, guid: a05caf0a70a4bb841ae7d1ebe635c7f7, type: 3}
+      propertyPath: drivingHand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1942364229231560710, guid: a05caf0a70a4bb841ae7d1ebe635c7f7, type: 3}
       propertyPath: pointingHand
       value: 
       objectReference: {fileID: 4613188549948562012, guid: 8e584f96278236b4c8a6d874d1897b2c, type: 3}

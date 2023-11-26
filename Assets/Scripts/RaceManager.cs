@@ -26,7 +26,6 @@ public class RaceManager : MonoBehaviour
 
     public void PlayerPassedCheckpoint(int checkpointNumber) {
         if(checkpointNumber == expectedCheckpointNumber) {
-            Debug.Log("player passed through checkpoint " + checkpointNumber);
             checkpoints[checkpointNumber].SetCrossed(true);
             expectedCheckpointNumber++;
             checkpointsPassed++;
