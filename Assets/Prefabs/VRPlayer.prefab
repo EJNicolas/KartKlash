@@ -886,7 +886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4954338905675320310}
   - component: {fileID: 4954338905675320305}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: VRPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}

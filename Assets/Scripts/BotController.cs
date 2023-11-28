@@ -25,6 +25,10 @@ public class BotController : Entity
     [Header("Damage")]
     [Range(0.1f, 1f)] public float resumeDelay;
 
+    [Header("Shooting")]
+    FieldOfView fov;
+
+
     //navmeshagent fields
     private float defaultSpeed, defaultAngular, defaultAccel;
     public float speedRubberbandAmount, angularRubberbandFactor, accelRubberbandAmount;
@@ -50,7 +54,11 @@ public class BotController : Entity
 
         rm = FindAnyObjectByType<RaceManager>();
 
+        //damage
         if (resumeDelay < 0.1f) resumeDelay = 0.1f;
+
+        //ai shooting
+        fov = GetComponent<FieldOfView>();
     }
 
     // Update is called once per frame
@@ -121,11 +129,6 @@ public class BotController : Entity
         }
     }
 
-    void Shoot()
-    {
-
-    }
-
     public void TakeDamage()
     {
         nma.isStopped = true;
@@ -136,5 +139,11 @@ public class BotController : Entity
     {
         yield return new WaitForSeconds(delayTime);
         nma.isStopped = false;
+    }
+
+    //AI shooting
+    void Shoot()
+    {
+
     }
 }
