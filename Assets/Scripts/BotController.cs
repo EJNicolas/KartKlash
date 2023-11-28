@@ -32,7 +32,7 @@ public class BotController : Entity
     [Header("Damage")]
     [Range(0.1f, 1f)] public float resumeDelay;
 
-    [Header("Shooting")]
+    [Header("Targeting")]
     public Transform gunShoulder;
     public Transform gunArm;
     public Transform neck;
@@ -40,9 +40,17 @@ public class BotController : Entity
     private Quaternion gunShoulderDefaultRotation, gunArmDefaultRotation, neckDefaultRotation;
     FieldOfView fov;
 
+    [Header("Shooting")]
     public float rotationSpeed;
     public float recoveryTime;
+
     public bool canShoot = false;
+
+    public float shootInterval;
+    float shootTimer = 0f;
+
+    public ParticleSystem fireParticle;
+    public Transform gunTip;
 
     //public GameObject trackedObj; //player
 
@@ -89,6 +97,11 @@ public class BotController : Entity
     {
         UpdateNavigation();
         UpdateTargeting();
+
+        if (shootTimer < shootInterval) canShoot = false;
+
+        if (canShoot) Shoot();
+        else shootTimer += Time.deltaTime;
     }
 
     void UpdateNavigation()
@@ -199,6 +212,9 @@ public class BotController : Entity
 
     void Shoot()
     {
-
+        Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
+        ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir));
+        ps.Play();
+        shootTimer = 0;
     }
 }
