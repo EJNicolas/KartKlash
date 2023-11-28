@@ -37,9 +37,12 @@ public class BotController : Entity
     public Transform gunArm;
     public Transform neck;
 
-    private Vector3 gunShoulderDefaultPosition, gunArmDefaultPosition, neckDefaultPosition;
     private Quaternion gunShoulderDefaultRotation, gunArmDefaultRotation, neckDefaultRotation;
     FieldOfView fov;
+
+    public float rotationSpeed;
+    public float recoveryTime;
+    public bool canShoot = false;
 
     //public GameObject trackedObj; //player
 
@@ -68,20 +71,13 @@ public class BotController : Entity
         fov = GetComponent<FieldOfView>();
 
         if (gunShoulder)
-        {
-            gunShoulderDefaultPosition = gunShoulder.localPosition;
             gunShoulderDefaultRotation = gunShoulder.localRotation;
-        }
+
         if (gunArm)
-        {
-            gunArmDefaultPosition = gunArm.localPosition;
             gunArmDefaultRotation = gunArm.localRotation;
-        }
+
         if (neck)
-        {
-            neckDefaultPosition = neck.localPosition;
             neckDefaultRotation = neck.localRotation;
-        }
 
         //Debug.Log(neckDefaultPosition);
         //Debug.Log(gunShoulderDefaultPosition);
@@ -174,28 +170,30 @@ public class BotController : Entity
     {
         if (fov.visibleTarget != null)
         {
-            neck.LookAt(fov.visibleTarget.transform);
-
             Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
+            Quaternion targetRot = Quaternion.LookRotation(targetDir);
+
+            neck.rotation = Quaternion.Slerp(neck.rotation, targetRot, rotationSpeed * Time.deltaTime);
+
+
             if (Vector3.Dot(transform.right, targetDir) < 0f) //only animate shoulder if target is on gun side
             {
-                gunShoulder.LookAt(fov.visibleTarget.transform.position);
-                gunShoulder.Rotate(0f, 90f - gunShoulderDefaultRotation.eulerAngles.y, 90f);
+                Quaternion gsTargetRot = Quaternion.Euler(targetRot.eulerAngles + new Vector3(0f, 90f - gunShoulderDefaultRotation.eulerAngles.y, 90f));
+                gunShoulder.rotation = Quaternion.Slerp(gunShoulder.rotation, gsTargetRot, rotationSpeed * Time.deltaTime);
             }
 
-            gunArm.LookAt(fov.visibleTarget.transform.position);
-            gunArm.Rotate(0f, 90f, 90f);
+            Quaternion gaTargetRot = Quaternion.Euler(targetRot.eulerAngles + new Vector3(0f, 90f, 90f));
+            gunArm.rotation = Quaternion.Slerp(gunArm.rotation, gaTargetRot, rotationSpeed * Time.deltaTime);
+
+            if (Quaternion.Angle(gunArm.rotation, gaTargetRot) < 1.0f) canShoot = true;
+            Debug.Log(canShoot);
         }
         else
         {
-            neck.localPosition = neckDefaultPosition;
-            neck.localRotation = neckDefaultRotation;
-
-            gunArm.localPosition = gunArmDefaultPosition;
-            gunArm.localRotation = gunArmDefaultRotation;
-
-            gunShoulder.localPosition = gunShoulderDefaultPosition;
-            gunShoulder.localRotation = gunShoulderDefaultRotation;
+            canShoot = false;
+            LeanTween.rotateLocal(neck.gameObject, neckDefaultRotation.eulerAngles, recoveryTime);
+            LeanTween.rotateLocal(gunArm.gameObject, gunArmDefaultRotation.eulerAngles, recoveryTime);
+            LeanTween.rotateLocal(gunShoulder.gameObject, gunShoulderDefaultRotation.eulerAngles, recoveryTime);
         }
     }
 

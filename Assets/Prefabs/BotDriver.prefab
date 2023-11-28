@@ -131,6 +131,8 @@ MonoBehaviour:
   gunShoulder: {fileID: 4596375181760401240}
   gunArm: {fileID: 3397850285332324016}
   neck: {fileID: 7560419844925812061}
+  rotationSpeed: 5
+  recoveryTime: 0.1
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -292,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 5
-  viewAngle: 300
+  viewAngle: 240
   targetMask:
     serializedVersion: 2
     m_Bits: 8

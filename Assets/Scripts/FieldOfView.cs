@@ -24,7 +24,6 @@ public class FieldOfView : MonoBehaviour
         if (targets.Length >= 1)
         {
             Vector3 dirTarget = (targets[0].transform.position - transform.position).normalized;
-            Debug.Log(Vector3.Angle(DirFromAngle(-viewAngle/2, false), dirTarget));
             if (Vector3.Angle(transform.forward, dirTarget) < viewAngle / 2)
                 visibleTarget = targets[0].gameObject;
             else visibleTarget = null;
