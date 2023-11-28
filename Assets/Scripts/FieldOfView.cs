@@ -21,12 +21,15 @@ public class FieldOfView : MonoBehaviour
         Collider[] targets = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         //assume only one player active
-        if(targets.Length >= 1)
+        if (targets.Length >= 1)
         {
             Vector3 dirTarget = (targets[0].transform.position - transform.position).normalized;
+            Debug.Log(Vector3.Angle(DirFromAngle(-viewAngle/2, false), dirTarget));
             if (Vector3.Angle(transform.forward, dirTarget) < viewAngle / 2)
                 visibleTarget = targets[0].gameObject;
+            else visibleTarget = null;
         }
+        else visibleTarget = null;
     }
 
     public Vector3 DirFromAngle(float angle, bool angleIsGlobal)

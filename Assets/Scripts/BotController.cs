@@ -11,7 +11,8 @@ public class BotController : Entity
     public NavMeshAgent nma;
     public RaceManager rm;
     public float rdThreshold;
-    public int currentPoint, checkpointsPassed;
+    public int currentPoint;
+    public int checkpointsPassed;
     public int rubberbandThreshold;
     enum RubberbandState
     {
@@ -22,17 +23,23 @@ public class BotController : Entity
     RubberbandState rs = RubberbandState.NORMAL;
     bool stateChanged = false;
 
+    [Header("Rubberband")] //navmeshagent fields
+    public float speedRubberbandAmount;
+    public float angularRubberbandFactor;
+    public float accelRubberbandAmount;
+    private float defaultSpeed, defaultAngular, defaultAccel;
+
     [Header("Damage")]
     [Range(0.1f, 1f)] public float resumeDelay;
 
     [Header("Shooting")]
+    public Transform gunShoulder;
+    public Transform gunArm;
+    public Transform neck;
+
+    private Vector3 gunShoulderDefaultPosition, gunArmDefaultPosition, neckDefaultPosition;
+    private Quaternion gunShoulderDefaultRotation, gunArmDefaultRotation, neckDefaultRotation;
     FieldOfView fov;
-
-
-    //navmeshagent fields
-    private float defaultSpeed, defaultAngular, defaultAccel;
-    public float speedRubberbandAmount, angularRubberbandFactor, accelRubberbandAmount;
-    public bool raceStarted = false;
 
     //public GameObject trackedObj; //player
 
@@ -59,12 +66,33 @@ public class BotController : Entity
 
         //ai shooting
         fov = GetComponent<FieldOfView>();
+
+        if (gunShoulder)
+        {
+            gunShoulderDefaultPosition = gunShoulder.localPosition;
+            gunShoulderDefaultRotation = gunShoulder.localRotation;
+        }
+        if (gunArm)
+        {
+            gunArmDefaultPosition = gunArm.localPosition;
+            gunArmDefaultRotation = gunArm.localRotation;
+        }
+        if (neck)
+        {
+            neckDefaultPosition = neck.localPosition;
+            neckDefaultRotation = neck.localRotation;
+        }
+
+        //Debug.Log(neckDefaultPosition);
+        //Debug.Log(gunShoulderDefaultPosition);
+        //Debug.Log(gunArmDefaultPosition);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         UpdateNavigation();
+        UpdateTargeting();
     }
 
     void UpdateNavigation()
@@ -142,6 +170,35 @@ public class BotController : Entity
     }
 
     //AI shooting
+    void UpdateTargeting()
+    {
+        if (fov.visibleTarget != null)
+        {
+            neck.LookAt(fov.visibleTarget.transform);
+
+            Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
+            if (Vector3.Dot(transform.right, targetDir) < 0f) //only animate shoulder if target is on gun side
+            {
+                gunShoulder.LookAt(fov.visibleTarget.transform.position);
+                gunShoulder.Rotate(0f, 90f - gunShoulderDefaultRotation.eulerAngles.y, 90f);
+            }
+
+            gunArm.LookAt(fov.visibleTarget.transform.position);
+            gunArm.Rotate(0f, 90f, 90f);
+        }
+        else
+        {
+            neck.localPosition = neckDefaultPosition;
+            neck.localRotation = neckDefaultRotation;
+
+            gunArm.localPosition = gunArmDefaultPosition;
+            gunArm.localRotation = gunArmDefaultRotation;
+
+            gunShoulder.localPosition = gunShoulderDefaultPosition;
+            gunShoulder.localRotation = gunShoulderDefaultRotation;
+        }
+    }
+
     void Shoot()
     {
 

@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 2277689102916780404}
   - component: {fileID: 3469334233655333253}
   - component: {fileID: 2626000930530790536}
+  - component: {fileID: 6538342594046736526}
   m_Layer: 6
   m_Name: BotDriver
   m_TagString: CPU
@@ -123,11 +124,13 @@ MonoBehaviour:
   currentPoint: 0
   checkpointsPassed: 0
   rubberbandThreshold: 2
-  resumeDelay: 0.25
   speedRubberbandAmount: 0
   angularRubberbandFactor: 0
   accelRubberbandAmount: 0
-  raceStarted: 0
+  resumeDelay: 0.25
+  gunShoulder: {fileID: 4596375181760401240}
+  gunArm: {fileID: 3397850285332324016}
+  neck: {fileID: 7560419844925812061}
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -276,6 +279,24 @@ MonoBehaviour:
   hovering: 0
   shotParticle: {fileID: 318857835175648327, guid: cb6123ce79a8eec46a4c808c333269ad, type: 3}
   hitLocation: {x: 0, y: 0, z: 0}
+--- !u!114 &6538342594046736526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8847094164500693211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9ef6e3fb0d49774d9f9d669d233a319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 5
+  viewAngle: 300
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  visibleTarget: {fileID: 0}
 --- !u!1001 &1965796471239338794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -474,6 +495,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
+--- !u!4 &3397850285332324016 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -325890506465995317, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
+  m_PrefabInstance: {fileID: 6079193860357835643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4596375181760401240 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7751882961357456419, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
+  m_PrefabInstance: {fileID: 6079193860357835643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5717819913763150000 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1946791378492888011, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
@@ -482,5 +513,10 @@ Transform:
 --- !u!4 &6041328100231359632 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
+  m_PrefabInstance: {fileID: 6079193860357835643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7560419844925812061 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4849915752481774042, guid: 3c6e1dce5ab3e4649a9029b8b72db3cb, type: 3}
   m_PrefabInstance: {fileID: 6079193860357835643}
   m_PrefabAsset: {fileID: 0}
