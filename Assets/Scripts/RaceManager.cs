@@ -84,11 +84,13 @@ public class RaceManager : MonoBehaviour
     }
 
     void BeginCountdown() {
-        BeginCountdownEvent?.Invoke();
         StartCoroutine(CountdownRoutine());
     }
 
     IEnumerator CountdownRoutine() {
+        yield return new WaitForSeconds(1.5f);
+
+        BeginCountdownEvent?.Invoke();
         yield return new WaitForSeconds(1f);
         //Debug.Log("3");
 
