@@ -40,6 +40,20 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void MovePlayerToCheckpoint(CarController player){
+        int previousCheckpointIndex = expectedCheckpointNumber - 1;
+
+        if(expectedCheckpointNumber == 0 && currentLapCount > 0) {
+            previousCheckpointIndex = checkpoints.Length - 1;
+        }
+
+        if (previousCheckpointIndex == -1) return;
+        else {
+            player.transform.position = checkpoints[previousCheckpointIndex].transform.position;
+            player.transform.rotation = checkpoints[previousCheckpointIndex].transform.rotation;
+        }
+    }
+
     public bool CheckValidCompleteLap() {
         foreach(Checkpoint checkpoint in checkpoints) {
             if (!checkpoint.GetCrossed()) return false;
@@ -75,7 +89,7 @@ public class RaceManager : MonoBehaviour
     }
 
     IEnumerator CountdownRoutine() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         //Debug.Log("3");
 
         yield return new WaitForSeconds(1f);

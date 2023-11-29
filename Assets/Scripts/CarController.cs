@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
     public VRHand drivingHand;
     public Rigidbody carRb;
     public BoxCollider carBoxCollider;
+    public UIManager UIManagerScript;
 
     [Header("Controls")]
     private bool triggerPressed;
@@ -25,6 +26,7 @@ public class CarController : MonoBehaviour
     private bool primaryStickPressed;
     private bool primaryButtonDown;
     private bool secondaryButtonDown;
+    private bool menuButtonDown;
 
     [Header("Driving Parameters")]
     public float baseAcceleration = 0.5f;
@@ -36,6 +38,9 @@ public class CarController : MonoBehaviour
     public bool canDrive = true;
     public bool reverseToggle = false;
     bool stickDownPrevFrame = false;
+
+    float resetTimer = 3;
+    bool resetInput = false;
 
     void Start() {
         transform.parent = null;
@@ -64,6 +69,7 @@ public class CarController : MonoBehaviour
         if (canDrive) {
             DoAccelAndReverse();
             DoDrifting();
+            CheckTeleportToLastCheckpoint();
         }
             
     }
@@ -125,6 +131,39 @@ public class CarController : MonoBehaviour
         else drivingHand.SetOpenHand();
     }
 
+    void CheckTeleportToLastCheckpoint() {
+        if (menuButtonDown && !gripPressed) resetInput = true;
+        else resetInput = false;
+
+        if (resetInput) {
+            UIManagerScript.SetRespawnTextActive(true);
+            resetTimer -= Time.deltaTime;
+            if (resetTimer < 0) {
+                UIManagerScript.SetRespawnTextActive(false);
+                RaceManager.instance.MovePlayerToCheckpoint(this);
+                VRPlayer.transform.rotation = transform.rotation;
+                resetTimer = 3;
+                resetInput = false;
+                return;
+            }
+            else if (resetTimer < 1) {
+                UIManagerScript.SetRespawnText("Respawning in: 1");
+            }
+            else if (resetTimer < 2) {
+                UIManagerScript.SetRespawnText("Respawning in: 2");
+            }
+            else if (resetTimer <= 3) {
+                UIManagerScript.SetRespawnText("Respawning in: 3");
+            }
+        }
+        else {
+            UIManagerScript.SetRespawnTextActive(false);
+            resetInput = false;
+            resetTimer = 3;
+        }
+        
+    }
+
     void ReadControllerInputs() {
         //get & print the trigger value
         leftController.inputDevice.TryGetFeatureValue(CommonUsages.trigger, out triggerValue);
@@ -150,6 +189,8 @@ public class CarController : MonoBehaviour
 
         leftController.inputDevice.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonDown);
         leftController.inputDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out secondaryButtonDown);
+
+        leftController.inputDevice.TryGetFeatureValue(CommonUsages.menuButton, out menuButtonDown);
 
         //if(leftStickValue != Vector2.zero)
         //{

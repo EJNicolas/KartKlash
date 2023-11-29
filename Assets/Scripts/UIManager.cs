@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject endOfRaceParent;
     public GameObject countdownParent;
     public TextMeshProUGUI countdownText;
+    public TextMeshProUGUI respawnText;
     int currentLapCount = 1;
 
     void Start() {
@@ -51,13 +52,21 @@ public class UIManager : MonoBehaviour
         lapCountText.text = lapNum.ToString() + "/" + RaceManager.instance.lapCompletion.ToString();
     }
 
+    public void SetRespawnText(string s) {
+        respawnText.text = s;
+    }
+
+    public void SetRespawnTextActive(bool b) {
+        respawnText.gameObject.SetActive(b);
+    }
+
     void StartCountdownUIRoutine() {
         countdownParent.SetActive(true);
         StartCoroutine(CountdownRoutine());
     }
 
     IEnumerator CountdownRoutine() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         countdownText.text = "3";
 
         yield return new WaitForSeconds(1f);
