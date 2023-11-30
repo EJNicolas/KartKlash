@@ -638,6 +638,8 @@ MonoBehaviour:
   audio: {fileID: 0}
   gunDamage: {fileID: 0}
   gunShoot: {fileID: 0}
+  shootParticle: {fileID: 318857835175648327, guid: bf39eed09e4c6b345be8376fb226873a, type: 3}
+  gunTip: {fileID: 4994605849820940578}
   rayInteractor: {fileID: 596127033835748267}
   weaponOutline: {fileID: 0}
   fireRate: 2
