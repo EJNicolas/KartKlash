@@ -42,8 +42,17 @@ public class CarController : MonoBehaviour
     float resetTimer = 3;
     bool resetInput = false;
 
+    //engine sounds
+    AudioSource engineAudioSource;
+    public float minimumPitch = 0.05f;
+    public float maximumPitch = 0.5f;
+    float engineSpeed;
+
     void Start() {
         transform.parent = null;
+
+        engineAudioSource = GetComponent<AudioSource>();
+        engineAudioSource.pitch = minimumPitch;
     }
 
     private void OnEnable() {
@@ -63,6 +72,7 @@ public class CarController : MonoBehaviour
         ToggleReverse();
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
         ChangeHandModels();
+        EngineSoundPitch();
     }
 
     void FixedUpdate() {
@@ -162,6 +172,18 @@ public class CarController : MonoBehaviour
             resetTimer = 3;
         }
         
+    }
+
+    void EngineSoundPitch() {
+        engineSpeed = Mathf.Sqrt(carRb.velocity.magnitude);
+
+        if(engineSpeed < minimumPitch){
+            engineAudioSource.pitch = minimumPitch;
+        }else if(engineSpeed > maximumPitch){
+            engineAudioSource.pitch = maximumPitch;
+        }else{
+        engineAudioSource.pitch = engineSpeed;
+        }
     }
 
     void ReadControllerInputs() {
