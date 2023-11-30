@@ -19,7 +19,8 @@ public class Weapon : MonoBehaviour
     public AudioClip gunDamage;
     public AudioClip gunShoot;
 
-    
+    public ParticleSystem shootParticle;
+    public Transform gunTip;
 
     private Rigidbody rigidBody;
     private XRGrabInteractable interactableWeapon;

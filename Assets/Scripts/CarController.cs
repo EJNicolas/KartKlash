@@ -175,7 +175,7 @@ public class CarController : MonoBehaviour
     }
 
     void EngineSoundPitch() {
-        engineSpeed = Mathf.Sqrt(carRb.velocity.magnitude);
+        engineSpeed = Mathf.Log10(carRb.velocity.magnitude);
 
         if(engineSpeed < minimumPitch){
             engineAudioSource.pitch = minimumPitch;

@@ -178,6 +178,8 @@ MonoBehaviour:
   driftTurnSpeed: 60
   canDrive: 1
   reverseToggle: 0
+  minimumPitch: 0.5
+  maximumPitch: 2
 --- !u!114 &7637702735288200400
 MonoBehaviour:
   m_ObjectHideFlags: 0
