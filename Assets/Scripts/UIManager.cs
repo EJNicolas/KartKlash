@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI respawnText;
     int currentLapCount = 1;
+    public AudioSource audioSource;
+    public AudioClip countdown;
+    public AudioClip lapCounter;
+    public AudioClip lapFinish;
 
     void Start() {
         InitializeRaceUI();
@@ -41,6 +45,7 @@ public class UIManager : MonoBehaviour
     void IncreaseLapCount() {
         currentLapCount++;
         SetLapCountText(currentLapCount);
+        audioSource.PlayOneShot(lapCounter,  1);
     }
 
     void ShowEndScreen() {
@@ -66,8 +71,10 @@ public class UIManager : MonoBehaviour
     }
 
     IEnumerator CountdownRoutine() {
+        
         yield return new WaitForSeconds(1f);
         countdownText.text = "3";
+        audioSource.PlayOneShot(countdown,  1);
 
         yield return new WaitForSeconds(1f);
         countdownText.text = "2";

@@ -15,6 +15,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float recoilForce;
     [SerializeField] private float damage;
 
+    public AudioSource audio;
+    public AudioClip gunDamage;
+    public AudioClip gunShoot;
+
+    
+
     private Rigidbody rigidBody;
     private XRGrabInteractable interactableWeapon;
 
@@ -28,7 +34,7 @@ public class Weapon : MonoBehaviour
         interactableWeapon = GetComponent<XRGrabInteractable>();
         rigidBody = GetComponent<Rigidbody>();
         rayInteractor = GetComponent<XRRayInteractor>();
-
+        audio = GetComponent<AudioSource>();
         SetupInteractableWeaponEvents();
     }
 
@@ -53,6 +59,7 @@ public class Weapon : MonoBehaviour
                 bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
                 bdb.hovering = true;
                 bdb.hitLocation = res.point;
+                //audioSource.PlayOneShot(gunDamage,1 );
             }
         }
         else if (bdb != null)
@@ -94,8 +101,15 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Shoot()
     {
-        if (bdb != null) bdb.OnDamage();
+        audio.Play();
+
+        if (bdb != null) {
+            bdb.OnDamage();
+            audio.PlayOneShot(gunDamage, 1);
+
+        }
         ApplyRecoil();
+        
     }
 
     private void ApplyRecoil()

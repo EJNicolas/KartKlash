@@ -10,6 +10,9 @@ public class Rifle : Weapon
     [SerializeField] private float fireRate;
     private WaitForSeconds wait;
     public BotDamagePreset bdp;
+ 
+
+   
 
     protected override void Awake()
     {
@@ -17,14 +20,18 @@ public class Rifle : Weapon
     }
 
     private void Start()
+
     {
+     
         wait = new WaitForSeconds(1 / fireRate);
+        
     }
 
     protected override void StartShooting(XRBaseInteractor interactor)
     {
         base.StartShooting(interactor);
         StartCoroutine(ShootingCO());
+        
     }
 
     private IEnumerator ShootingCO()
