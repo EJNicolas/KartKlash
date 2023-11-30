@@ -104,10 +104,12 @@ public class Weapon : MonoBehaviour
     {
         audio.Play();
 
+        ParticleSystem ps = Instantiate(shootParticle, gunTip.position, Quaternion.LookRotation(transform.forward));
+        ps.Play();
+
         if (bdb != null) {
             bdb.OnDamage();
             audio.PlayOneShot(gunDamage, 1);
-
         }
         ApplyRecoil();
         
