@@ -23,12 +23,18 @@ public class Player : Entity
         if(!takingDamage && health <= 0)
         {
             LeanTween.value(health, maxHealth, healTime)
-                .setOnStart(() => { healing = true; })
+                .setOnStart(() => { 
+                    healing = true;
+                    car.canDrive = false;
+                })
                 .setOnUpdate((float newHP) => { 
                     health = newHP;
                     healthBar.fillAmount = health / maxHealth;
                 })
-                .setOnComplete(() => { healing = false; });
+                .setOnComplete(() => { 
+                    healing = false;
+                    car.canDrive = true;
+                });
         }
     }
 

@@ -53,6 +53,7 @@ public class BotController : Entity
     public Transform gunTip;
 
     public float botDamage;
+    bool raceStarted = false;
 
     //public GameObject trackedObj; //player
 
@@ -106,12 +107,15 @@ public class BotController : Entity
     void FixedUpdate()
     {
         UpdateNavigation();
-        UpdateTargeting();
+        if (raceStarted)
+        {
+            UpdateTargeting();
 
-        if (shootTimer < shootInterval) canShoot = false;
+            if (shootTimer < shootInterval) canShoot = false;
 
-        if (canShoot) Shoot();
-        else shootTimer += Time.deltaTime;
+            if (canShoot) Shoot();
+            else shootTimer += Time.deltaTime;
+        }
     }
 
     void UpdateNavigation()
@@ -237,5 +241,6 @@ public class BotController : Entity
 
     void StartMoving() {
         nma.isStopped = false;
+        raceStarted = true;
     }
 }
