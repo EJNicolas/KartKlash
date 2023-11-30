@@ -8,6 +8,10 @@ public class BotController : Entity
     [Header("Navigation")]
     public GameObject[] listPos;
 
+    public AudioSource audio;
+    public AudioClip cpuGunDamage;
+    
+
     public NavMeshAgent nma;
     public RaceManager rm;
     public float rdThreshold;
@@ -63,6 +67,8 @@ public class BotController : Entity
         //RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
 
         currentPoint = listPos.Length;
+
+        audio = GetComponent<AudioSource>();
 
         //nma fields
         defaultSpeed = nma.speed;
@@ -230,11 +236,15 @@ public class BotController : Entity
         //particle
         Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
         ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir));
+
         ps.Play();
+        audio.Play();
 
         if (fov.visibleTarget != null)
         {
             fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
+            //damage
+            audio.PlayOneShot(cpuGunDamage, 1);
         }
         shootTimer = 0;
     }
