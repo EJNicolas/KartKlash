@@ -52,6 +52,8 @@ public class BotController : Entity
     public ParticleSystem fireParticle;
     public Transform gunTip;
 
+    public float botDamage;
+
     //public GameObject trackedObj; //player
 
     void Start()
@@ -166,8 +168,9 @@ public class BotController : Entity
         }
     }
 
-    public void TakeDamage()
+    public override void TakeDamage(float damage)
     {
+        base.TakeDamage(damage);
         nma.isStopped = true;
         StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
     }
@@ -212,9 +215,15 @@ public class BotController : Entity
 
     void Shoot()
     {
+        //particle
         Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
         ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir));
         ps.Play();
+
+        if (fov.visibleTarget != null)
+        {
+            fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
+        }
         shootTimer = 0;
     }
 }

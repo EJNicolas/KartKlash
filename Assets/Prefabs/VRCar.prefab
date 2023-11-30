@@ -96,7 +96,8 @@ GameObject:
   - component: {fileID: 3802580825895211018}
   - component: {fileID: 3802580825895211019}
   - component: {fileID: 7637702735288200400}
-  m_Layer: 0
+  - component: {fileID: 1200532395051380620}
+  m_Layer: 3
   m_Name: VRCar
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -165,8 +166,10 @@ MonoBehaviour:
   carParent: {fileID: 0}
   leftController: {fileID: 0}
   rightController: {fileID: 0}
+  drivingHand: {fileID: 0}
   carRb: {fileID: 3802580825895211018}
   carBoxCollider: {fileID: 3802580825895211017}
+  UIManagerScript: {fileID: 0}
   baseAcceleration: 80
   baseReverseAcceleration: 30
   driftAcceleration: 60
@@ -192,6 +195,25 @@ MonoBehaviour:
   maxCutoff: 20
   enterDuration: 3
   exitDuration: 1
+--- !u!114 &1200532395051380620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496184430893591722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b00200e307fb24a9ac98cb2d67f850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  head: {fileID: 0}
+  damage: 5
+  healthBar: {fileID: 0}
+  damageTime: 0.1
+  healTime: 5
 --- !u!1001 &7711035926794637438
 PrefabInstance:
   m_ObjectHideFlags: 0

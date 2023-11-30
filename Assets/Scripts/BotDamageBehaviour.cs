@@ -68,7 +68,7 @@ public class BotDamageBehaviour : MonoBehaviour
     {
         if(!shot) EmitShotParticle();
         ShootHighlight();
-        bc.TakeDamage();
+        bc.TakeDamage(player.GetComponent<Player>().damage);
     }
 
     void ShootHighlight()

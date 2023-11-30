@@ -6,11 +6,12 @@ public class Entity : MonoBehaviour
 {
     [Header("Health")]
     public float health;
+    public float maxHealth = 100;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (health == 0) health = 100;
+        if (health == 0) health = maxHealth;
     }
 
     // Update is called once per frame
@@ -19,13 +20,8 @@ public class Entity : MonoBehaviour
         
     }
 
-    void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
-        health -= amount;
-    }
-    
-    void Shoot()
-    {
-        //implement generic shooting behaviour
+        if (health > 0) health -= amount;
     }
 }
