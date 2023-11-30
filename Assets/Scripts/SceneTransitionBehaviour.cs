@@ -19,6 +19,14 @@ public class SceneTransitionBehaviour : MonoBehaviour
         TransitionOut();
     }
 
+    private void OnEnable() {
+        RaceManager.SwitchingToNewScene += TransitionIn;
+    }
+
+    private void OnDisable() {
+        RaceManager.SwitchingToNewScene -= TransitionIn;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {

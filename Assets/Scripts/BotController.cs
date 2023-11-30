@@ -59,7 +59,7 @@ public class BotController : Entity
     void Start()
     {
         nma.isStopped = true;
-        RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
+        //RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
 
         currentPoint = listPos.Length;
 
@@ -92,6 +92,14 @@ public class BotController : Entity
         //Debug.Log(neckDefaultPosition);
         //Debug.Log(gunShoulderDefaultPosition);
         //Debug.Log(gunArmDefaultPosition);
+    }
+
+    private void OnEnable(){
+        RaceManager.StartRaceEvent += StartMoving;
+    }
+
+    private void OnDisable(){
+        RaceManager.StartRaceEvent -= StartMoving;
     }
 
     // Update is called once per frame
@@ -225,5 +233,9 @@ public class BotController : Entity
             fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
         }
         shootTimer = 0;
+    }
+
+    void StartMoving() {
+        nma.isStopped = false;
     }
 }

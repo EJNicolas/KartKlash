@@ -26,12 +26,14 @@ public class UIManager : MonoBehaviour
         RaceManager.BeginCountdownEvent += StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent += IncreaseLapCount;
         RaceManager.CompleteRaceEvent += ShowEndScreen;
+        RaceManager.SwitchingToNewScene += RemoveUI;
     }
 
     private void OnDisable() {
         RaceManager.BeginCountdownEvent -= StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent -= IncreaseLapCount;
         RaceManager.CompleteRaceEvent -= ShowEndScreen;
+        RaceManager.SwitchingToNewScene -= RemoveUI;
     }
 
     void InitializeRaceUI() {
@@ -63,6 +65,11 @@ public class UIManager : MonoBehaviour
 
     public void SetRespawnTextActive(bool b) {
         respawnText.gameObject.SetActive(b);
+    }
+
+    void RemoveUI() {
+        endOfRaceParent.SetActive(false);
+        raceUIParent.SetActive(false);
     }
 
     void StartCountdownUIRoutine() {
