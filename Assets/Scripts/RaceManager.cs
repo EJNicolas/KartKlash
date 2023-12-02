@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class RaceManager : MonoBehaviour
 {
+    public enum MapScenes { 
+        Tutorial, 
+        Map1,
+        Map2,
+        Map3,
+    };
+
     public static RaceManager instance;
+    public MapScenes currentScene;
     public int lapCompletion;
     private int currentLapCount = 0;
     public int checkpointsPassed = 0;
@@ -16,6 +25,7 @@ public class RaceManager : MonoBehaviour
     public static event Action StartRaceEvent;
     public static event Action CompleteLapEvent;
     public static event Action CompleteRaceEvent;
+    public static event Action SwitchingToNewScene;
 
     void Start() {
         instance = this;
@@ -40,12 +50,39 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void MovePlayerToCheckpoint(CarController player){
+        int previousCheckpointIndex = expectedCheckpointNumber - 1;
+
+        if(expectedCheckpointNumber == 0 && currentLapCount > 0) {
+            previousCheckpointIndex = checkpoints.Length - 1;
+        }
+
+        if (previousCheckpointIndex == -1) return;
+        else {
+            player.transform.position = checkpoints[previousCheckpointIndex].transform.position;
+            player.transform.rotation = checkpoints[previousCheckpointIndex].transform.rotation;
+        }
+    }
+
     public bool CheckValidCompleteLap() {
         foreach(Checkpoint checkpoint in checkpoints) {
             if (!checkpoint.GetCrossed()) return false;
         }
 
         return true;
+    }
+
+    void ChangeScenes(MapScenes sceneName) {
+        string sceneToLoad = "";
+        if(sceneName == MapScenes.Tutorial) {
+            sceneToLoad = "doesnt exist yet lol";
+        } else if(sceneName == MapScenes.Map1) {
+            sceneToLoad = "SampleScene";
+        } else if(sceneName == MapScenes.Map2) {
+            sceneToLoad = "RaceMap2";
+        }
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void CompleteLap() {
@@ -56,6 +93,7 @@ public class RaceManager : MonoBehaviour
 
     void CompleteRace() {
         CompleteRaceEvent?.Invoke();
+        StartCoroutine(EndOfRaceRoutine());
     }
 
     void InitializeCheckpoints() {
@@ -70,12 +108,14 @@ public class RaceManager : MonoBehaviour
     }
 
     void BeginCountdown() {
-        BeginCountdownEvent?.Invoke();
         StartCoroutine(CountdownRoutine());
     }
 
     IEnumerator CountdownRoutine() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
+
+        BeginCountdownEvent?.Invoke();
+        yield return new WaitForSeconds(1f);
         //Debug.Log("3");
 
         yield return new WaitForSeconds(1f);
@@ -88,4 +128,14 @@ public class RaceManager : MonoBehaviour
         //Debug.Log("GO!");
         BeginRace();
     }
+
+    IEnumerator EndOfRaceRoutine() {
+        yield return new WaitForSeconds(2f);
+        SwitchingToNewScene?.Invoke();
+        yield return new WaitForSeconds(2f);
+
+        ChangeScenes(MapScenes.Map2);
+    }
+
+
 }

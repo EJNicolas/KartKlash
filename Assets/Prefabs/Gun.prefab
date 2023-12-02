@@ -102,7 +102,7 @@ MeshCollider:
   m_GameObject: {fileID: 596127033835748279}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -635,9 +635,14 @@ MonoBehaviour:
   bulletSpawn: {fileID: 596127033835748268}
   recoilForce: 2
   damage: 5
+  audio: {fileID: 0}
+  gunDamage: {fileID: 0}
+  gunShoot: {fileID: 0}
+  shootParticle: {fileID: 318857835175648327, guid: bf39eed09e4c6b345be8376fb226873a, type: 3}
+  gunTip: {fileID: 4994605849820940578}
   rayInteractor: {fileID: 596127033835748267}
   weaponOutline: {fileID: 0}
-  fireRate: 2
+  fireRate: 5
   bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
 --- !u!114 &596127033835748270
 MonoBehaviour:

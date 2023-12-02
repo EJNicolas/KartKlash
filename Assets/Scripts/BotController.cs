@@ -8,6 +8,10 @@ public class BotController : Entity
     [Header("Navigation")]
     public GameObject[] listPos;
 
+    public AudioSource audio;
+    public AudioClip cpuGunDamage;
+    
+
     public NavMeshAgent nma;
     public RaceManager rm;
     public float rdThreshold;
@@ -52,14 +56,19 @@ public class BotController : Entity
     public ParticleSystem fireParticle;
     public Transform gunTip;
 
+    public float botDamage;
+    bool raceStarted = false;
+
     //public GameObject trackedObj; //player
 
     void Start()
     {
         nma.isStopped = true;
-        RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
+        //RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
 
         currentPoint = listPos.Length;
+
+        audio = GetComponent<AudioSource>();
 
         //nma fields
         defaultSpeed = nma.speed;
@@ -92,16 +101,27 @@ public class BotController : Entity
         //Debug.Log(gunArmDefaultPosition);
     }
 
+    private void OnEnable(){
+        RaceManager.StartRaceEvent += StartMoving;
+    }
+
+    private void OnDisable(){
+        RaceManager.StartRaceEvent -= StartMoving;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         UpdateNavigation();
-        UpdateTargeting();
+        if (raceStarted)
+        {
+            UpdateTargeting();
 
-        if (shootTimer < shootInterval) canShoot = false;
+            if (shootTimer < shootInterval) canShoot = false;
 
-        if (canShoot) Shoot();
-        else shootTimer += Time.deltaTime;
+            if (canShoot) Shoot();
+            else shootTimer += Time.deltaTime;
+        }
     }
 
     void UpdateNavigation()
@@ -166,8 +186,9 @@ public class BotController : Entity
         }
     }
 
-    public void TakeDamage()
+    public override void TakeDamage(float damage)
     {
+        base.TakeDamage(damage);
         nma.isStopped = true;
         StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
     }
@@ -212,9 +233,24 @@ public class BotController : Entity
 
     void Shoot()
     {
+        //particle
         Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
-        ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir));
+        ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir), gunTip);
+
         ps.Play();
+        audio.Play();
+
+        if (fov.visibleTarget != null)
+        {
+            fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
+            //damage
+            audio.PlayOneShot(cpuGunDamage, 1);
+        }
         shootTimer = 0;
+    }
+
+    void StartMoving() {
+        nma.isStopped = false;
+        raceStarted = true;
     }
 }

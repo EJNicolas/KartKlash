@@ -20,7 +20,7 @@ public class BotDamageBehaviour : MonoBehaviour
 
     [Header("Particles")]
     public ParticleSystem shotParticle;
-    GameObject player;
+    [SerializeField] GameObject player;
     public Vector3 hitLocation;
 
     // Start is called before the first frame update
@@ -66,9 +66,10 @@ public class BotDamageBehaviour : MonoBehaviour
 
     public void OnDamage()
     {
-        if(!shot) EmitShotParticle();
+        if (!player) player = GameObject.FindGameObjectWithTag("Player");
+        if (!shot) EmitShotParticle();
         ShootHighlight();
-        bc.TakeDamage();
+        bc.TakeDamage(player.GetComponentInChildren<Player>().damage);
     }
 
     void ShootHighlight()
@@ -78,9 +79,9 @@ public class BotDamageBehaviour : MonoBehaviour
 
     void EmitShotParticle()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        if(!player) player = GameObject.FindGameObjectWithTag("Player");
         Vector3 targetDir = this.gameObject.transform.position - player.transform.position;
-        ParticleSystem ps = Instantiate(shotParticle, hitLocation, Quaternion.LookRotation(targetDir));
+        ParticleSystem ps = Instantiate(shotParticle, hitLocation, Quaternion.LookRotation(targetDir), this.transform);
         ps.Play();
     }
 }
