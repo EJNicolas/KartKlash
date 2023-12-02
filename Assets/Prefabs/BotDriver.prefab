@@ -135,13 +135,15 @@ MonoBehaviour:
   gunShoulder: {fileID: 4596375181760401240}
   gunArm: {fileID: 3397850285332324016}
   neck: {fileID: 7560419844925812061}
+  botShootPreset: {fileID: 11400000, guid: 0f216f7979141b943851a933b0b240c0, type: 2}
   rotationSpeed: 5
   recoveryTime: 0.1
   canShoot: 0
-  shootInterval: 0.5
   fireParticle: {fileID: 318857835175648327, guid: c810a2fc502bad541be120b5edfcbf0e, type: 3}
   gunTip: {fileID: 4723505964212632856}
+  fireRate: 6
   botDamage: 5
+  hitChance: 25
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0

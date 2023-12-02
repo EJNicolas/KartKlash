@@ -44,19 +44,24 @@ public class BotController : Entity
     FieldOfView fov;
 
     [Header("Shooting")]
+    public BotShootPreset botShootPreset;
+
     public float rotationSpeed;
     public float recoveryTime;
 
     public bool canShoot = false;
 
-    public float shootInterval;
-    float shootTimer = 0f;
-
     public ParticleSystem fireParticle;
     public Transform gunTip;
 
-    public float botDamage;
     bool raceStarted = false;
+
+    public float fireRate;
+    float shootInterval;
+    float shootTimer = 0f;
+
+    public float botDamage;
+    [Range(0f, 100f)] public float hitChance;
 
     //public GameObject trackedObj; //player
 
@@ -69,7 +74,7 @@ public class BotController : Entity
 
         audio = GetComponent<AudioSource>();
 
-        //randomize ranges
+        //randomize ranges from preset
         nma.speed = Random.Range(botDrivePreset.minDefaultSpeed, botDrivePreset.maxDefaultSpeed);
         nma.angularSpeed = Random.Range(botDrivePreset.minDefaultAngular, botDrivePreset.maxDefaultAngular);
         nma.acceleration = Random.Range(botDrivePreset.minDefaultAccel, botDrivePreset.maxDefaultAccel);
@@ -104,6 +109,12 @@ public class BotController : Entity
 
         if (neck)
             neckDefaultRotation = neck.localRotation;
+
+        fireRate = Random.Range(botShootPreset.minFireRate, botShootPreset.maxFireRate);
+        shootInterval = 1 / fireRate;
+
+        botDamage = Random.Range(botShootPreset.minDamage, botShootPreset.maxDamage);
+        hitChance = Random.Range(botShootPreset.minHitChance, botShootPreset.maxHitChance);
 
         //Debug.Log(neckDefaultPosition);
         //Debug.Log(gunShoulderDefaultPosition);
@@ -249,7 +260,7 @@ public class BotController : Entity
         ps.Play();
         audio.Play();
 
-        if (fov.visibleTarget != null)
+        if (fov.visibleTarget != null && hitChance > Random.Range(1, 100))
         {
             fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
             //damage
