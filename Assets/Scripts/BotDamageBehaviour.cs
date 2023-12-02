@@ -81,7 +81,7 @@ public class BotDamageBehaviour : MonoBehaviour
     {
         if(!player) player = GameObject.FindGameObjectWithTag("Player");
         Vector3 targetDir = this.gameObject.transform.position - player.transform.position;
-        ParticleSystem ps = Instantiate(shotParticle, hitLocation, Quaternion.LookRotation(targetDir));
+        ParticleSystem ps = Instantiate(shotParticle, hitLocation, Quaternion.LookRotation(targetDir), this.transform);
         ps.Play();
     }
 }

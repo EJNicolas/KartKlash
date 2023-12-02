@@ -104,7 +104,7 @@ public class Weapon : MonoBehaviour
     {
         audio.Play();
 
-        ParticleSystem ps = Instantiate(shootParticle, gunTip.position, Quaternion.LookRotation(transform.forward));
+        ParticleSystem ps = Instantiate(shootParticle, gunTip.position, Quaternion.LookRotation(transform.forward), gunTip);
         ps.Play();
 
         if (bdb != null) {

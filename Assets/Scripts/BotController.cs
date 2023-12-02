@@ -235,7 +235,7 @@ public class BotController : Entity
     {
         //particle
         Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
-        ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir));
+        ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir), gunTip);
 
         ps.Play();
         audio.Play();
