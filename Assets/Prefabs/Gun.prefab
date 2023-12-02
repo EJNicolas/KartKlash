@@ -642,7 +642,7 @@ MonoBehaviour:
   gunTip: {fileID: 4994605849820940578}
   rayInteractor: {fileID: 596127033835748267}
   weaponOutline: {fileID: 0}
-  fireRate: 2
+  fireRate: 5
   bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
 --- !u!114 &596127033835748270
 MonoBehaviour:
