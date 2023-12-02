@@ -199,7 +199,7 @@ public class BotController : Entity
     {
         base.TakeDamage(damage);
         nma.isStopped = true;
-        StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
+        if(raceStarted) StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
     }
 
     IEnumerator ResumeAgentAfterDelay(float delayTime)
