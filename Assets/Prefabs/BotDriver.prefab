@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 100
+  botDrivePreset: {fileID: 11400000, guid: 4531255ece51c5c42806fbddd6ad37be, type: 2}
   listPos:
   - {fileID: 0}
   - {fileID: 0}
@@ -124,13 +125,12 @@ MonoBehaviour:
   cpuGunDamage: {fileID: 8300000, guid: ad9a75ab49bfa0248924cb8ac578a2d8, type: 3}
   nma: {fileID: 4813285327349035499}
   rm: {fileID: 0}
-  rdThreshold: 0
   currentPoint: 0
   checkpointsPassed: 0
   rubberbandThreshold: 2
-  speedRubberbandAmount: 0
-  angularRubberbandFactor: 0
-  accelRubberbandAmount: 0
+  speedRubberbandAmount: 10
+  angularRubberbandFactor: 2
+  accelRubberbandAmount: 5
   resumeDelay: 0.25
   gunShoulder: {fileID: 4596375181760401240}
   gunArm: {fileID: 3397850285332324016}

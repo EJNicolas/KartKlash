@@ -6,15 +6,14 @@ using UnityEngine.AI;
 public class BotController : Entity
 {
     [Header("Navigation")]
+    public BotDrivingPreset botDrivePreset;
     public GameObject[] listPos;
 
     public AudioSource audio;
     public AudioClip cpuGunDamage;
-    
 
     public NavMeshAgent nma;
     public RaceManager rm;
-    public float rdThreshold;
     public int currentPoint;
     public int checkpointsPassed;
     public int rubberbandThreshold;
@@ -70,10 +69,20 @@ public class BotController : Entity
 
         audio = GetComponent<AudioSource>();
 
+        //randomize ranges
+        nma.speed = Random.Range(botDrivePreset.minDefaultSpeed, botDrivePreset.maxDefaultSpeed);
+        nma.angularSpeed = Random.Range(botDrivePreset.minDefaultAngular, botDrivePreset.maxDefaultAngular);
+        nma.acceleration = Random.Range(botDrivePreset.minDefaultAccel, botDrivePreset.maxDefaultAccel);
+        nma.stoppingDistance = Random.Range(botDrivePreset.minStoppingDistance, botDrivePreset.maxStoppingDistance);
+
         //nma fields
         defaultSpeed = nma.speed;
         defaultAngular = nma.angularSpeed;
         defaultAccel = nma.acceleration;
+
+        speedRubberbandAmount = botDrivePreset.speedRubberbandAmount;
+        angularRubberbandFactor = botDrivePreset.speedRubberbandAmount;
+        accelRubberbandAmount = botDrivePreset.accelRubberbandAmount;
 
         if (speedRubberbandAmount == 0) speedRubberbandAmount = 10;
         if (angularRubberbandFactor == 0) angularRubberbandFactor = 2;
@@ -127,7 +136,7 @@ public class BotController : Entity
     void UpdateNavigation()
     {
         //navigation
-        if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance + rdThreshold && currentPoint < listPos.Length)
+        if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance && currentPoint < listPos.Length)
         {
             currentPoint++;
             checkpointsPassed++;
