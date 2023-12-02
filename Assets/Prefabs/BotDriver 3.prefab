@@ -162,7 +162,7 @@ MonoBehaviour:
   speedRubberbandAmount: 0
   angularRubberbandFactor: 0
   accelRubberbandAmount: 0
-  resumeDelay: 0
+  resumeDelay: 0.25
   gunShoulder: {fileID: 4216754305770336024}
   gunArm: {fileID: 9062898926521258261}
   neck: {fileID: 4719446212011062270}
