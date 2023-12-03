@@ -11,6 +11,7 @@ public class BotController : Entity
 
     public AudioSource audio;
     public AudioClip cpuGunDamage;
+    public float defaultVolume;
 
     public NavMeshAgent nma;
     public RaceManager rm;
@@ -62,6 +63,9 @@ public class BotController : Entity
 
     public float botDamage;
     [Range(0f, 100f)] public float hitChance;
+
+    public ParticleSystem botShotParticles;
+    public float botHitChanceMultiplier;
 
     //public GameObject trackedObj; //player
 
@@ -115,6 +119,9 @@ public class BotController : Entity
 
         botDamage = Random.Range(botShootPreset.minDamage, botShootPreset.maxDamage);
         hitChance = Random.Range(botShootPreset.minHitChance, botShootPreset.maxHitChance);
+
+        botHitChanceMultiplier = Random.Range(botShootPreset.minBotHitChanceMult, botShootPreset.maxBotHitChanceMult);
+        defaultVolume = audio.volume;
 
         //Debug.Log(neckDefaultPosition);
         //Debug.Log(gunShoulderDefaultPosition);
@@ -229,7 +236,6 @@ public class BotController : Entity
 
             neck.rotation = Quaternion.Slerp(neck.rotation, targetRot, rotationSpeed * Time.deltaTime);
 
-
             if (Vector3.Dot(transform.right, targetDir) < 0f) //only animate shoulder if target is on gun side
             {
                 Quaternion gsTargetRot = Quaternion.Euler(targetRot.eulerAngles + new Vector3(0f, 90f - gunShoulderDefaultRotation.eulerAngles.y, 90f));
@@ -258,13 +264,31 @@ public class BotController : Entity
         ParticleSystem ps = Instantiate(fireParticle, gunTip.position, Quaternion.LookRotation(targetDir), gunTip);
 
         ps.Play();
+
+        if (fov.visibleTarget.layer == LayerMask.NameToLayer("Player")) audio.volume = defaultVolume;
+        else audio.volume = defaultVolume / 4;
+
         audio.Play();
 
         if (fov.visibleTarget != null && hitChance > Random.Range(1, 100))
         {
-            fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
-            //damage
-            audio.PlayOneShot(cpuGunDamage, 1);
+            //if target is player
+            if(fov.visibleTarget.layer == LayerMask.NameToLayer("Player"))
+            {
+                fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
+                audio.PlayOneShot(cpuGunDamage, 1); //damage audio
+            }
+
+            if (fov.visibleTarget.layer == LayerMask.NameToLayer("CPU") && botHitChanceMultiplier > 1f)
+            {
+                fov.visibleTarget.GetComponentInParent<BotController>().TakeDamage(botDamage);
+
+                RaycastHit res;
+                if(Physics.Raycast(this.transform.position, targetDir, out res, fov.viewRadius, LayerMask.GetMask("CPU")))
+                    Instantiate(botShotParticles, res.point, Quaternion.LookRotation(targetDir), this.transform);
+
+                audio.PlayOneShot(cpuGunDamage, 0.5f); //damage audio
+            }
         }
         shootTimer = 0;
     }

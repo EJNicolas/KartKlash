@@ -14,4 +14,7 @@ public class BotShootPreset : ScriptableObject
 
     public float minHitChance;
     public float maxHitChance;
+
+    public float minBotHitChanceMult;
+    public float maxBotHitChanceMult;
 }

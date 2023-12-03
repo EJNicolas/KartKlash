@@ -52,8 +52,6 @@ public class Weapon : MonoBehaviour
         RaycastHit res;
         if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
         {
-            Vector3 groundPt = res.point; // the coordinate that the ray hits
-            // Debug.Log(" coordinates on the ground: " + groundPt);
             if (res.transform.gameObject.layer == 6)
             {
                 //Debug.Log("OBJECT");

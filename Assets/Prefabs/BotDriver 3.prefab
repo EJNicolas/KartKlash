@@ -154,6 +154,7 @@ MonoBehaviour:
   - {fileID: 0}
   audio: {fileID: 0}
   cpuGunDamage: {fileID: 8300000, guid: ad9a75ab49bfa0248924cb8ac578a2d8, type: 3}
+  defaultVolume: 0
   nma: {fileID: 4813285327349035499}
   rm: {fileID: 0}
   currentPoint: 0
@@ -175,6 +176,8 @@ MonoBehaviour:
   fireRate: 0
   botDamage: 5
   hitChance: 0
+  botShotParticles: {fileID: 318857835175648327, guid: 559862ea962389f43822e47ba4b35d1d, type: 3}
+  botHitChanceMultiplier: 0
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -340,7 +343,7 @@ MonoBehaviour:
   viewAngle: 300
   targetMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   visibleTarget: {fileID: 0}
 --- !u!82 &1657638989926641563
 AudioSource:
@@ -353,7 +356,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 229d80aec458a7649bbf5cb9babad9a4, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -398,7 +401,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0

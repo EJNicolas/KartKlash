@@ -19,14 +19,22 @@ public class FieldOfView : MonoBehaviour
     public void FindVisibleTarget()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-
         //assume only one player active
         if (targets.Length >= 1)
         {
-            Vector3 dirTarget = (targets[0].transform.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirTarget) < viewAngle / 2)
-                visibleTarget = targets[0].gameObject;
-            else visibleTarget = null;
+            Debug.Log(this.gameObject.transform.GetChild(0));
+            visibleTarget = null;
+            foreach(Collider target in targets)
+                {
+                    Vector3 dirTarget = (target.transform.position - transform.position).normalized;
+                    if (Vector3.Angle(transform.forward, dirTarget) < viewAngle / 2 && //within range and angle
+                        target.gameObject != this.gameObject.transform.GetChild(0).gameObject && //not a child of current gameobject
+                        target.gameObject != this.gameObject) //not current gameobject
+                    {
+                        visibleTarget = target.gameObject;
+                        return;
+                    }
+                }
         }
         else visibleTarget = null;
     }
