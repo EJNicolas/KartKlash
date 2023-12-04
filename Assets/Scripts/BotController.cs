@@ -15,16 +15,17 @@ public class BotController : Entity
 
     public NavMeshAgent nma;
     public RaceManager rm;
-    public int currentPoint;
-    public int checkpointsPassed;
-    public int rubberbandThreshold;
-    enum RubberbandState
+    int currentPoint;
+    int checkpointsPassed = 0;
+    GameObject lastCheckpoint;
+    int rubberbandThreshold;
+    public enum RubberbandState
     {
         SLOW,
         NORMAL,
         FAST
     }
-    RubberbandState rs = RubberbandState.NORMAL;
+    public RubberbandState rs = RubberbandState.NORMAL;
     bool stateChanged = false;
 
     [Header("Rubberband")] //navmeshagent fields
@@ -89,6 +90,8 @@ public class BotController : Entity
         defaultAngular = nma.angularSpeed;
         defaultAccel = nma.acceleration;
 
+        rubberbandThreshold = botDrivePreset.rubberbandThreshold;
+
         speedRubberbandAmount = botDrivePreset.speedRubberbandAmount;
         angularRubberbandFactor = botDrivePreset.speedRubberbandAmount;
         accelRubberbandAmount = botDrivePreset.accelRubberbandAmount;
@@ -136,6 +139,15 @@ public class BotController : Entity
         RaceManager.StartRaceEvent -= StartMoving;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Checkpoint") && lastCheckpoint != other.gameObject)
+        {
+            checkpointsPassed++;
+            lastCheckpoint = other.gameObject;
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -157,7 +169,7 @@ public class BotController : Entity
         if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance && currentPoint < listPos.Length)
         {
             currentPoint++;
-            checkpointsPassed++;
+            //checkpointsPassed++;
             //Debug.Log(this.gameObject.name + ", Checkpoints: " + checkpointsPassed);
         }
         else if (currentPoint >= listPos.Length) currentPoint = 0;
@@ -176,11 +188,12 @@ public class BotController : Entity
 
     void NavRubberband()
     {
-        if (checkpointsPassed - rm.checkpointsPassed < -rubberbandThreshold) rs = RubberbandState.FAST;
-        else if (checkpointsPassed - rm.checkpointsPassed > rubberbandThreshold) rs = RubberbandState.SLOW;
+        int checkpointDiff = checkpointsPassed - rm.checkpointsPassed;
+        if (checkpointDiff < -rubberbandThreshold) rs = RubberbandState.FAST;
+        else if (checkpointDiff > rubberbandThreshold) rs = RubberbandState.SLOW;
         else rs = RubberbandState.NORMAL;
 
-        //Debug.Log(this.gameObject.name + ", rb value:" + (checkpointsPassed - rm.checkpointsPassed));
+        //Debug.Log(this.gameObject + " Ahead by checkpoints: " + (Mathf.Abs(checkpointDiff) - rubberbandThreshold));
 
         stateChanged = true;
 
@@ -188,9 +201,9 @@ public class BotController : Entity
         {
             case RubberbandState.FAST:
                 //Debug.Log(this.gameObject.name + ", Speeding Up");
-                nma.speed = defaultSpeed + (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
+                nma.speed = defaultSpeed + (speedRubberbandAmount * (Mathf.Abs(checkpointDiff) - rubberbandThreshold));
                 nma.angularSpeed = defaultAngular * angularRubberbandFactor;
-                nma.acceleration = defaultAccel + (accelRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
+                nma.acceleration = defaultAccel + (accelRubberbandAmount * (Mathf.Abs(checkpointDiff) - rubberbandThreshold));
                 return;
 
             case RubberbandState.NORMAL:
@@ -202,7 +215,7 @@ public class BotController : Entity
 
             case RubberbandState.SLOW:
                 //Debug.Log(this.gameObject.name + ", Slowing Down");
-                nma.speed = defaultSpeed - (speedRubberbandAmount * Mathf.Abs(checkpointsPassed - rm.checkpointsPassed));
+                nma.speed = defaultSpeed - (speedRubberbandAmount * (Mathf.Abs(checkpointDiff) - rubberbandThreshold));
                 return;
 
             default:
@@ -246,7 +259,7 @@ public class BotController : Entity
             gunArm.rotation = Quaternion.Slerp(gunArm.rotation, gaTargetRot, rotationSpeed * Time.deltaTime);
 
             if (Quaternion.Angle(gunArm.rotation, gaTargetRot) < 1.0f) canShoot = true;
-            Debug.Log(canShoot);
+            //Debug.Log(canShoot);
         }
         else
         {

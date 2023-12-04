@@ -18,6 +18,8 @@ public class BotDrivingPreset : ScriptableObject
     public float minStoppingDistance;
     public float maxStoppingDistance;
 
+    public int rubberbandThreshold;
+
     public float speedRubberbandAmount;
     public float angularRubberbandFactor;
     public float accelRubberbandAmount;
