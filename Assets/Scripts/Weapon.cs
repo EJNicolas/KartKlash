@@ -54,6 +54,7 @@ public class Weapon : MonoBehaviour
         {
             if (res.transform.gameObject.layer == 6)
             {
+                if(bdb != null && bdb.gameObject != res.transform.gameObject) bdb.hovering = false;
                 //Debug.Log("OBJECT");
                 bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
                 bdb.hovering = true;

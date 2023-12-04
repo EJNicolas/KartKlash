@@ -22,7 +22,7 @@ public class FieldOfView : MonoBehaviour
         //assume only one player active
         if (targets.Length >= 1)
         {
-            Debug.Log(this.gameObject.transform.GetChild(0));
+            //Debug.Log(this.gameObject.transform.GetChild(0));
             visibleTarget = null;
             foreach(Collider target in targets)
                 {
