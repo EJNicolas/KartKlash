@@ -76,7 +76,12 @@ public class CarController : MonoBehaviour
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
         ChangeHandModels();
         EngineSoundPitch();
-        if(triggerPressed)engineAudioSource.pitch = 15f;
+        if(triggerPressed){
+            engineAudioSource.pitch = 15f;
+            engineAudioSource.volume = 0.8f;
+        } else {
+            engineAudioSource.volume = 0.3f;
+        }
     }
 
     void FixedUpdate() {
