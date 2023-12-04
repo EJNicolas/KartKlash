@@ -43,7 +43,9 @@ public class CarController : MonoBehaviour
     bool resetInput = false;
 
     //engine sounds
-    AudioSource engineAudioSource;
+    public AudioSource engineAudioSource;
+
+    public AudioClip driftSound;
     public float minimumPitch = 0.05f;
     public float maximumPitch = 0.5f;
     float engineSpeed;
@@ -52,6 +54,7 @@ public class CarController : MonoBehaviour
         transform.parent = null;
 
         engineAudioSource = GetComponent<AudioSource>();
+
         engineAudioSource.pitch = minimumPitch;
     }
 
@@ -73,6 +76,7 @@ public class CarController : MonoBehaviour
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
         ChangeHandModels();
         EngineSoundPitch();
+        if(triggerPressed)engineAudioSource.pitch = 15f;
     }
 
     void FixedUpdate() {
