@@ -7,14 +7,15 @@ using UnityEngine.SceneManagement;
 public class RaceManager : MonoBehaviour
 {
     public enum MapScenes { 
-        Tutorial, 
-        Map1,
-        Map2,
-        Map3,
+        SampleScene, 
+        Island,
+        SnowMountain,
+        City,
     };
 
     public static RaceManager instance;
     public MapScenes currentScene;
+    public MapScenes nextSceneToLoad;
     public int lapCompletion;
     private int currentLapCount = 0;
     public int checkpointsPassed = 0;
@@ -38,8 +39,8 @@ public class RaceManager : MonoBehaviour
     public void PlayerPassedCheckpoint(int checkpointNumber) {
         if(checkpointNumber == expectedCheckpointNumber) {
             checkpoints[checkpointNumber].SetCrossed(true);
+            expectedCheckpointNumber++;
             if (expectedCheckpointNumber >= checkpoints.Length) expectedCheckpointNumber = 0;
-            else expectedCheckpointNumber++;
             checkpointsPassed++;
         }
 
@@ -83,6 +84,7 @@ public class RaceManager : MonoBehaviour
                 int botCheckpoint = bot.GetCurrentCheckpointIndex();
                 if (botCheckpoint > expectedCheckpointNumber) playerPlacement++;
                 else if(botCheckpoint == expectedCheckpointNumber) {
+
                     float playerCheckpointDistance = Vector3.Distance(player.transform.position, checkpoints[expectedCheckpointNumber].transform.position);
                     float botCheckpointDistance = Vector3.Distance(bot.transform.position, checkpoints[botCheckpoint].transform.position);
                     if (playerCheckpointDistance > botCheckpointDistance) playerPlacement++;
@@ -93,14 +95,22 @@ public class RaceManager : MonoBehaviour
         return playerPlacement;
     }
 
-    void ChangeScenes(MapScenes sceneName) {
+    void LoadNextScene() {
         string sceneToLoad = "";
-        if(sceneName == MapScenes.Tutorial) {
-            sceneToLoad = "doesnt exist yet lol";
-        } else if(sceneName == MapScenes.Map1) {
-            sceneToLoad = "SampleScene";
-        } else if(sceneName == MapScenes.Map2) {
-            sceneToLoad = "RaceMap2";
+
+        switch (nextSceneToLoad) {
+            case MapScenes.SampleScene:
+                sceneToLoad = "SampleScene";
+                break;
+            case MapScenes.Island:
+                sceneToLoad = "Island Map";
+                break;
+            case MapScenes.SnowMountain:
+                sceneToLoad = "Snow Mountain Map";
+                break;
+            default:
+                sceneToLoad = "SampleScene";
+                break;
         }
 
         SceneManager.LoadScene(sceneToLoad);
@@ -155,7 +165,7 @@ public class RaceManager : MonoBehaviour
         SwitchingToNewScene?.Invoke();
         yield return new WaitForSeconds(2f);
 
-        ChangeScenes(MapScenes.Map2);
+        LoadNextScene();
     }
 
 
