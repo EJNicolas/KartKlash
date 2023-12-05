@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     [Header("Health")]
     public float health;
     public float maxHealth = 100;
+    Transform damageSource;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,11 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(float amount)
     {
         if (health > 0) health -= amount;
+    }
+
+    public virtual void TakeDamage(float amount, Transform source)
+    {
+        if (health > 0) health -= amount;
+        damageSource = source;
     }
 }

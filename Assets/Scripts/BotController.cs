@@ -288,8 +288,12 @@ public class BotController : Entity
             //if target is player
             if(fov.visibleTarget.layer == LayerMask.NameToLayer("Player"))
             {
-                fov.visibleTarget.GetComponentInChildren<Player>().TakeDamage(botDamage);
-                audio.PlayOneShot(cpuGunDamage, 1); //damage audio
+                Player p = fov.visibleTarget.GetComponentInChildren<Player>();
+                if (!p.healing)
+                {
+                    p.TakeDamage(botDamage, this.transform);
+                    audio.PlayOneShot(cpuGunDamage, 1); //damage audio
+                }
             }
 
             if (fov.visibleTarget.layer == LayerMask.NameToLayer("CPU") && botHitChanceMultiplier > 1f)
