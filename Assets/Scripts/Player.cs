@@ -19,6 +19,7 @@ public class Player : Entity
     public CanvasGroup backHUD;
 
     LTDescr leftLT = null, rightLT = null, frontLT = null, backLT = null;
+    public Camera playerCam;
 
     public void Start()
     {
@@ -40,6 +41,11 @@ public class Player : Entity
                 {
                     healing = true;
                     car.canDrive = false;
+
+                    leftLT = LeanTween.alphaCanvas(leftHUD, 0f, 0.25f);
+                    rightLT = LeanTween.alphaCanvas(rightHUD, 0f, 0.25f);
+                    frontLT = LeanTween.alphaCanvas(frontHUD, 0f, 0.25f);
+                    backLT = LeanTween.alphaCanvas(backHUD, 0f, 0.25f);
                 })
                 .setOnUpdate((float newHP) =>
                 {
@@ -65,8 +71,7 @@ public class Player : Entity
 
         //directional HUD response
         Vector3 targetDir = (source.position - transform.position).normalized;
-        float targetAngle = Vector3.SignedAngle(transform.forward, targetDir, Vector3.up);
-        //Debug.Log(targetAngle);
+        float targetAngle = Vector3.SignedAngle(playerCam.transform.forward, targetDir, Vector3.up);
 
         switch (targetAngle)
         {
@@ -91,7 +96,7 @@ public class Player : Entity
     {
         LeanTween.cancel(lt.id);
         hud.alpha = 1f;
-        lt = LeanTween.alphaCanvas(hud, 0f, 0.25f);
+        lt = LeanTween.alphaCanvas(hud, 0f, 0.5f);
     }
 
     public Vector3 GetHeadPosition()
