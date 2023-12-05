@@ -15,8 +15,8 @@ public class BotController : Entity
 
     public NavMeshAgent nma;
     public RaceManager rm;
-    int currentPoint;   //checkpoint index of the checkpoint that will be crossed
-    int lapCount = 0;
+    public int currentPoint;   //checkpoint index of the checkpoint that will be crossed
+    int lapCount = -1;
     int checkpointsPassed = 0;
     GameObject lastCheckpoint;
     int rubberbandThreshold;
@@ -76,7 +76,7 @@ public class BotController : Entity
         nma.isStopped = true;
         //RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
 
-        currentPoint = 0;//listPos.Length;
+        currentPoint = listPos.Length;
 
         audio = GetComponent<AudioSource>();
 
