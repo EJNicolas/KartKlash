@@ -46,15 +46,14 @@ public class CarController : MonoBehaviour
     public AudioSource engineAudioSource;
     public AudioSource driftAudioSource;
 
-
     public float minimumPitch = 0.05f;
     public float maximumPitch = 0.5f;
     float engineSpeed;
 
     void Start() {
         transform.parent = null;
-
         engineAudioSource.pitch = minimumPitch;
+
         engineAudioSource.volume = 0.5f;
         driftAudioSource.volume = 0f;
     }
@@ -79,7 +78,7 @@ public class CarController : MonoBehaviour
         EngineSoundPitch();
 
         if(triggerPressed) {
-            driftAudioSource.volume = 0.6f;
+            driftAudioSource.volume = 1f;
         } else {
             driftAudioSource.volume = 0f;
         }
