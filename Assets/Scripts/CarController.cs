@@ -50,6 +50,8 @@ public class CarController : MonoBehaviour
     public float maximumPitch = 0.1f;
     float engineSpeed;
 
+    int racePlacement;
+
     void Start() {
         transform.parent = null;
         engineAudioSource.pitch = minimumPitch;
@@ -76,12 +78,12 @@ public class CarController : MonoBehaviour
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
         ChangeHandModels();
         EngineSoundPitch();
-
-        if(triggerPressed) {
-            driftAudioSource.volume = 1f;
-        } else {
-            driftAudioSource.volume = 0f;
-        }
+        UpdatePlayerPlacement();
+        //if(triggerPressed) {
+        //    driftAudioSource.volume = 1f;
+        //} else {
+        //    driftAudioSource.volume = 0f;
+        //}
         
     } 
 
@@ -123,11 +125,14 @@ public class CarController : MonoBehaviour
 
     void DoDrifting()
     {   
-        if(triggerPressed && carRb.velocity.magnitude > 1)
-        {
+        if(triggerPressed && carRb.velocity.magnitude > 1) {
+            driftAudioSource.volume = 1f;
             float newRotation = primaryStickValue.x * driftTurnSpeed * Time.deltaTime;
             transform.Rotate(0, newRotation, 0);
             VRPlayer.transform.Rotate(0, newRotation, 0);
+        }
+        else {
+            driftAudioSource.volume = 0f;
         }
         
     }
@@ -183,6 +188,14 @@ public class CarController : MonoBehaviour
             resetTimer = 3;
         }
         
+    }
+
+    void UpdatePlayerPlacement() {
+        int newPlacement = RaceManager.instance.FindPlayerPlacement(this);
+        if(racePlacement != newPlacement) {
+            racePlacement = newPlacement;
+            UIManagerScript.SetPlacementText(racePlacement);
+        }
     }
 
     void EngineSoundPitch() {

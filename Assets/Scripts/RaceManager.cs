@@ -20,6 +20,7 @@ public class RaceManager : MonoBehaviour
     public int checkpointsPassed = 0;
 
     public Checkpoint[] checkpoints;
+    public BotController[] botDrivers;
     private int expectedCheckpointNumber;
     public static event Action BeginCountdownEvent;
     public static event Action StartRaceEvent;
@@ -37,7 +38,8 @@ public class RaceManager : MonoBehaviour
     public void PlayerPassedCheckpoint(int checkpointNumber) {
         if(checkpointNumber == expectedCheckpointNumber) {
             checkpoints[checkpointNumber].SetCrossed(true);
-            expectedCheckpointNumber++;
+            if (expectedCheckpointNumber >= checkpoints.Length) expectedCheckpointNumber = 0;
+            else expectedCheckpointNumber++;
             checkpointsPassed++;
         }
 
@@ -70,6 +72,25 @@ public class RaceManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public int FindPlayerPlacement(CarController player) {
+        int playerPlacement = 1;
+        foreach (BotController bot in botDrivers) {
+            if(bot.GetLapCount() > currentLapCount) {
+                playerPlacement++;
+            } else {
+                int botCheckpoint = bot.GetCurrentCheckpointIndex();
+                if (botCheckpoint > expectedCheckpointNumber) playerPlacement++;
+                else if(botCheckpoint == expectedCheckpointNumber) {
+                    float playerCheckpointDistance = Vector3.Distance(player.transform.position, checkpoints[expectedCheckpointNumber].transform.position);
+                    float botCheckpointDistance = Vector3.Distance(bot.transform.position, checkpoints[botCheckpoint].transform.position);
+                    if (playerCheckpointDistance > botCheckpointDistance) playerPlacement++;
+                }
+            } 
+        }
+
+        return playerPlacement;
     }
 
     void ChangeScenes(MapScenes sceneName) {

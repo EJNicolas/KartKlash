@@ -67,6 +67,25 @@ public class UIManager : MonoBehaviour
         respawnText.gameObject.SetActive(b);
     }
 
+    public void SetPlacementText(int num) {
+        string placementString = "";
+        switch (num) {
+            case 1: 
+                placementString = "1st";
+                break;
+            case 2: 
+                placementString = "2nd";
+                break;
+            case 3: 
+                placementString = "3rd";
+                break;
+            default:
+                placementString = num.ToString() + "th";
+                break;
+        }
+        placementText.text = placementString;
+    }
+
     void RemoveUI() {
         endOfRaceParent.SetActive(false);
         raceUIParent.SetActive(false);
