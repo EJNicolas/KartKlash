@@ -47,14 +47,14 @@ public class CarController : MonoBehaviour
     public AudioSource driftAudioSource;
 
     public float minimumPitch = 0.05f;
-    public float maximumPitch = 0.5f;
+    public float maximumPitch = 0.1f;
     float engineSpeed;
 
     void Start() {
         transform.parent = null;
         engineAudioSource.pitch = minimumPitch;
 
-        engineAudioSource.volume = 0.5f;
+        engineAudioSource.volume = 0.3f;
         driftAudioSource.volume = 0f;
     }
 
