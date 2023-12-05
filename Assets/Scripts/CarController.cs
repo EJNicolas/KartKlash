@@ -56,7 +56,7 @@ public class CarController : MonoBehaviour
 
         engineAudioSource.pitch = minimumPitch;
         engineAudioSource.volume = 0.5f;
-        driftAudioSource.volume = 1f;
+        driftAudioSource.volume = 0f;
     }
 
     private void OnEnable() {
@@ -79,8 +79,7 @@ public class CarController : MonoBehaviour
         EngineSoundPitch();
 
         if(triggerPressed) {
-            driftAudioSource.volume = 0.8f;
-            engineAudioSource.pitch = 5f;
+            driftAudioSource.volume = 0.6f;
         } else {
             driftAudioSource.volume = 0f;
         }
