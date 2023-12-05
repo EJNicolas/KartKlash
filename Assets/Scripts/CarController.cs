@@ -44,8 +44,9 @@ public class CarController : MonoBehaviour
 
     //engine sounds
     public AudioSource engineAudioSource;
+    public AudioSource driftAudioSource;
 
-    public AudioClip driftSound;
+
     public float minimumPitch = 0.05f;
     public float maximumPitch = 0.5f;
     float engineSpeed;
@@ -53,9 +54,9 @@ public class CarController : MonoBehaviour
     void Start() {
         transform.parent = null;
 
-        engineAudioSource = GetComponent<AudioSource>();
-
         engineAudioSource.pitch = minimumPitch;
+        engineAudioSource.volume = 0.5f;
+        driftAudioSource.volume = 1f;
     }
 
     private void OnEnable() {
@@ -76,13 +77,15 @@ public class CarController : MonoBehaviour
         if(primaryButtonDown || secondaryButtonDown) ReallignCameraToCar();
         ChangeHandModels();
         EngineSoundPitch();
-        if(triggerPressed){
-            engineAudioSource.pitch = 15f;
-            engineAudioSource.volume = 0.8f;
+
+        if(triggerPressed) {
+            driftAudioSource.volume = 0.8f;
+            engineAudioSource.pitch = 5f;
         } else {
-            engineAudioSource.volume = 0.3f;
+            driftAudioSource.volume = 0f;
         }
-    }
+        
+    } 
 
     void FixedUpdate() {
         if (canDrive) {
@@ -113,6 +116,7 @@ public class CarController : MonoBehaviour
     {
         if(carRb.velocity.magnitude > 1)
         {
+            
             float newRotation = primaryStickValue.x * turnSpeed * Time.deltaTime;
             transform.Rotate(0, newRotation, 0);
             VRPlayer.transform.Rotate(0, newRotation, 0);
