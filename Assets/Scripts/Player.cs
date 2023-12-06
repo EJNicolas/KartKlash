@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Player : Entity
@@ -13,13 +14,16 @@ public class Player : Entity
     public float damageTime, healTime;
 
     [Header("Hit HUD")]
-    public CanvasGroup leftHUD;
-    public CanvasGroup rightHUD;
-    public CanvasGroup frontHUD;
-    public CanvasGroup backHUD;
+    [SerializeField] CanvasGroup leftHUD;
+    [SerializeField] CanvasGroup rightHUD;
+    [SerializeField] CanvasGroup frontHUD;
+    [SerializeField] CanvasGroup backHUD;
 
     LTDescr leftLT = null, rightLT = null, frontLT = null, backLT = null;
     public Camera playerCam;
+
+    [Header("No Health Post-Processing")]
+    [SerializeField] UnityEngine.Rendering.Volume postVol;
 
     public void Start()
     {
@@ -46,6 +50,9 @@ public class Player : Entity
                     rightLT = LeanTween.alphaCanvas(rightHUD, 0f, 0.25f);
                     frontLT = LeanTween.alphaCanvas(frontHUD, 0f, 0.25f);
                     backLT = LeanTween.alphaCanvas(backHUD, 0f, 0.25f);
+
+                    if (postVol) LeanTween.value(0f, 1f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
+
                 })
                 .setOnUpdate((float newHP) =>
                 {
@@ -56,6 +63,7 @@ public class Player : Entity
                 {
                     healing = false;
                     car.canDrive = true;
+                    if (postVol) LeanTween.value(1f, 0f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
                 });
         }
     }
