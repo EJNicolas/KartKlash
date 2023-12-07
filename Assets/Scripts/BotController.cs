@@ -16,8 +16,8 @@ public class BotController : Entity
     NavMeshAgent nma;
     public RaceManager rm;
     public int currentPoint;   //checkpoint index of the checkpoint that will be crossed
-    int lapCount = -1;
-    int checkpointsPassed = 0;
+    private int lapCount = 0;
+    private int checkpointsPassed = 0;
     GameObject lastCheckpoint;
     int rubberbandThreshold;
     public enum RubberbandState
@@ -141,6 +141,7 @@ public class BotController : Entity
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Checkpoint") && lastCheckpoint != other.gameObject)
         {
+            if (checkpointsPassed % listPos.Length == 0) lapCount++;
             checkpointsPassed++;
             lastCheckpoint = other.gameObject;
         }
@@ -173,16 +174,15 @@ public class BotController : Entity
         else if (currentPoint >= listPos.Length)
         {
             currentPoint = 0;
-            lapCount++;
         }
         if (currentPoint < listPos.Length)
             nma.SetDestination(new Vector3(listPos[currentPoint].transform.position.x,
                 this.gameObject.transform.position.y,
                 listPos[currentPoint].transform.position.z));
 
-        if (Mathf.Abs(checkpointsPassed - rm.checkpointsPassed) > rubberbandThreshold || 
-            rs == RubberbandState.SLOW && Mathf.Abs(checkpointsPassed - rm.checkpointsPassed) < rubberbandThreshold ||
-            rs == RubberbandState.FAST && Mathf.Abs(checkpointsPassed - rm.checkpointsPassed) < rubberbandThreshold) 
+        if (Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) > rubberbandThreshold || 
+            rs == RubberbandState.SLOW && Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) < rubberbandThreshold ||
+            rs == RubberbandState.FAST && Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) < rubberbandThreshold) 
             stateChanged = false;
 
         if(!stateChanged && !tutorialMode) NavRubberband();
@@ -190,7 +190,7 @@ public class BotController : Entity
 
     void NavRubberband()
     {
-        int checkpointDiff = checkpointsPassed - rm.checkpointsPassed;
+        int checkpointDiff = checkpointsPassed - rm.totalCheckpoints;
         if (checkpointDiff < -rubberbandThreshold) rs = RubberbandState.FAST;
         else if (checkpointDiff > rubberbandThreshold) rs = RubberbandState.SLOW;
         else rs = RubberbandState.NORMAL;
@@ -328,5 +328,9 @@ public class BotController : Entity
 
     public int GetLapCount(){
         return lapCount;
+    }
+
+    public int GetCheckpointsPassed() {
+        return checkpointsPassed;
     }
 }

@@ -18,7 +18,7 @@ public class RaceManager : MonoBehaviour
     public MapScenes nextSceneToLoad;
     public int lapCompletion;
     private int currentLapCount = 0;
-    public int checkpointsPassed = 0;
+    public int totalCheckpoints = 0;
     public bool tutorialMode = false;
 
     public Checkpoint[] checkpoints;
@@ -43,7 +43,7 @@ public class RaceManager : MonoBehaviour
             checkpoints[checkpointNumber].SetCrossed(true);
             expectedCheckpointNumber++;
             if (expectedCheckpointNumber >= checkpoints.Length) expectedCheckpointNumber = 0;
-            checkpointsPassed++;
+            totalCheckpoints++;
         }
 
         if(checkpointNumber == 0 && !tutorialMode) {
@@ -83,16 +83,18 @@ public class RaceManager : MonoBehaviour
             if(bot.GetLapCount() > currentLapCount) {
                 playerPlacement++;
             } else {
-                int botCheckpoint = bot.GetCurrentCheckpointIndex();
-                if (botCheckpoint > expectedCheckpointNumber) playerPlacement++;
-                else if(botCheckpoint == expectedCheckpointNumber) {
-
+                int botCheckpointCount = bot.GetCheckpointsPassed();
+                int botCheckpointIndex = botCheckpointCount % checkpoints.Length;
+                if (botCheckpointCount > totalCheckpoints) playerPlacement++;
+                else if(botCheckpointCount == totalCheckpoints) {
                     float playerCheckpointDistance = Vector3.Distance(player.transform.position, checkpoints[expectedCheckpointNumber].transform.position);
-                    float botCheckpointDistance = Vector3.Distance(bot.transform.position, checkpoints[botCheckpoint].transform.position);
+                    float botCheckpointDistance = Vector3.Distance(bot.transform.position, checkpoints[botCheckpointIndex].transform.position);
                     if (playerCheckpointDistance > botCheckpointDistance) playerPlacement++;
                 }
             } 
         }
+
+
 
         return playerPlacement;
     }
