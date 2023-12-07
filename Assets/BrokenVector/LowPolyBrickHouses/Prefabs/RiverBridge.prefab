@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4735502971657758}
   - component: {fileID: 33618253488455408}
   - component: {fileID: 23453889472114654}
-  - component: {fileID: 64278199939946542}
   m_Layer: 0
   m_Name: RiverBridge
   m_TagString: Untagged
@@ -85,17 +84,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64278199939946542
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660016168069552}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 268f4f0d65f1549488a4076f41b4e82e, type: 3}
