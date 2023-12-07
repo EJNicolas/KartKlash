@@ -13,16 +13,19 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI respawnText;
     int currentLapCount = 1;
+    public bool tutorialMode;
     public AudioSource audioSource;
     public AudioClip countdown;
     public AudioClip lapCounter;
     public AudioClip lapFinish;
 
     void Start() {
+        tutorialMode = RaceManager.instance.tutorialMode;
         InitializeRaceUI();
     }
 
     private void OnEnable() {
+        RaceManager.BeginTutorialEvent += SetTutorialMode;
         RaceManager.BeginCountdownEvent += StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent += IncreaseLapCount;
         RaceManager.CompleteRaceEvent += ShowEndScreen;
@@ -30,6 +33,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void OnDisable() {
+        RaceManager.BeginTutorialEvent -= SetTutorialMode;
         RaceManager.BeginCountdownEvent -= StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent -= IncreaseLapCount;
         RaceManager.CompleteRaceEvent -= ShowEndScreen;
@@ -41,7 +45,7 @@ public class UIManager : MonoBehaviour
         currentLapCount = 1;
         SetLapCountText(currentLapCount);
         endOfRaceParent.SetActive(false);
-        //countdownParent.SetActive(false);
+        if(!tutorialMode) countdownParent.SetActive(true);
     } 
 
     void IncreaseLapCount() {
@@ -56,7 +60,7 @@ public class UIManager : MonoBehaviour
     }
 
     void SetLapCountText(int lapNum) {
-        lapCountText.text = lapNum.ToString() + "/" + RaceManager.instance.lapCompletion.ToString();
+        if (RaceManager.instance) lapCountText.text = lapNum.ToString() + "/" + RaceManager.instance.lapCompletion.ToString();
     }
 
     public void SetRespawnText(string s) {
@@ -84,6 +88,12 @@ public class UIManager : MonoBehaviour
                 break;
         }
         placementText.text = placementString;
+    }
+
+    void SetTutorialMode()
+    {
+        tutorialMode = true;
+        countdownParent.SetActive(false);
     }
 
     void RemoveUI() {

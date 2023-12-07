@@ -59,7 +59,7 @@ public class SceneTransitionBehaviour : MonoBehaviour
     {
         transitioning = false;
         sphereActive = true;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        RaceManager.instance.LoadNextScene();
     }
 
     void TransitionComplete()

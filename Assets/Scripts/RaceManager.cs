@@ -19,10 +19,12 @@ public class RaceManager : MonoBehaviour
     public int lapCompletion;
     private int currentLapCount = 0;
     public int checkpointsPassed = 0;
+    public bool tutorialMode = false;
 
     public Checkpoint[] checkpoints;
     public BotController[] botDrivers;
     private int expectedCheckpointNumber;
+    public static event Action BeginTutorialEvent;
     public static event Action BeginCountdownEvent;
     public static event Action StartRaceEvent;
     public static event Action CompleteLapEvent;
@@ -32,8 +34,8 @@ public class RaceManager : MonoBehaviour
     void Start() {
         instance = this;
         InitializeCheckpoints();
-        BeginCountdown();
-        
+        if(!tutorialMode) BeginCountdown();
+        else BeginTutorial();
     }
 
     public void PlayerPassedCheckpoint(int checkpointNumber) {
@@ -95,7 +97,7 @@ public class RaceManager : MonoBehaviour
         return playerPlacement;
     }
 
-    void LoadNextScene() {
+    public void LoadNextScene() {
         string sceneToLoad = "";
 
         switch (nextSceneToLoad) {
@@ -132,6 +134,12 @@ public class RaceManager : MonoBehaviour
         for(int i=0; i<checkpoints.Length; i++) {
             checkpoints[i].SetCheckpointNum(i);
         }
+    }
+
+    void BeginTutorial()
+    {
+        BeginTutorialEvent?.Invoke();
+        BeginRace();
     }
 
     void BeginRace() {

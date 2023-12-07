@@ -3273,6 +3273,7 @@ MonoBehaviour:
   nextSceneToLoad: 0
   lapCompletion: 0
   checkpointsPassed: 0
+  tutorialMode: 1
   checkpoints: []
   botDrivers: []
 --- !u!4 &1519117880
@@ -3790,6 +3791,10 @@ PrefabInstance:
     - target: {fileID: 933418264781360198, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067919967079288790, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1206269698930386357, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer

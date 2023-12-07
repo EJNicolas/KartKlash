@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8867089646564368439
 RectTransform:
   m_ObjectHideFlags: 0
@@ -754,6 +754,7 @@ MonoBehaviour:
   countdownParent: {fileID: 1067919967079288790}
   countdownText: {fileID: 1407128351207966552}
   respawnText: {fileID: 7089381211383027834}
+  tutorialMode: 0
   audioSource: {fileID: 7601887207075622271}
   countdown: {fileID: 8300000, guid: 1d73f30544d1f474a8396d9317b10bf3, type: 3}
   lapCounter: {fileID: 8300000, guid: 74663bc282826a849aa9ef022ecb493f, type: 3}

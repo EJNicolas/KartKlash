@@ -13,7 +13,7 @@ public class BotController : Entity
     public AudioClip cpuGunDamage;
     public float defaultVolume;
 
-    public NavMeshAgent nma;
+    NavMeshAgent nma;
     public RaceManager rm;
     public int currentPoint;   //checkpoint index of the checkpoint that will be crossed
     int lapCount = -1;
@@ -57,7 +57,7 @@ public class BotController : Entity
     public ParticleSystem fireParticle;
     public Transform gunTip;
 
-    bool raceStarted = false;
+    public bool raceStarted = false;
 
     public float fireRate;
     float shootInterval;
@@ -69,22 +69,26 @@ public class BotController : Entity
     public ParticleSystem botShotParticles;
     public float botHitChanceMultiplier;
 
-    //public GameObject trackedObj; //player
+    [Header("Tutorial")]
+    public bool tutorialMode = false;
+    public bool shootAtPlayer;
+    public bool stationary;
 
     void Start()
     {
-        nma.isStopped = true;
-        //RaceManager.StartRaceEvent += () =>{ nma.isStopped = false; };
-
         currentPoint = listPos.Length;
-
         audio = GetComponent<AudioSource>();
+        nma = GetComponent<NavMeshAgent>();
 
         //randomize ranges from preset
-        nma.speed = Random.Range(botDrivePreset.minDefaultSpeed, botDrivePreset.maxDefaultSpeed);
-        nma.angularSpeed = Random.Range(botDrivePreset.minDefaultAngular, botDrivePreset.maxDefaultAngular);
-        nma.acceleration = Random.Range(botDrivePreset.minDefaultAccel, botDrivePreset.maxDefaultAccel);
-        nma.stoppingDistance = Random.Range(botDrivePreset.minStoppingDistance, botDrivePreset.maxStoppingDistance);
+        if (nma && !stationary)
+        {
+            nma.isStopped = true;
+            nma.speed = Random.Range(botDrivePreset.minDefaultSpeed, botDrivePreset.maxDefaultSpeed);
+            nma.angularSpeed = Random.Range(botDrivePreset.minDefaultAngular, botDrivePreset.maxDefaultAngular);
+            nma.acceleration = Random.Range(botDrivePreset.minDefaultAccel, botDrivePreset.maxDefaultAccel);
+            nma.stoppingDistance = Random.Range(botDrivePreset.minStoppingDistance, botDrivePreset.maxStoppingDistance);
+        }
 
         //nma fields
         defaultSpeed = nma.speed;
@@ -109,14 +113,9 @@ public class BotController : Entity
         //ai shooting
         fov = GetComponent<FieldOfView>();
 
-        if (gunShoulder)
-            gunShoulderDefaultRotation = gunShoulder.localRotation;
-
-        if (gunArm)
-            gunArmDefaultRotation = gunArm.localRotation;
-
-        if (neck)
-            neckDefaultRotation = neck.localRotation;
+        if (gunShoulder) gunShoulderDefaultRotation = gunShoulder.localRotation;
+        if (gunArm) gunArmDefaultRotation = gunArm.localRotation;
+        if (neck) neckDefaultRotation = neck.localRotation;
 
         fireRate = Random.Range(botShootPreset.minFireRate, botShootPreset.maxFireRate);
         shootInterval = 1 / fireRate;
@@ -126,18 +125,16 @@ public class BotController : Entity
 
         botHitChanceMultiplier = Random.Range(botShootPreset.minBotHitChanceMult, botShootPreset.maxBotHitChanceMult);
         defaultVolume = audio.volume;
-
-        //Debug.Log(neckDefaultPosition);
-        //Debug.Log(gunShoulderDefaultPosition);
-        //Debug.Log(gunArmDefaultPosition);
     }
 
     private void OnEnable(){
         RaceManager.StartRaceEvent += StartMoving;
+        RaceManager.BeginTutorialEvent += SetTutorial;
     }
 
     private void OnDisable(){
         RaceManager.StartRaceEvent -= StartMoving;
+        RaceManager.BeginTutorialEvent -= SetTutorial;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -152,8 +149,8 @@ public class BotController : Entity
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateNavigation();
-        if (raceStarted)
+        if(!stationary) UpdateNavigation();
+        if (raceStarted && shootAtPlayer)
         {
             UpdateTargeting();
 
@@ -188,7 +185,7 @@ public class BotController : Entity
             rs == RubberbandState.FAST && Mathf.Abs(checkpointsPassed - rm.checkpointsPassed) < rubberbandThreshold) 
             stateChanged = false;
 
-        if(!stateChanged) NavRubberband();
+        if(!stateChanged && !tutorialMode) NavRubberband();
     }
 
     void NavRubberband()
@@ -315,8 +312,13 @@ public class BotController : Entity
         shootTimer = 0;
     }
 
+    void SetTutorial()
+    {
+        tutorialMode = true;
+    }
+
     void StartMoving() {
-        nma.isStopped = false;
+        if (!stationary) nma.isStopped = false;
         raceStarted = true;
     }
 
