@@ -39,14 +39,14 @@ public class RaceManager : MonoBehaviour
     }
 
     public void PlayerPassedCheckpoint(int checkpointNumber) {
-        if(checkpointNumber == expectedCheckpointNumber) {
+        if(checkpointNumber == expectedCheckpointNumber && !tutorialMode) {
             checkpoints[checkpointNumber].SetCrossed(true);
             expectedCheckpointNumber++;
             if (expectedCheckpointNumber >= checkpoints.Length) expectedCheckpointNumber = 0;
             checkpointsPassed++;
         }
 
-        if(checkpointNumber == 0) {
+        if(checkpointNumber == 0 && !tutorialMode) {
             if (CheckValidCompleteLap()) {
                 CompleteLap();
                 checkpoints[0].SetCrossed(true);

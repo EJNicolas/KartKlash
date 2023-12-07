@@ -71,7 +71,7 @@ public class BotController : Entity
 
     [Header("Tutorial")]
     public bool tutorialMode = false;
-    public bool shootAtPlayer;
+    public bool shooting;
     public bool stationary;
 
     void Start()
@@ -150,7 +150,7 @@ public class BotController : Entity
     void FixedUpdate()
     {
         if(!stationary) UpdateNavigation();
-        if (raceStarted && shootAtPlayer)
+        if (raceStarted && shooting)
         {
             UpdateTargeting();
 

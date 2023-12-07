@@ -155,11 +155,9 @@ MonoBehaviour:
   audio: {fileID: 0}
   cpuGunDamage: {fileID: 8300000, guid: ad9a75ab49bfa0248924cb8ac578a2d8, type: 3}
   defaultVolume: 0
-  nma: {fileID: 4813285327349035499}
   rm: {fileID: 0}
   currentPoint: 0
-  checkpointsPassed: 0
-  rubberbandThreshold: 1
+  rs: 1
   speedRubberbandAmount: 0
   angularRubberbandFactor: 0
   accelRubberbandAmount: 0
@@ -173,11 +171,15 @@ MonoBehaviour:
   canShoot: 0
   fireParticle: {fileID: 318857835175648327, guid: c810a2fc502bad541be120b5edfcbf0e, type: 3}
   gunTip: {fileID: 7664623881229901494}
+  raceStarted: 0
   fireRate: 0
   botDamage: 5
   hitChance: 0
   botShotParticles: {fileID: 318857835175648327, guid: 559862ea962389f43822e47ba4b35d1d, type: 3}
   botHitChanceMultiplier: 0
+  tutorialMode: 0
+  shooting: 1
+  stationary: 0
 --- !u!195 &4813285327349035499
 NavMeshAgent:
   m_ObjectHideFlags: 0
