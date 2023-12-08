@@ -52,6 +52,11 @@ public class CarController : MonoBehaviour
 
     int racePlacement;
 
+    [Header("Shootables")]
+    public int targetsShot = 0;
+    public int targetLimit;
+    public float targetAccelBonus;
+
     void Start() {
         transform.parent = null;
         engineAudioSource.pitch = minimumPitch;
@@ -257,6 +262,15 @@ public class CarController : MonoBehaviour
         //    Debug.Log($"Left Stick Value:, value {leftStickValue} ");
         //}
 
+    }
+
+    public void ShootableShot()
+    {
+        if (targetsShot <= 10)
+        {
+            targetsShot++;
+            baseAcceleration += targetAccelBonus;
+        }
     }
 
     void StartRace() {

@@ -361,7 +361,7 @@ MonoBehaviour:
   m_SphereCastRadius: 0.1
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 1
@@ -641,6 +641,8 @@ MonoBehaviour:
   shootParticle: {fileID: 318857835175648327, guid: bf39eed09e4c6b345be8376fb226873a, type: 3}
   gunTip: {fileID: 4994605849820940578}
   rayInteractor: {fileID: 596127033835748267}
+  bdb: {fileID: 0}
+  sb: {fileID: 0}
   weaponOutline: {fileID: 0}
   fireRate: 5
   bdp: {fileID: 11400000, guid: 94616ffb5ba196f469c5f96a71fd86f1, type: 2}
