@@ -777,6 +777,10 @@ MonoBehaviour:
   shot: 0
   outline: {fileID: 0}
   hovering: 0
-  shotParticle: {fileID: 318857835175648327, guid: cb6123ce79a8eec46a4c808c333269ad, type: 3}
+  shotParticle: {fileID: 318857835175648327, guid: aed9e3a764531064da26ff8ec16189cc, type: 3}
   player: {fileID: 0}
   hitLocation: {x: 0, y: 0, z: 0}
+  minCutoff: -2.5
+  maxCutoff: 2.5
+  disableDuration: 1
+  fadeDuration: 0.4
