@@ -16,7 +16,7 @@ public class BotController : Entity
     NavMeshAgent nma;
     public RaceManager rm;
     public int currentPoint;   //checkpoint index of the checkpoint that will be crossed
-    private int lapCount = 0;
+    private int lapCount = -1;
     private int checkpointsPassed = 0;
     GameObject lastCheckpoint;
     int rubberbandThreshold;
