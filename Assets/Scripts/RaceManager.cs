@@ -140,8 +140,7 @@ public class RaceManager : MonoBehaviour
 
     void BeginTutorial()
     {
-        BeginTutorialEvent?.Invoke();
-        BeginRace();
+        StartCoroutine(TutorialRoutine());
     }
 
     void BeginRace() {
@@ -150,6 +149,13 @@ public class RaceManager : MonoBehaviour
 
     void BeginCountdown() {
         StartCoroutine(CountdownRoutine());
+    }
+
+    IEnumerator TutorialRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        BeginTutorialEvent?.Invoke();
+        BeginRace();
     }
 
     IEnumerator CountdownRoutine() {
