@@ -27,7 +27,8 @@ public class Weapon : MonoBehaviour
 
     [Header("Raycast")]
     public XRRayInteractor rayInteractor;
-    BotDamageBehaviour bdb;
+    public BotDamageBehaviour bdb;
+    public ShootableBehaviour sb;
     public WeaponOutline weaponOutline;
 
     protected virtual void Awake()
@@ -52,13 +53,20 @@ public class Weapon : MonoBehaviour
         RaycastHit res;
         if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
         {
-            if (res.transform.gameObject.layer == 6)
+            if (res.transform.gameObject.layer == LayerMask.NameToLayer("CPU"))
             {
                 if(bdb != null && bdb.gameObject != res.transform.gameObject) bdb.hovering = false;
-                //Debug.Log("OBJECT");
                 bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
                 bdb.hovering = true;
                 bdb.hitLocation = res.point;
+                //audioSource.PlayOneShot(gunDamage,1 );
+            }
+            else if (res.transform.gameObject.layer == LayerMask.NameToLayer("Shootable"))
+            {
+                if (sb != null && sb.gameObject != res.transform.gameObject) sb.hovering = false;
+                sb = res.transform.gameObject.GetComponent<ShootableBehaviour>();
+                sb.hovering = true;
+                sb.hitLocation = res.point;
                 //audioSource.PlayOneShot(gunDamage,1 );
             }
         }
@@ -66,6 +74,11 @@ public class Weapon : MonoBehaviour
         {
             bdb.hovering = false;
             bdb = null;
+        }
+        else if (sb != null)
+        {
+            sb.hovering = false;
+            sb = null;
         }
     }
 
@@ -108,6 +121,11 @@ public class Weapon : MonoBehaviour
 
         if (bdb != null) {
             bdb.OnDamage();
+            audio.PlayOneShot(gunDamage, 1);
+        }
+        else if(sb != null)
+        {
+            sb.OnDamage();
             audio.PlayOneShot(gunDamage, 1);
         }
         ApplyRecoil();
