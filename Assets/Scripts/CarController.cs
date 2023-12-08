@@ -92,6 +92,7 @@ public class CarController : MonoBehaviour
             DoAccelAndReverse();
             DoDrifting();
             CheckTeleportToLastCheckpoint();
+            //SetRotationToGround();
         }
             
     }
@@ -116,8 +117,8 @@ public class CarController : MonoBehaviour
     {
         if(carRb.velocity.magnitude > 1)
         {
-            
             float newRotation = primaryStickValue.x * turnSpeed * Time.deltaTime;
+            if (reverseToggle) newRotation *= -1;
             transform.Rotate(0, newRotation, 0);
             VRPlayer.transform.Rotate(0, newRotation, 0);
         }
@@ -136,6 +137,19 @@ public class CarController : MonoBehaviour
         }
         
     }
+
+
+    //int layerMask = 1 << 8;
+    //void SetRotationToGround() {
+    //    RaycastHit hit;
+    //    if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 50, layerMask)) {
+    //        Vector3 normal = hit.normal;
+    //        Debug.Log("normal x: " + normal.x);
+    //        //Debug.Log("normal y: " + normal.y);
+    //        //Debug.Log("normal z: " + normal.z);
+
+    //    }
+    //}
 
     void ToggleReverse() {
         if (primaryStickPressed) {
