@@ -27,8 +27,7 @@ public class Weapon : MonoBehaviour
 
     [Header("Raycast")]
     public XRRayInteractor rayInteractor;
-    public BotDamageBehaviour bdb;
-    public ShootableBehaviour sb;
+    public DamageBehaviour db;
     public WeaponOutline weaponOutline;
 
     protected virtual void Awake()
@@ -53,32 +52,20 @@ public class Weapon : MonoBehaviour
         RaycastHit res;
         if (rayInteractor.TryGetCurrent3DRaycastHit(out res))
         {
-            if (res.transform.gameObject.layer == LayerMask.NameToLayer("CPU"))
+            if (res.transform.gameObject.layer == LayerMask.NameToLayer("CPU") ||
+                res.transform.gameObject.layer == LayerMask.NameToLayer("Shootable"))
             {
-                if(bdb != null && bdb.gameObject != res.transform.gameObject) bdb.hovering = false;
-                bdb = res.transform.gameObject.GetComponent<BotDamageBehaviour>();
-                bdb.hovering = true;
-                bdb.hitLocation = res.point;
-                //audioSource.PlayOneShot(gunDamage,1 );
-            }
-            else if (res.transform.gameObject.layer == LayerMask.NameToLayer("Shootable"))
-            {
-                if (sb != null && sb.gameObject != res.transform.gameObject) sb.hovering = false;
-                sb = res.transform.gameObject.GetComponent<ShootableBehaviour>();
-                sb.hovering = true;
-                sb.hitLocation = res.point;
+                if(db != null && db.gameObject != res.transform.gameObject) db.hovering = false;
+                db = res.transform.gameObject.GetComponent<DamageBehaviour>();
+                db.hovering = true;
+                db.hitLocation = res.point;
                 //audioSource.PlayOneShot(gunDamage,1 );
             }
         }
-        else if (bdb != null)
+        else if (db != null)
         {
-            bdb.hovering = false;
-            bdb = null;
-        }
-        else if (sb != null)
-        {
-            sb.hovering = false;
-            sb = null;
+            db.hovering = false;
+            db = null;
         }
     }
 
@@ -119,13 +106,8 @@ public class Weapon : MonoBehaviour
         ParticleSystem ps = Instantiate(shootParticle, gunTip.position, Quaternion.LookRotation(transform.forward), gunTip);
         ps.Play();
 
-        if (bdb != null) {
-            bdb.OnDamage();
-            audio.PlayOneShot(gunDamage, 1);
-        }
-        else if(sb != null)
-        {
-            sb.OnDamage();
+        if (db != null) {
+            db.OnDamage();
             audio.PlayOneShot(gunDamage, 1);
         }
         ApplyRecoil();

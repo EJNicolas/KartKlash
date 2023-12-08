@@ -266,7 +266,7 @@ public class CarController : MonoBehaviour
 
     public void ShootableShot()
     {
-        if (targetsShot <= 10)
+        if (targetsShot < 10)
         {
             targetsShot++;
             baseAcceleration += targetAccelBonus;
