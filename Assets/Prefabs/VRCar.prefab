@@ -178,8 +178,13 @@ MonoBehaviour:
   driftTurnSpeed: 60
   canDrive: 1
   reverseToggle: 0
+  engineAudioSource: {fileID: 0}
+  driftAudioSource: {fileID: 0}
   minimumPitch: 0.5
   maximumPitch: 2
+  targetsShot: 0
+  targetLimit: 0
+  targetAccelBonus: 0
 --- !u!114 &7637702735288200400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,8 +220,16 @@ MonoBehaviour:
   head: {fileID: 0}
   damage: 5
   healthBar: {fileID: 0}
+  takingDamage: 0
+  healing: 0
   damageTime: 0.1
-  healTime: 5
+  healTime: 2
+  leftHUD: {fileID: 0}
+  rightHUD: {fileID: 0}
+  frontHUD: {fileID: 0}
+  backHUD: {fileID: 0}
+  playerCam: {fileID: 0}
+  postVol: {fileID: 0}
 --- !u!82 &4917027584514069903
 AudioSource:
   m_ObjectHideFlags: 0

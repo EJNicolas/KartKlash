@@ -167,7 +167,7 @@ MonoBehaviour:
   neck: {fileID: 3244484412875632231}
   botShootPreset: {fileID: 11400000, guid: 0f216f7979141b943851a933b0b240c0, type: 2}
   rotationSpeed: 5
-  recoveryTime: 0.1
+  recoveryTime: 0.5
   canShoot: 0
   fireParticle: {fileID: 318857835175648327, guid: c810a2fc502bad541be120b5edfcbf0e, type: 3}
   gunTip: {fileID: 7664623881229901494}
