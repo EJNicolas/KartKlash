@@ -39,7 +39,8 @@ public class CarController : MonoBehaviour
     public bool reverseToggle = false;
     bool stickDownPrevFrame = false;
 
-    float resetTimer = 3;
+    public float resetTimer = 1.5f;
+    float resetTimerCounter;
     bool resetInput = false;
 
     //engine sounds
@@ -63,6 +64,7 @@ public class CarController : MonoBehaviour
 
         engineAudioSource.volume = 0.3f;
         driftAudioSource.volume = 0f;
+        resetTimerCounter = resetTimer;
     }
 
     private void OnEnable() {
@@ -185,29 +187,29 @@ public class CarController : MonoBehaviour
 
         if (resetInput) {
             UIManagerScript.SetRespawnTextActive(true);
-            resetTimer -= Time.deltaTime;
-            if (resetTimer < 0) {
+            resetTimerCounter -= Time.deltaTime;
+            if (resetTimerCounter < 0) {
                 UIManagerScript.SetRespawnTextActive(false);
                 RaceManager.instance.MovePlayerToCheckpoint(this);
                 VRPlayer.transform.rotation = transform.rotation;
-                resetTimer = 3;
+                resetTimerCounter = resetTimer;
                 resetInput = false;
                 return;
             }
-            else if (resetTimer < 1) {
+            else if (resetTimerCounter < resetTimer / 3) {
                 UIManagerScript.SetRespawnText("Respawning in: 1");
             }
-            else if (resetTimer < 2) {
+            else if (resetTimerCounter < resetTimer / 3 * 2) {
                 UIManagerScript.SetRespawnText("Respawning in: 2");
             }
-            else if (resetTimer <= 3) {
+            else if (resetTimerCounter <= resetTimer) {
                 UIManagerScript.SetRespawnText("Respawning in: 3");
             }
         }
         else {
             UIManagerScript.SetRespawnTextActive(false);
             resetInput = false;
-            resetTimer = 3;
+            resetTimerCounter = resetTimer;
         }
         
     }
