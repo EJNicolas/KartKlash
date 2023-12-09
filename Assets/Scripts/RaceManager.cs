@@ -12,6 +12,7 @@ public class RaceManager : MonoBehaviour
         SnowMountain,
         City,
         Tutorial,
+        Playground,
     };
 
     public static RaceManager instance;
@@ -115,6 +116,9 @@ public class RaceManager : MonoBehaviour
                 break;
             case MapScenes.Tutorial:
                 sceneToLoad = "Tutorial Map";
+                break;
+            case MapScenes.Playground:
+                sceneToLoad = "Playground Map";
                 break;
             default:
                 sceneToLoad = "SampleScene";
