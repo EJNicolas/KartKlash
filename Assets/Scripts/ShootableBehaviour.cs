@@ -47,7 +47,7 @@ public class ShootableBehaviour : DamageBehaviour
     public override void EmitShotParticle()
     {
         if (!player) player = GameObject.FindGameObjectWithTag("Player");
-        ParticleSystem ps = Instantiate(shotParticle, hitLocation, transform.rotation, this.transform);
+        ParticleSystem ps = Instantiate(shotParticle, transform.position, transform.rotation, this.transform);
         ps.GetComponent<TargetParticleBehaviour>().target = damageSource;
         ps.Play();
     }
