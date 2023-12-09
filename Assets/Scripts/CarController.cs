@@ -84,12 +84,12 @@ public class CarController : MonoBehaviour
         ChangeHandModels();
         EngineSoundPitch();
         UpdatePlayerPlacement();
+        SetAboveGround();
         //if(triggerPressed) {
         //    driftAudioSource.volume = 1f;
         //} else {
         //    driftAudioSource.volume = 0f;
         //}
-        
     } 
 
     void FixedUpdate() {
@@ -97,7 +97,6 @@ public class CarController : MonoBehaviour
             DoAccelAndReverse();
             DoDrifting();
             CheckTeleportToLastCheckpoint();
-            //SetRotationToGround();
         }
             
     }
@@ -144,17 +143,21 @@ public class CarController : MonoBehaviour
     }
 
 
-    //int layerMask = 1 << 8;
-    //void SetRotationToGround() {
-    //    RaycastHit hit;
-    //    if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 50, layerMask)) {
-    //        Vector3 normal = hit.normal;
-    //        Debug.Log("normal x: " + normal.x);
-    //        //Debug.Log("normal y: " + normal.y);
-    //        //Debug.Log("normal z: " + normal.z);
-
-    //    }
-    //}
+    int layerMask = (1 << 8) | (1 << 11);
+    float height = 0.5f;
+    float damping = 2;
+    void SetAboveGround()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 50, layerMask))
+        {
+            Vector3 point = hit.point;
+            point.y += height;
+            transform.position = Vector3.Lerp(transform.position, point, Time.deltaTime * damping);
+            Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            transform.rotation = slopeRotation;
+        }
+    }
 
     void ToggleReverse() {
         if (primaryStickPressed) {

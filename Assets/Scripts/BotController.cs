@@ -268,9 +268,9 @@ public class BotController : Entity
         else
         {
             canShoot = false;
-            LeanTween.rotateLocal(neck.gameObject, neckDefaultRotation.eulerAngles, recoveryTime);
-            LeanTween.rotateLocal(gunArm.gameObject, gunArmDefaultRotation.eulerAngles, recoveryTime);
-            LeanTween.rotateLocal(gunShoulder.gameObject, gunShoulderDefaultRotation.eulerAngles, recoveryTime);
+            //LeanTween.rotateLocal(neck.gameObject, neckDefaultRotation.eulerAngles, recoveryTime);
+            //LeanTween.rotateLocal(gunArm.gameObject, gunArmDefaultRotation.eulerAngles, recoveryTime);
+            //LeanTween.rotateLocal(gunShoulder.gameObject, gunShoulderDefaultRotation.eulerAngles, recoveryTime);
         }
     }
 
