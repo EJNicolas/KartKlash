@@ -146,6 +146,7 @@ MonoBehaviour:
   hitChance: 25
   botShotParticles: {fileID: 318857835175648327, guid: 559862ea962389f43822e47ba4b35d1d, type: 3}
   botHitChanceMultiplier: 0
+  botTargetHitChanceMultiplier: 0
   tutorialMode: 0
   shooting: 1
   stationary: 0
@@ -314,7 +315,7 @@ MonoBehaviour:
   viewAngle: 300
   targetMask:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 1096
   visibleTarget: {fileID: 0}
 --- !u!82 &3683101097516416348
 AudioSource:

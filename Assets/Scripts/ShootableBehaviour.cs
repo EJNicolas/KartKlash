@@ -16,6 +16,8 @@ public class ShootableBehaviour : DamageBehaviour
     Material dissolveMaterial;
     Collider col;
 
+    Transform damageSource;
+
     public override void Start()
     {
         base.Start();
@@ -29,10 +31,35 @@ public class ShootableBehaviour : DamageBehaviour
 
     public override void OnDamage()
     {
+        damageSource = player.transform;
         base.OnDamage();
+
         player.GetComponentInChildren<Player>().health += 5f;
         cc = player.GetComponentInChildren<CarController>();
         cc.ShootableShot();
+
+        outline.OutlineWidth = 0f;
+        col.enabled = false;
+
+        LeanTween.value(dissolveMaterial.GetFloat("_CutoffHeight"), minCutoff, fadeDuration).setOnUpdate(UpdateMaterial);
+        StartCoroutine(RespawnAfterDelay(fadeDuration + disableDuration));
+    }
+    public override void EmitShotParticle()
+    {
+        if (!player) player = GameObject.FindGameObjectWithTag("Player");
+        ParticleSystem ps = Instantiate(shotParticle, hitLocation, transform.rotation, this.transform);
+        ps.GetComponent<TargetParticleBehaviour>().target = damageSource;
+        ps.Play();
+    }
+
+    public void EnemyDamage(Transform src)
+    {
+        damageSource = src;
+        if (!shot)
+        {
+            shotTimer = 0;
+            EmitShotParticle();
+        }
 
         outline.OutlineWidth = 0f;
         col.enabled = false;

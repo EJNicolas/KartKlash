@@ -68,6 +68,7 @@ public class BotController : Entity
 
     public ParticleSystem botShotParticles;
     public float botHitChanceMultiplier;
+    public float botTargetHitChanceMultiplier;
 
     [Header("Tutorial")]
     public bool tutorialMode = false;
@@ -124,6 +125,7 @@ public class BotController : Entity
         hitChance = Random.Range(botShootPreset.minHitChance, botShootPreset.maxHitChance);
 
         botHitChanceMultiplier = Random.Range(botShootPreset.minBotHitChanceMult, botShootPreset.maxBotHitChanceMult);
+        botTargetHitChanceMultiplier = Random.Range(botShootPreset.minTargetHitChanceMult, botShootPreset.maxTargetHitChanceMult);
         defaultVolume = audio.volume;
     }
 
@@ -231,14 +233,14 @@ public class BotController : Entity
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        nma.isStopped = true;
+        if(nma) nma.isStopped = true;
         if(raceStarted) StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
     }
 
     IEnumerator ResumeAgentAfterDelay(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        nma.isStopped = false;
+        if(nma) nma.isStopped = false;
     }
 
     //AI shooting
@@ -298,7 +300,7 @@ public class BotController : Entity
                 }
             }
 
-            if (fov.visibleTarget.layer == LayerMask.NameToLayer("CPU") && botHitChanceMultiplier > 1f)
+            if (fov.visibleTarget.layer == LayerMask.NameToLayer("CPU") && botHitChanceMultiplier > Random.Range(0f, 1f))
             {
                 fov.visibleTarget.GetComponentInParent<BotController>().TakeDamage(botDamage);
 
@@ -306,6 +308,12 @@ public class BotController : Entity
                 if(Physics.Raycast(this.transform.position, targetDir, out res, fov.viewRadius, LayerMask.GetMask("CPU")))
                     Instantiate(botShotParticles, res.point, Quaternion.LookRotation(targetDir), this.transform);
 
+                audio.PlayOneShot(cpuGunDamage, 0.5f); //damage audio
+            }
+
+            if (fov.visibleTarget.layer == LayerMask.NameToLayer("Shootable") && botTargetHitChanceMultiplier > Random.Range(0f, 1f))
+            {
+                fov.visibleTarget.GetComponentInParent<ShootableBehaviour>().EnemyDamage(this.transform);
                 audio.PlayOneShot(cpuGunDamage, 0.5f); //damage audio
             }
         }

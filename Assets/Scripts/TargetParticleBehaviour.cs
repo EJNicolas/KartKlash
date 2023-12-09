@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetParticleBehaviour : MonoBehaviour
 {
-    public Transform player;
+    public Transform target;
     public float yOffset;
     public float speed = 5f;
     public float delayTime = 0.25f;
@@ -13,14 +13,14 @@ public class TargetParticleBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
         particleSystem = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player) StartCoroutine(MoveParticlesTowardsPlayer(delayTime));
+        if (target) StartCoroutine(MoveParticlesTowardsPlayer(delayTime));
     }
 
     IEnumerator MoveParticlesTowardsPlayer(float seconds)
@@ -29,7 +29,7 @@ public class TargetParticleBehaviour : MonoBehaviour
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[particleSystem.main.maxParticles];
         int particleCount = particleSystem.GetParticles(particles);
 
-        Vector3 playerPosition = player.position;
+        Vector3 playerPosition = target.position;
 
         for (int i = 0; i < particleCount; i++)
         {

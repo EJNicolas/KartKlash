@@ -72,7 +72,7 @@ public class DamageBehaviour : MonoBehaviour
         if (!shot) shotTimer = 0;
     }
 
-    void EmitShotParticle()
+    public virtual void EmitShotParticle()
     {
         if (!player) player = GameObject.FindGameObjectWithTag("Player");
         Vector3 targetDir = this.gameObject.transform.position - player.transform.position;
