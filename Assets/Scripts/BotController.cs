@@ -53,6 +53,7 @@ public class BotController : Entity
     public float recoveryTime;
 
     public bool canShoot = false;
+    bool rotationOffset = false;
 
     public ParticleSystem fireParticle;
     public Transform gunTip;
@@ -77,7 +78,6 @@ public class BotController : Entity
 
     void Start()
     {
-        LeanTween.init(800);
         currentPoint = listPos.Length;
         audio = GetComponent<AudioSource>();
         nma = GetComponent<NavMeshAgent>();
@@ -249,6 +249,7 @@ public class BotController : Entity
     {
         if (fov.visibleTarget != null)
         {
+            rotationOffset = true;
             Vector3 targetDir = fov.visibleTarget.transform.position - transform.position;
             Quaternion targetRot = Quaternion.LookRotation(targetDir);
 
@@ -266,9 +267,11 @@ public class BotController : Entity
             if (Quaternion.Angle(gunArm.rotation, gaTargetRot) < 1.0f) canShoot = true;
             //Debug.Log(canShoot);
         }
-        else
+        else if(rotationOffset)
         {
+            rotationOffset = false;
             canShoot = false;
+            Debug.Log("rotating");
             LeanTween.rotateLocal(neck.gameObject, neckDefaultRotation.eulerAngles, recoveryTime);
             LeanTween.rotateLocal(gunArm.gameObject, gunArmDefaultRotation.eulerAngles, recoveryTime);
             LeanTween.rotateLocal(gunShoulder.gameObject, gunShoulderDefaultRotation.eulerAngles, recoveryTime);

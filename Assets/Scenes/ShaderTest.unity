@@ -1938,12 +1938,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScene: 0
-  nextSceneToLoad: 0
+  nextSceneToLoad: 4
   lapCompletion: 0
   totalCheckpoints: 0
   tutorialMode: 1
   checkpoints: []
   botDrivers: []
+  playerSpawn: {fileID: 0}
 --- !u!4 &1519117880
 Transform:
   m_ObjectHideFlags: 0
