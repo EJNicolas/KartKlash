@@ -182,7 +182,7 @@ MonoBehaviour:
   absoluteResetAngleTreshold: 80
   resetAngleTreshold: 25
   resetSpeedTreshold: 2
-  cpuBumpForce: 100
+  cpuBumpForce: 25
   engineAudioSource: {fileID: 0}
   driftAudioSource: {fileID: 0}
   minimumPitch: 0.5
@@ -235,7 +235,6 @@ MonoBehaviour:
   frontHUD: {fileID: 0}
   backHUD: {fileID: 0}
   playerCam: {fileID: 0}
-  postVol: {fileID: 0}
 --- !u!82 &4917027584514069903
 AudioSource:
   m_ObjectHideFlags: 0

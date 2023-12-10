@@ -257,12 +257,16 @@ public class CarController : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision other) {
-    //    if (other.gameObject.CompareTag("CPU")) {
-    //        //other.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * cpuBumpForce);
-    //        Debug.Log("Points colliding: " + other.contacts.Length);
-    //    }
-    //}
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.CompareTag("CPU") && !RaceManager.instance.tutorialMode) {
+            carRb.angularVelocity = Vector3.zero;
+            other.gameObject.GetComponent<BotController>().TakeDamage(100);
+            Vector3 knockback = new Vector3(1, 0, -1);
+            if (other.GetContact(0).normal.x > 0) knockback.x *= -1;
+            other.gameObject.GetComponent<Rigidbody>().AddForce(knockback * cpuBumpForce, ForceMode.VelocityChange);
+            
+        }
+    }
 
     void ReadControllerInputs() {
         //get & print the trigger value
