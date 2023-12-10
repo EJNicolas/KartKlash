@@ -26,6 +26,9 @@ public class ShootableBehaviour : DamageBehaviour
         base.Start();
         dissolveMaterial = this.GetComponent<Renderer>().material;
         col = GetComponent<Collider>();
+
+        outlineHoverWidth *= 4;
+        outlineShootWidth *= 4;
     }
     public override void FixedUpdate()
     {

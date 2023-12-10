@@ -7,7 +7,7 @@ public class DamageBehaviour : MonoBehaviour
     [Header("Damage")]
     public BotDamagePreset bdp;
     float shotInterval;
-    float outlineHoverWidth, outlineShootWidth;
+    public float outlineHoverWidth, outlineShootWidth;
     Color shotColor, hoverColor;
 
     public float shotTimer = 0;

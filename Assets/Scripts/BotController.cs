@@ -77,6 +77,7 @@ public class BotController : Entity
 
     void Start()
     {
+        LeanTween.init(800);
         currentPoint = listPos.Length;
         audio = GetComponent<AudioSource>();
         nma = GetComponent<NavMeshAgent>();
