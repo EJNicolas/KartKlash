@@ -94,6 +94,7 @@ public class UIManager : MonoBehaviour
     {
         tutorialMode = true;
         countdownParent.SetActive(false);
+        placementText.text = "";
     }
 
     void RemoveUI() {

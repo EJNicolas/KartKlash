@@ -32,6 +32,7 @@ public class RaceManager : MonoBehaviour
     public static event Action CompleteLapEvent;
     public static event Action CompleteRaceEvent;
     public static event Action SwitchingToNewScene;
+    public Transform playerSpawn;
 
     void Start() {
         instance = this;
@@ -58,6 +59,12 @@ public class RaceManager : MonoBehaviour
     }
 
     public void MovePlayerToCheckpoint(CarController player){
+        if (tutorialMode) {
+            player.transform.position = playerSpawn.position;
+            player.transform.rotation = playerSpawn.rotation;
+            return;
+        }
+
         int previousCheckpointIndex = expectedCheckpointNumber - 1;
 
         if(expectedCheckpointNumber == 0 && currentLapCount > 0) {
