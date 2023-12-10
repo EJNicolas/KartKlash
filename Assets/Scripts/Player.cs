@@ -100,6 +100,16 @@ public class Player : Entity
         }
     }
 
+    public void Heal(float healAmount)
+    {
+        if(health < maxHealth)
+        {
+            health += healAmount;
+            LeanTween.value(healthBar.fillAmount, health / maxHealth, damageTime)
+                .setOnUpdate((float percentage) => { healthBar.fillAmount = percentage; });
+        }
+    }
+
     void ShotHUD(ref LTDescr lt, ref CanvasGroup hud)
     {
         LeanTween.cancel(lt.id);
