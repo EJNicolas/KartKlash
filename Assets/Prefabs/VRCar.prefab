@@ -179,6 +179,9 @@ MonoBehaviour:
   canDrive: 1
   reverseToggle: 0
   resetTimer: 1.5
+  absoluteResetAngleTreshold: 80
+  resetAngleTreshold: 45
+  resetSpeedTreshold: 2
   engineAudioSource: {fileID: 0}
   driftAudioSource: {fileID: 0}
   minimumPitch: 0.5

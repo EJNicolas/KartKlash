@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     public GameObject countdownParent;
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI respawnText;
+    public TextMeshProUGUI finishText;
+    public TextMeshProUGUI endPlacementMessage;
+    public TextMeshProUGUI endPlacementText;
     int currentLapCount = 1;
     public bool tutorialMode;
     public AudioSource audioSource;
@@ -19,6 +22,7 @@ public class UIManager : MonoBehaviour
     public AudioClip lapCounter;
     public AudioClip lapFinish;
 
+    string placement;
     void Start() {
         tutorialMode = RaceManager.instance.tutorialMode;
         InitializeRaceUI();
@@ -52,11 +56,6 @@ public class UIManager : MonoBehaviour
         currentLapCount++;
         SetLapCountText(currentLapCount);
         audioSource.PlayOneShot(lapCounter,  1);
-    }
-
-    void ShowEndScreen() {
-        endOfRaceParent.SetActive(true);
-        raceUIParent.SetActive(false);
     }
 
     void SetLapCountText(int lapNum) {
@@ -124,6 +123,29 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         countdownParent.SetActive(false);
+    }
+
+    void ShowEndScreen() {
+        placement = placementText.text;
+        StartCoroutine(EndOfRaceRoutine());
+    }
+
+    IEnumerator EndOfRaceRoutine() {
+        endOfRaceParent.SetActive(true);
+        raceUIParent.SetActive(false);
+        endPlacementMessage.text = "";
+        endPlacementText.text = "";
+        yield return new WaitForSeconds(2f);
+        finishText.text = "";
+        endPlacementMessage.text = "You placed";
+        yield return new WaitForSeconds(0.33f);
+        endPlacementMessage.text = "You placed.";
+        yield return new WaitForSeconds(0.33f);
+        endPlacementMessage.text = "You placed..";
+        yield return new WaitForSeconds(0.33f);
+        endPlacementMessage.text = "You placed...";
+        yield return new WaitForSeconds(0.33f);
+        endPlacementText.text = placement + "!";
     }
 
 }

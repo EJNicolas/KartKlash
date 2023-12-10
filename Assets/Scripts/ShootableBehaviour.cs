@@ -41,7 +41,7 @@ public class ShootableBehaviour : DamageBehaviour
         damageSource = player.transform;
         base.OnDamage();
 
-        player.GetComponentInChildren<Player>().health += healAmount;
+        player.GetComponentInChildren<Player>().Heal(healAmount);
         cc = player.GetComponentInChildren<CarController>();
         cc.ShootableShot();
 
