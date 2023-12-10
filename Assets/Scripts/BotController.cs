@@ -271,7 +271,7 @@ public class BotController : Entity
         {
             rotationOffset = false;
             canShoot = false;
-            Debug.Log("rotating");
+            //Debug.Log("rotating");
             LeanTween.rotateLocal(neck.gameObject, neckDefaultRotation.eulerAngles, recoveryTime);
             LeanTween.rotateLocal(gunArm.gameObject, gunArmDefaultRotation.eulerAngles, recoveryTime);
             LeanTween.rotateLocal(gunShoulder.gameObject, gunShoulderDefaultRotation.eulerAngles, recoveryTime);

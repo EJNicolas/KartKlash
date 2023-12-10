@@ -9,6 +9,7 @@ public class Player : Entity
     [SerializeField] Transform head;
     public float damage;
     public Image healthBar;
+    public UIManager UIManagerScript;
     CarController car;
     public bool takingDamage = false, healing = false;
     public float damageTime, healTime;
@@ -58,6 +59,7 @@ public class Player : Entity
                 {
                     health = newHP;
                     healthBar.fillAmount = health / maxHealth;
+                    UIManagerScript.SetHealthText(health);
                 })
                 .setOnComplete(() =>
                 {
@@ -74,7 +76,10 @@ public class Player : Entity
         if(!healing) base.TakeDamage(damage, source);
         LeanTween.value(healthBar.fillAmount, health / maxHealth, damageTime)
             .setOnStart(() => { takingDamage = true; })
-            .setOnUpdate((float percentage) => { healthBar.fillAmount = percentage; })
+            .setOnUpdate((float percentage) => { 
+                healthBar.fillAmount = percentage;
+                UIManagerScript.SetHealthText(health);
+            })
             .setOnComplete(() => { takingDamage = false; });
 
         //directional HUD response
@@ -106,7 +111,10 @@ public class Player : Entity
         {
             health += healAmount;
             LeanTween.value(healthBar.fillAmount, health / maxHealth, damageTime)
-                .setOnUpdate((float percentage) => { healthBar.fillAmount = percentage; });
+                .setOnUpdate((float percentage) => { 
+                    healthBar.fillAmount = percentage;
+                    UIManagerScript.SetHealthText(health);
+                });
         }
     }
 

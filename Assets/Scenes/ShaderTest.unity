@@ -2514,7 +2514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929099830593857395, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_margin.y
-      value: 1.7712717
+      value: -3.2066102
       objectReference: {fileID: 0}
     - target: {fileID: 2929099830593857395, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_margin.z
@@ -2531,10 +2531,6 @@ PrefabInstance:
     - target: {fileID: 4088120122300597204, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4162852358936610578, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4468424688728593803, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer
@@ -2652,17 +2648,13 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.3137255
       objectReference: {fileID: 0}
-    - target: {fileID: 8098311037062931345, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
-      propertyPath: targetLimit
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8098311037062931345, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
-      propertyPath: targetAccelBonus
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8807696104154596654, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835400215955071057, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8975604907996345693, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer

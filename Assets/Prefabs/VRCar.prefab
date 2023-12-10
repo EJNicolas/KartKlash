@@ -225,6 +225,7 @@ MonoBehaviour:
   head: {fileID: 0}
   damage: 5
   healthBar: {fileID: 0}
+  UIManagerScript: {fileID: 0}
   takingDamage: 0
   healing: 0
   damageTime: 0.1

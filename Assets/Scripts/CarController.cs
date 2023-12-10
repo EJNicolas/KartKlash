@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -48,7 +50,7 @@ public class CarController : MonoBehaviour
 
     public float cpuBumpForce = 50;
 
-    //engine sounds
+    [Header("Engine Sounds")]
     public AudioSource engineAudioSource;
     public AudioSource driftAudioSource;
 
@@ -62,6 +64,7 @@ public class CarController : MonoBehaviour
     public int targetsShot = 0;
     public int targetLimit;
     public float targetAccelBonus;
+
 
     void Start() {
         transform.parent = null;
@@ -99,6 +102,7 @@ public class CarController : MonoBehaviour
         if (canDrive && !menuButtonDown && !forcedReset) {
             DoAccelAndReverse();
             DoDrifting();
+            UIManagerScript.UpdateSpeedUI(carRb.velocity.magnitude);
         }
 
         if (canDrive) {
@@ -293,10 +297,11 @@ public class CarController : MonoBehaviour
 
     public void ShootableShot()
     {
-        if (targetsShot < 10)
+        if (targetsShot < targetLimit)
         {
             targetsShot++;
             baseAcceleration += targetAccelBonus;
+            UIManagerScript.SetShootableCountText(targetsShot, targetLimit);
         }
     }
 

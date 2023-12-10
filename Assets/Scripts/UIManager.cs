@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Race Attributes")]
     public GameObject raceUIParent;
     public TextMeshProUGUI lapCountText;
     public TextMeshProUGUI placementText;
@@ -16,7 +18,19 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI endPlacementMessage;
     public TextMeshProUGUI endPlacementText;
     int currentLapCount = 1;
+
+    [Header("Speed")]
+    public Image speedBar;
+    public TextMeshProUGUI speedText;
+    public TextMeshProUGUI shootablesText;
+
+    [Header("Health")]
+    public TextMeshProUGUI healthText;
+
+    [Header("Tutorial")]
     public bool tutorialMode;
+
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip countdown;
     public AudioClip lapCounter;
@@ -24,7 +38,7 @@ public class UIManager : MonoBehaviour
 
     string placement;
     void Start() {
-        tutorialMode = RaceManager.instance.tutorialMode;
+        if (RaceManager.instance) tutorialMode = RaceManager.instance.tutorialMode;
         InitializeRaceUI();
     }
 
@@ -58,8 +72,24 @@ public class UIManager : MonoBehaviour
         audioSource.PlayOneShot(lapCounter,  1);
     }
 
+    public void UpdateSpeedUI(float speed)
+    {
+        speedText.text = "" + (int) speed * 4;
+        speedBar.fillAmount = speed / 50f;
+    }
+
+    public void SetHealthText(float health)
+    {
+        if (tutorialMode) healthText.text = (int) health + "";
+    }
+
     void SetLapCountText(int lapNum) {
-        if (RaceManager.instance) lapCountText.text = lapNum.ToString() + "/" + RaceManager.instance.lapCompletion.ToString();
+        if (RaceManager.instance) lapCountText.text = "Lap " + lapNum.ToString() + " | " + RaceManager.instance.lapCompletion.ToString();
+    }
+
+    public void SetShootableCountText(int targets, int maxTargets)
+    {
+        shootablesText.text = targets.ToString() + " | " + maxTargets.ToString();
     }
 
     public void SetRespawnText(string s) {
@@ -94,6 +124,8 @@ public class UIManager : MonoBehaviour
         tutorialMode = true;
         countdownParent.SetActive(false);
         placementText.text = "";
+        lapCountText.text = "";
+        healthText.gameObject.SetActive(true);
     }
 
     void RemoveUI() {
