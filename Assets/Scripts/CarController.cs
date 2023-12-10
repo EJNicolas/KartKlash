@@ -41,7 +41,7 @@ public class CarController : MonoBehaviour
 
     public float resetTimer = 1.5f;
     float resetTimerCounter;
-    bool resetInput = false;
+    bool forcedReset = false;
 
     //engine sounds
     public AudioSource engineAudioSource;
@@ -95,9 +95,12 @@ public class CarController : MonoBehaviour
     } 
 
     void FixedUpdate() {
-        if (canDrive) {
+        if (canDrive && !menuButtonDown) {
             DoAccelAndReverse();
             DoDrifting();
+        }
+
+        if (canDrive) {
             CheckTeleportToLastCheckpoint();
         }
             
@@ -182,10 +185,7 @@ public class CarController : MonoBehaviour
     }
 
     void CheckTeleportToLastCheckpoint() {
-        if (menuButtonDown && !gripPressed) resetInput = true;
-        else resetInput = false;
-
-        if (resetInput) {
+        if (menuButtonDown) {
             UIManagerScript.SetRespawnTextActive(true);
             resetTimerCounter -= Time.deltaTime;
             if (resetTimerCounter < 0) {
@@ -193,7 +193,7 @@ public class CarController : MonoBehaviour
                 RaceManager.instance.MovePlayerToCheckpoint(this);
                 VRPlayer.transform.rotation = transform.rotation;
                 resetTimerCounter = resetTimer;
-                resetInput = false;
+                forcedReset = false;
                 return;
             }
             else if (resetTimerCounter < resetTimer / 3) {
@@ -208,11 +208,12 @@ public class CarController : MonoBehaviour
         }
         else {
             UIManagerScript.SetRespawnTextActive(false);
-            resetInput = false;
             resetTimerCounter = resetTimer;
         }
         
     }
+
+    //void Reset
 
     void UpdatePlayerPlacement() {
         int newPlacement = RaceManager.instance.FindPlayerPlacement(this);
