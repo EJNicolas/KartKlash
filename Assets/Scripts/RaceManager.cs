@@ -197,7 +197,7 @@ public class RaceManager : MonoBehaviour
         SwitchingToNewScene?.Invoke();
         yield return new WaitForSeconds(2f);
 
-        LoadNextScene();
+        if(!tutorialMode) LoadNextScene();
     }
 
 
