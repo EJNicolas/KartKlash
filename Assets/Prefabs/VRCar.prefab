@@ -178,6 +178,7 @@ MonoBehaviour:
   driftTurnSpeed: 65
   canDrive: 1
   reverseToggle: 0
+  resetTimer: 1.5
   engineAudioSource: {fileID: 0}
   driftAudioSource: {fileID: 0}
   minimumPitch: 0.5
@@ -185,7 +186,6 @@ MonoBehaviour:
   targetsShot: 0
   targetLimit: 0
   targetAccelBonus: 0
-  forceUp: 2
 --- !u!114 &7637702735288200400
 MonoBehaviour:
   m_ObjectHideFlags: 0
