@@ -218,8 +218,8 @@ public class CarController : MonoBehaviour
         float farEnd = (transform.eulerAngles.y + resetAngleTreshold) % 360;
         float backEnd = (transform.eulerAngles.y - resetAngleTreshold) % 360;
         if (backEnd < 0) backEnd = 360 - backEnd;
-        Debug.Log("backEnd: " + backEnd + "        farEnd: " + farEnd);
-        Debug.Log("player: " + VRPlayer.transform.eulerAngles.y);
+        //Debug.Log("backEnd: " + backEnd + "        farEnd: " + farEnd);
+        //Debug.Log("player: " + VRPlayer.transform.eulerAngles.y);
         if(farEnd > backEnd) {
             if (!(VRPlayer.transform.eulerAngles.y > backEnd && VRPlayer.transform.eulerAngles.y < farEnd)) forcedReset = true;
         }
