@@ -3577,6 +3577,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4775047259680635591}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
+      propertyPath: targetLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: leftController
       value: 
       objectReference: {fileID: 4954338905697139942}
@@ -3592,6 +3596,10 @@ PrefabInstance:
       propertyPath: driftAudioSource
       value: 
       objectReference: {fileID: 877753046922362086}
+    - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
+      propertyPath: targetAccelBonus
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: engineAudioSource
       value: 

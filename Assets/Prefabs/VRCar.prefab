@@ -187,8 +187,8 @@ MonoBehaviour:
   minimumPitch: 0.5
   maximumPitch: 2
   targetsShot: 0
-  targetLimit: 0
-  targetAccelBonus: 0
+  targetLimit: 10
+  targetAccelBonus: 20
 --- !u!114 &7637702735288200400
 MonoBehaviour:
   m_ObjectHideFlags: 0
