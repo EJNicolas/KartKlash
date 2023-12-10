@@ -779,6 +779,7 @@ MonoBehaviour:
   shotParticle: {fileID: 318857835175648327, guid: aed9e3a764531064da26ff8ec16189cc, type: 3}
   player: {fileID: 0}
   hitLocation: {x: 0, y: 0, z: 0}
+  healAmount: 5
   minCutoff: -3
   maxCutoff: 3
   disableDuration: 1

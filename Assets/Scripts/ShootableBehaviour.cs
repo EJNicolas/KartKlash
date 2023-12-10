@@ -6,6 +6,9 @@ public class ShootableBehaviour : DamageBehaviour
 {
     CarController cc;
 
+    [Header("Healing")]
+    public float healAmount = 5f;
+
     [Header("Dissolve")]
     public float minCutoff;
     public float maxCutoff;
@@ -34,7 +37,7 @@ public class ShootableBehaviour : DamageBehaviour
         damageSource = player.transform;
         base.OnDamage();
 
-        player.GetComponentInChildren<Player>().health += 5f;
+        player.GetComponentInChildren<Player>().health += healAmount;
         cc = player.GetComponentInChildren<CarController>();
         cc.ShootableShot();
 
