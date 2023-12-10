@@ -42,6 +42,9 @@ public class CarController : MonoBehaviour
     public float resetTimer = 1.5f;
     float resetTimerCounter;
     bool forcedReset = false;
+    public float absoluteResetAngleTreshold = 80;
+    public float resetAngleTreshold;
+    public float resetSpeedTreshold;
 
     //engine sounds
     public AudioSource engineAudioSource;
@@ -87,15 +90,11 @@ public class CarController : MonoBehaviour
         EngineSoundPitch();
         UpdatePlayerPlacement();
         SetAboveGround();
-        //if(triggerPressed) {
-        //    driftAudioSource.volume = 1f;
-        //} else {
-        //    driftAudioSource.volume = 0f;
-        //}
+        CheckAutomaticReset();
     } 
 
     void FixedUpdate() {
-        if (canDrive && !menuButtonDown) {
+        if (canDrive && !menuButtonDown && !forcedReset) {
             DoAccelAndReverse();
             DoDrifting();
         }
@@ -185,13 +184,14 @@ public class CarController : MonoBehaviour
     }
 
     void CheckTeleportToLastCheckpoint() {
-        if (menuButtonDown) {
+        if (menuButtonDown || forcedReset) {
             UIManagerScript.SetRespawnTextActive(true);
             resetTimerCounter -= Time.deltaTime;
             if (resetTimerCounter < 0) {
                 UIManagerScript.SetRespawnTextActive(false);
                 RaceManager.instance.MovePlayerToCheckpoint(this);
                 VRPlayer.transform.rotation = transform.rotation;
+                
                 resetTimerCounter = resetTimer;
                 forcedReset = false;
                 return;
@@ -212,8 +212,14 @@ public class CarController : MonoBehaviour
         }
         
     }
-
-    //void Reset
+    void CheckAutomaticReset() {
+        float carRotation = UnityEditor.TransformUtils.GetInspectorRotation(transform).y;
+        float playerRotation = UnityEditor.TransformUtils.GetInspectorRotation(VRPlayer.transform).y;
+        float carPlayerAngleDiff = Mathf.Abs(Mathf.Abs(carRotation) - Mathf.Abs(playerRotation));
+        if (carPlayerAngleDiff > absoluteResetAngleTreshold) forcedReset = true;
+        else if (carPlayerAngleDiff > resetAngleTreshold && resetSpeedTreshold > carRb.velocity.magnitude) forcedReset = true;
+        else if (carPlayerAngleDiff < resetAngleTreshold) forcedReset = false;
+    }
 
     void UpdatePlayerPlacement() {
         int newPlacement = RaceManager.instance.FindPlayerPlacement(this);
