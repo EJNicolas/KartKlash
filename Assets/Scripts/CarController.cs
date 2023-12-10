@@ -217,7 +217,8 @@ public class CarController : MonoBehaviour
         float playerRotation = UnityEditor.TransformUtils.GetInspectorRotation(VRPlayer.transform).y;
         float carPlayerAngleDiff = Mathf.Abs(Mathf.Abs(carRotation) - Mathf.Abs(playerRotation));
         if (carPlayerAngleDiff > absoluteResetAngleTreshold) forcedReset = true;
-        else if (carPlayerAngleDiff > resetAngleTreshold && resetSpeedTreshold > carRb.velocity.magnitude ) forcedReset = true; 
+        else if (carPlayerAngleDiff > resetAngleTreshold && resetSpeedTreshold > carRb.velocity.magnitude) forcedReset = true;
+        else if (carPlayerAngleDiff < resetAngleTreshold) forcedReset = false;
     }
 
     void UpdatePlayerPlacement() {
