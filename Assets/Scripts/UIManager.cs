@@ -27,6 +27,15 @@ public class UIManager : MonoBehaviour
     [Header("Health")]
     public TextMeshProUGUI healthText;
 
+    [Header("Hit HUD")]
+    [SerializeField] CanvasGroup leftHUD;
+    [SerializeField] CanvasGroup rightHUD;
+    [SerializeField] CanvasGroup frontHUD;
+    [SerializeField] CanvasGroup backHUD;
+
+    [Header("Wipeout Post-Processing")]
+    [SerializeField] UnityEngine.Rendering.Volume postVol;
+
     [Header("Tutorial")]
     public bool tutorialMode;
 
@@ -126,6 +135,20 @@ public class UIManager : MonoBehaviour
         placementText.text = "";
         lapCountText.text = "";
         healthText.gameObject.SetActive(true);
+    }
+
+    public void SetWipeoutPostProcessing(bool wipedOut)
+    {
+        if (wipedOut) LeanTween.value(0f, 1f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
+        else LeanTween.value(1f, 0f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
+    }
+
+    public void ResetShotHUD()
+    {
+        leftHUD.alpha = 0f;
+        rightHUD.alpha = 0f;
+        frontHUD.alpha = 0f;
+        backHUD.alpha = 0f;
     }
 
     void RemoveUI() {

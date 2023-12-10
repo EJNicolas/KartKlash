@@ -23,9 +23,6 @@ public class Player : Entity
     LTDescr leftLT = null, rightLT = null, frontLT = null, backLT = null;
     public Camera playerCam;
 
-    [Header("No Health Post-Processing")]
-    [SerializeField] UnityEngine.Rendering.Volume postVol;
-
     public void Start()
     {
         if (health == 0) health = 100;
@@ -52,8 +49,7 @@ public class Player : Entity
                     frontLT = LeanTween.alphaCanvas(frontHUD, 0f, 0.25f);
                     backLT = LeanTween.alphaCanvas(backHUD, 0f, 0.25f);
 
-                    if (postVol) LeanTween.value(0f, 1f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
-
+                    UIManagerScript.SetWipeoutPostProcessing(true);
                 })
                 .setOnUpdate((float newHP) =>
                 {
@@ -65,7 +61,7 @@ public class Player : Entity
                 {
                     healing = false;
                     car.canDrive = true;
-                    if (postVol) LeanTween.value(1f, 0f, 0.5f).setOnUpdate((float val) => { postVol.weight = val; });
+                    UIManagerScript.SetWipeoutPostProcessing(false);
                 });
         }
     }

@@ -195,6 +195,9 @@ public class CarController : MonoBehaviour
             resetTimerCounter -= Time.deltaTime;
             if (resetTimerCounter < 0) {
                 UIManagerScript.SetRespawnTextActive(false);
+                UIManagerScript.ResetShotHUD();
+                //UIManagerScript.SetWipeoutPostProcessing(false);
+
                 RaceManager.instance.MovePlayerToCheckpoint(this);
                 VRPlayer.transform.rotation = transform.rotation;
                 carRb.angularVelocity = Vector3.zero;
@@ -210,6 +213,7 @@ public class CarController : MonoBehaviour
             }
             else if (resetTimerCounter <= resetTimer) {
                 UIManagerScript.SetRespawnText("Respawning in: 3");
+                //UIManagerScript.SetWipeoutPostProcessing(true);
             }
         }
         else {

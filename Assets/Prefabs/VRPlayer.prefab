@@ -1296,6 +1296,11 @@ MonoBehaviour:
   speedText: {fileID: 2854605552901817827}
   shootablesText: {fileID: 2234233170202223390}
   healthText: {fileID: 6794184896330063119}
+  leftHUD: {fileID: 3792294316863918625}
+  rightHUD: {fileID: 8775990939743289093}
+  frontHUD: {fileID: 781494090559123095}
+  backHUD: {fileID: 5659371235018327350}
+  postVol: {fileID: 5371020525343092420}
   tutorialMode: 0
   audioSource: {fileID: 7601887207075622271}
   countdown: {fileID: 8300000, guid: 1d73f30544d1f474a8396d9317b10bf3, type: 3}
