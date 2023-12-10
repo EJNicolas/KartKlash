@@ -46,6 +46,8 @@ public class CarController : MonoBehaviour
     public float resetAngleTreshold;
     public float resetSpeedTreshold;
 
+    public float cpuBumpForce = 50;
+
     //engine sounds
     public AudioSource engineAudioSource;
     public AudioSource driftAudioSource;
@@ -191,7 +193,7 @@ public class CarController : MonoBehaviour
                 UIManagerScript.SetRespawnTextActive(false);
                 RaceManager.instance.MovePlayerToCheckpoint(this);
                 VRPlayer.transform.rotation = transform.rotation;
-                
+                carRb.angularVelocity = Vector3.zero;
                 resetTimerCounter = resetTimer;
                 forcedReset = false;
                 return;
@@ -213,12 +215,18 @@ public class CarController : MonoBehaviour
         
     }
     void CheckAutomaticReset() {
-        float carRotation = UnityEditor.TransformUtils.GetInspectorRotation(transform).y;
-        float playerRotation = UnityEditor.TransformUtils.GetInspectorRotation(VRPlayer.transform).y;
-        float carPlayerAngleDiff = Mathf.Abs(Mathf.Abs(carRotation) - Mathf.Abs(playerRotation));
-        if (carPlayerAngleDiff > absoluteResetAngleTreshold) forcedReset = true;
-        else if (carPlayerAngleDiff > resetAngleTreshold && resetSpeedTreshold > carRb.velocity.magnitude) forcedReset = true;
-        else if (carPlayerAngleDiff < resetAngleTreshold) forcedReset = false;
+        float farEnd = (transform.eulerAngles.y + resetAngleTreshold) % 360;
+        float backEnd = (transform.eulerAngles.y - resetAngleTreshold) % 360;
+        if (backEnd < 0) backEnd = 360 - backEnd;
+        Debug.Log("backEnd: " + backEnd + "        farEnd: " + farEnd);
+        Debug.Log("player: " + VRPlayer.transform.eulerAngles.y);
+        if(farEnd > backEnd) {
+            if (!(VRPlayer.transform.eulerAngles.y > backEnd && VRPlayer.transform.eulerAngles.y < farEnd)) forcedReset = true;
+        }
+        else {
+            if (!(VRPlayer.transform.eulerAngles.y > backEnd || VRPlayer.transform.eulerAngles.y < farEnd)) forcedReset = true;
+        }
+
     }
 
     void UpdatePlayerPlacement() {
@@ -240,6 +248,13 @@ public class CarController : MonoBehaviour
         engineAudioSource.pitch = engineSpeed;
         }
     }
+
+    //private void OnCollisionEnter(Collision other) {
+    //    if (other.gameObject.CompareTag("CPU")) {
+    //        //other.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * cpuBumpForce);
+    //        Debug.Log("Points colliding: " + other.contacts.Length);
+    //    }
+    //}
 
     void ReadControllerInputs() {
         //get & print the trigger value

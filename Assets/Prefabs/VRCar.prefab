@@ -180,8 +180,9 @@ MonoBehaviour:
   reverseToggle: 0
   resetTimer: 1.5
   absoluteResetAngleTreshold: 80
-  resetAngleTreshold: 45
+  resetAngleTreshold: 25
   resetSpeedTreshold: 2
+  cpuBumpForce: 100
   engineAudioSource: {fileID: 0}
   driftAudioSource: {fileID: 0}
   minimumPitch: 0.5
