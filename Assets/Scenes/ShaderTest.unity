@@ -2628,6 +2628,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6023646729332768992, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
+      propertyPath: m_Name
+      value: Wipeout Effect
+      objectReference: {fileID: 0}
     - target: {fileID: 6190871401107354694, guid: cd14d68ed86d59c448e77797f19144e2, type: 3}
       propertyPath: m_Layer
       value: 3

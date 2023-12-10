@@ -3306,7 +3306,7 @@ GameObject:
   - component: {fileID: 1642545213787763988}
   - component: {fileID: 5371020525343092420}
   m_Layer: 0
-  m_Name: No Health Effect
+  m_Name: Wipeout Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
