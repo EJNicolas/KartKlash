@@ -19,7 +19,7 @@ public class RaceManager : MonoBehaviour
     public MapScenes currentScene;
     public MapScenes nextSceneToLoad;
     public int lapCompletion;
-    private int currentLapCount = 0;
+    public int currentLapCount = 0;
     public int totalCheckpoints = 0;
     public bool tutorialMode = false;
 
@@ -193,7 +193,7 @@ public class RaceManager : MonoBehaviour
     }
 
     IEnumerator EndOfRaceRoutine() {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(7f);
         SwitchingToNewScene?.Invoke();
         yield return new WaitForSeconds(2f);
 
