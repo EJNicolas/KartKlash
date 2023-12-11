@@ -234,14 +234,14 @@ public class BotController : Entity
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        if(nma) nma.isStopped = true;
-        if(raceStarted) StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
+        if (!stationary) nma.isStopped = true;
+        if (raceStarted) StartCoroutine(ResumeAgentAfterDelay(resumeDelay));
     }
 
     IEnumerator ResumeAgentAfterDelay(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        if(nma) nma.isStopped = false;
+        if (!stationary) nma.isStopped = false;
     }
 
     //AI shooting
