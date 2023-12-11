@@ -108,8 +108,15 @@ public class Weapon : MonoBehaviour
 
         if (db != null) {
             db.OnDamage();
-            audio.PlayOneShot(gunDamage, 1);
-        }
+            if(db.gameObject.tag == "CPU"){
+                audio.PlayOneShot(gunDamage, 1);
+
+            } else if(db.gameObject.tag == "Shootable"){
+                audio.PlayOneShot(gunShoot, 1);
+
+            }
+            
+        } 
         ApplyRecoil();
         
     }
