@@ -15,11 +15,10 @@ public class BotController : Entity
 
     NavMeshAgent nma;
     public RaceManager rm;
-    public int currentPoint;   //checkpoint index of the checkpoint that will be crossed
+    public int currentPoint = 0;   //checkpoint index of the checkpoint that will be crossed
     private int lapCount = -1;
     private int checkpointsPassed = 0;
     GameObject lastCheckpoint;
-    bool setNewPoint = false;
 
     [Header("Rubberband")]
     int rubberbandThreshold;
@@ -156,40 +155,35 @@ public class BotController : Entity
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!stationary) UpdateNavigation();
-        if (raceStarted && shooting)
+        if (raceStarted)
         {
-            UpdateTargeting();
+            if (!stationary) UpdateNavigation();
+            if (shooting)
+            {
+                UpdateTargeting();
 
-            if (shootTimer < shootInterval) canShoot = false;
+                if (shootTimer < shootInterval) canShoot = false;
 
-            if (canShoot) Shoot();
-            else shootTimer += Time.deltaTime;
+                if (canShoot) Shoot();
+                else shootTimer += Time.deltaTime;
+            }
         }
     }
 
     void UpdateNavigation()
     {
         //navigation
-        if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance && currentPoint < listPos.Length)
+        if (nma.remainingDistance < nma.stoppingDistance)
         {
-            currentPoint++;
-            setNewPoint = false;
-            //checkpointsPassed++;
-            //Debug.Log(this.gameObject.name + ", Checkpoints: " + checkpointsPassed);
-        }
-        else if (currentPoint >= listPos.Length)
-        {
-            currentPoint = 0;
-        }
-        if (currentPoint < listPos.Length && !setNewPoint)
-        {
-            setNewPoint = true;
+            if (currentPoint < listPos.Length) currentPoint++;
+            if (currentPoint >= listPos.Length) currentPoint = 0;
+
             Transform checkpoint = listPos[currentPoint].transform;
+            Debug.Log(checkpoint.localScale);
             nma.SetDestination(new Vector3(
-                Random.Range(checkpoint.position.x - (checkpoint.localScale.x / 2), checkpoint.position.x + (checkpoint.localScale.x / 2)),
-                this.gameObject.transform.position.y,
-                Random.Range(checkpoint.position.z - (checkpoint.localScale.z / 2), checkpoint.position.z + (checkpoint.localScale.z / 2))
+                Random.Range(checkpoint.position.x - (checkpoint.lossyScale.x / 2), checkpoint.position.x + (checkpoint.lossyScale.x / 2)),
+                checkpoint.position.y,
+                Random.Range(checkpoint.position.z - (checkpoint.lossyScale.z / 2), checkpoint.position.z + (checkpoint.lossyScale.z / 2))
             ));
         }
 
@@ -198,7 +192,7 @@ public class BotController : Entity
             rs == RubberbandState.FAST && Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) < rubberbandThreshold) 
             stateChanged = false;
 
-        if(!stateChanged && !tutorialMode) NavRubberband();
+        //if (!stateChanged && !tutorialMode) NavRubberband();
     }
 
     void NavRubberband()
