@@ -43,14 +43,19 @@ public class RaceManager : MonoBehaviour
     }
 
     public void PlayerPassedCheckpoint(int checkpointNumber) {
-        if(checkpointNumber == expectedCheckpointNumber && !tutorialMode) {
+        if (tutorialMode) {
+            expectedCheckpointNumber++;
+            return;
+        }
+
+        if(checkpointNumber == expectedCheckpointNumber) {
             checkpoints[checkpointNumber].SetCrossed(true);
             expectedCheckpointNumber++;
             if (expectedCheckpointNumber >= checkpoints.Length) expectedCheckpointNumber = 0;
             totalCheckpoints++;
         }
 
-        if(checkpointNumber == 0 && !tutorialMode) {
+        if(checkpointNumber == 0) {
             if (CheckValidCompleteLap()) {
                 CompleteLap();
                 checkpoints[0].SetCrossed(true);
@@ -60,13 +65,18 @@ public class RaceManager : MonoBehaviour
     }
 
     public void MovePlayerToCheckpoint(CarController player){
-        if (tutorialMode) {
+        int previousCheckpointIndex = expectedCheckpointNumber - 1;
+
+        if(tutorialMode && expectedCheckpointNumber == 0) {
             player.transform.position = playerSpawn.position;
             player.transform.rotation = playerSpawn.rotation;
             return;
+        } else if(expectedCheckpointNumber > 0) {
+            player.transform.position = checkpoints[0].transform.position;
+            player.transform.rotation = checkpoints[0].transform.rotation;
+            return;
         }
 
-        int previousCheckpointIndex = expectedCheckpointNumber - 1;
 
         if(expectedCheckpointNumber == 0 && currentLapCount > 0) {
             previousCheckpointIndex = checkpoints.Length - 1;
