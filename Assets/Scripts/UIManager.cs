@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateSpeedUI(float speed)
     {
-        speedText.text = "" + (int) speed * 4;
+        speedText.text = "" + (int)(speed * 4);
         speedBar.fillAmount = speed / 50f;
     }
 
