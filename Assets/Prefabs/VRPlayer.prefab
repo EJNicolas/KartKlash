@@ -4836,6 +4836,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 926197388908360033}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
+      propertyPath: carHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 11bfb198a7f532242ae630762d1a3b03, type: 3}
+    - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: VRPlayer
       value: 
       objectReference: {fileID: 4954338905675320311}

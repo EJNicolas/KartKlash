@@ -53,6 +53,7 @@ public class CarController : MonoBehaviour
     [Header("Engine Sounds")]
     public AudioSource engineAudioSource;
     public AudioSource driftAudioSource;
+    public AudioClip carHit;
 
     public float minimumPitch = 0.05f;
     public float maximumPitch = 0.1f;
@@ -264,7 +265,8 @@ public class CarController : MonoBehaviour
             Vector3 knockback = new Vector3(1, 0, -1);
             if (other.GetContact(0).normal.x > 0) knockback.x *= -1;
             other.gameObject.GetComponent<Rigidbody>().AddForce(knockback * cpuBumpForce, ForceMode.VelocityChange);
-            
+
+            engineAudioSource.PlayOneShot(carHit, 1);
         }
     }
 
