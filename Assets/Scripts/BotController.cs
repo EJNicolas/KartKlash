@@ -179,7 +179,6 @@ public class BotController : Entity
             if (currentPoint >= listPos.Length) currentPoint = 0;
 
             Transform checkpoint = listPos[currentPoint].transform;
-            Debug.Log(checkpoint.localScale);
             nma.SetDestination(new Vector3(
                 Random.Range(checkpoint.position.x - (checkpoint.lossyScale.x / 2), checkpoint.position.x + (checkpoint.lossyScale.x / 2)),
                 checkpoint.position.y,
@@ -192,7 +191,7 @@ public class BotController : Entity
             rs == RubberbandState.FAST && Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) < rubberbandThreshold) 
             stateChanged = false;
 
-        //if (!stateChanged && !tutorialMode) NavRubberband();
+        if (!stateChanged && !tutorialMode) NavRubberband();
     }
 
     void NavRubberband()
