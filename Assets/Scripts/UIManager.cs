@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI finishText;
     public TextMeshProUGUI endPlacementMessage;
     public TextMeshProUGUI endPlacementText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI[] endOfRaceTimers;
     int currentLapCount = 1;
 
     [Header("Speed")]
@@ -46,15 +48,30 @@ public class UIManager : MonoBehaviour
     public AudioClip lapFinish;
 
     string placement;
+
+    string[] lapTimes;
+    float totalTime;
+    float lapTime;
+    bool startTimer = false;
+
     void Start() {
         if (RaceManager.instance) tutorialMode = RaceManager.instance.tutorialMode;
         InitializeRaceUI();
+        lapTimes = new string[RaceManager.instance.lapCompletion];
+        foreach(TextMeshProUGUI textMesh in endOfRaceTimers) {
+            textMesh.text = "";
+        }
+    }
+
+    private void Update() {
+        if(!RaceManager.instance.tutorialMode) UpdateTimer();
     }
 
     private void OnEnable() {
         RaceManager.BeginTutorialEvent += SetTutorialMode;
         RaceManager.BeginCountdownEvent += StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent += IncreaseLapCount;
+        RaceManager.CompleteLapEvent += LogLapTime;
         RaceManager.CompleteRaceEvent += ShowEndScreen;
         RaceManager.SwitchingToNewScene += RemoveUI;
     }
@@ -63,6 +80,7 @@ public class UIManager : MonoBehaviour
         RaceManager.BeginTutorialEvent -= SetTutorialMode;
         RaceManager.BeginCountdownEvent -= StartCountdownUIRoutine;
         RaceManager.CompleteLapEvent -= IncreaseLapCount;
+        RaceManager.CompleteLapEvent -= LogLapTime;
         RaceManager.CompleteRaceEvent -= ShowEndScreen;
         RaceManager.SwitchingToNewScene -= RemoveUI;
     }
@@ -79,6 +97,20 @@ public class UIManager : MonoBehaviour
         currentLapCount++;
         SetLapCountText(currentLapCount);
         audioSource.PlayOneShot(lapCounter,  1);
+    }
+
+    void UpdateTimer() {
+        if (startTimer) {
+            totalTime += Time.deltaTime;
+            lapTime += Time.deltaTime;
+        }
+
+        timerText.text = DisplayTime(lapTime);
+    }
+
+    void LogLapTime() {
+        lapTimes[RaceManager.instance.currentLapCount] = timerText.text;
+        lapTime = 0;
     }
 
     public void UpdateSpeedUI(float speed)
@@ -161,6 +193,24 @@ public class UIManager : MonoBehaviour
         StartCoroutine(CountdownRoutine());
     }
 
+    private string DisplayTime(float timeToDisplay) {
+        // get the total full seconds.
+        var t0 = (int) timeToDisplay;
+
+        // get the number of minutes.
+        var m = t0/60;
+
+        // get the remaining seconds.
+        var s = (t0 - m*60);
+
+        // get the 2 most significant values of the milliseconds.
+        var ms = (int)( (timeToDisplay - t0)*100);
+
+        return $"{m:00} : {s:00} : {ms:00}";
+    }
+
+
+
     IEnumerator CountdownRoutine() {
         
         yield return new WaitForSeconds(1f);
@@ -175,6 +225,7 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         countdownText.text = "GO!";
+        startTimer = true;
 
         yield return new WaitForSeconds(0.5f);
         countdownParent.SetActive(false);
@@ -182,6 +233,7 @@ public class UIManager : MonoBehaviour
 
     void ShowEndScreen() {
         placement = placementText.text;
+        startTimer = false;
         StartCoroutine(EndOfRaceRoutine());
     }
 
@@ -195,11 +247,15 @@ public class UIManager : MonoBehaviour
         endPlacementMessage.text = "You placed";
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed.";
+        endOfRaceTimers[0].text = "Lap 1 " + lapTimes[0];
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed..";
+        endOfRaceTimers[1].text = "Lap 2 " +lapTimes[1];
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed...";
+        endOfRaceTimers[2].text = "Lap 3 " +lapTimes[2];
         yield return new WaitForSeconds(0.33f);
+        endOfRaceTimers[3].text = "Total " +DisplayTime(totalTime);
         endPlacementText.text = placement + "!";
     }
 
