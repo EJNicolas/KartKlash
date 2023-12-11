@@ -19,6 +19,9 @@ public class BotController : Entity
     private int lapCount = -1;
     private int checkpointsPassed = 0;
     GameObject lastCheckpoint;
+    bool setNewPoint = false;
+
+    [Header("Rubberband")]
     int rubberbandThreshold;
     public enum RubberbandState
     {
@@ -171,6 +174,7 @@ public class BotController : Entity
         if (nma.hasPath && nma.remainingDistance < nma.stoppingDistance && currentPoint < listPos.Length)
         {
             currentPoint++;
+            setNewPoint = false;
             //checkpointsPassed++;
             //Debug.Log(this.gameObject.name + ", Checkpoints: " + checkpointsPassed);
         }
@@ -178,10 +182,16 @@ public class BotController : Entity
         {
             currentPoint = 0;
         }
-        if (currentPoint < listPos.Length)
-            nma.SetDestination(new Vector3(listPos[currentPoint].transform.position.x,
+        if (currentPoint < listPos.Length && !setNewPoint)
+        {
+            setNewPoint = true;
+            Transform checkpoint = listPos[currentPoint].transform;
+            nma.SetDestination(new Vector3(
+                Random.Range(checkpoint.position.x - (checkpoint.localScale.x / 2), checkpoint.position.x + (checkpoint.localScale.x / 2)),
                 this.gameObject.transform.position.y,
-                listPos[currentPoint].transform.position.z));
+                Random.Range(checkpoint.position.z - (checkpoint.localScale.z / 2), checkpoint.position.z + (checkpoint.localScale.z / 2))
+            ));
+        }
 
         if (Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) > rubberbandThreshold || 
             rs == RubberbandState.SLOW && Mathf.Abs(checkpointsPassed - rm.totalCheckpoints) < rubberbandThreshold ||
