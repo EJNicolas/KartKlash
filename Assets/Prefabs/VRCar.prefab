@@ -173,7 +173,7 @@ MonoBehaviour:
   UIManagerScript: {fileID: 0}
   baseAcceleration: 330
   baseReverseAcceleration: 50
-  driftAcceleration: 280
+  driftReduction: 50
   turnSpeed: 45
   driftTurnSpeed: 65
   canDrive: 1

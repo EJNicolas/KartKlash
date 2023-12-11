@@ -33,7 +33,7 @@ public class CarController : MonoBehaviour
     [Header("Driving Parameters")]
     public float baseAcceleration = 0.5f;
     public float baseReverseAcceleration = 0.5f;
-    public float driftAcceleration;
+    public float driftReduction;
     private float currentSpeed = 0;
     public float turnSpeed = 0.3f;
     public float driftTurnSpeed;
@@ -116,7 +116,7 @@ public class CarController : MonoBehaviour
 
         if (gripPressed) {
             if (reverseToggle) currentSpeed = -baseReverseAcceleration; 
-            else if (triggerPressed) currentSpeed = driftAcceleration;
+            else if (triggerPressed) currentSpeed = baseAcceleration - driftReduction;
             else currentSpeed = baseAcceleration;
         }
         else currentSpeed = 0;
