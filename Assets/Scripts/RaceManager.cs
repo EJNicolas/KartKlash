@@ -71,7 +71,7 @@ public class RaceManager : MonoBehaviour
             player.transform.position = playerSpawn.position;
             player.transform.rotation = playerSpawn.rotation;
             return;
-        } else if(expectedCheckpointNumber > 0) {
+        } else if(tutorialMode && expectedCheckpointNumber > 0) {
             player.transform.position = checkpoints[0].transform.position;
             player.transform.rotation = checkpoints[0].transform.rotation;
             return;
