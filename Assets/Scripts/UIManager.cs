@@ -247,16 +247,27 @@ public class UIManager : MonoBehaviour
         endPlacementMessage.text = "You placed";
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed.";
-        endOfRaceTimers[0].text = "Lap 1 " + lapTimes[0];
+        
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed..";
-        endOfRaceTimers[1].text = "Lap 2 " +lapTimes[1];
+        
         yield return new WaitForSeconds(0.33f);
         endPlacementMessage.text = "You placed...";
+        
+        yield return new WaitForSeconds(0.33f);
+        endPlacementText.text = placement + "!";
+
+        yield return new WaitForSeconds(0.33f);
+        endOfRaceTimers[0].text = "Lap 1 " + lapTimes[0];
+
+        yield return new WaitForSeconds(0.33f);
+        endOfRaceTimers[1].text = "Lap 2 " +lapTimes[1];
+
+        yield return new WaitForSeconds(0.33f);
         endOfRaceTimers[2].text = "Lap 3 " +lapTimes[2];
+
         yield return new WaitForSeconds(0.33f);
         endOfRaceTimers[3].text = "Total " +DisplayTime(totalTime);
-        endPlacementText.text = placement + "!";
     }
 
 }
