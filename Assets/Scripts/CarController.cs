@@ -265,11 +265,16 @@ public class CarController : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("CPU") && !RaceManager.instance.tutorialMode) {
             audio.PlayOneShot(carHit, 1);
-            carHit2.Play();
+           // carHit2.Play();
+            
             carRb.angularVelocity = Vector3.zero;
             other.gameObject.GetComponent<BotController>().TakeDamage(100);
             Vector3 knockback = new Vector3(1, 0, -1);
-            if (other.GetContact(0).normal.x > 0) knockback.x *= -1;
+            if (other.GetContact(0).normal.x > 0) {
+                knockback.x *= -1 ;
+           // Debug.Log("CAR HIT");
+            }
+            
             other.gameObject.GetComponent<Rigidbody>().AddForce(knockback * cpuBumpForce, ForceMode.VelocityChange);
             
         }
