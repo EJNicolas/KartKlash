@@ -203,7 +203,7 @@ public class RaceManager : MonoBehaviour
     }
 
     IEnumerator EndOfRaceRoutine() {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         SwitchingToNewScene?.Invoke();
         yield return new WaitForSeconds(2f);
 
