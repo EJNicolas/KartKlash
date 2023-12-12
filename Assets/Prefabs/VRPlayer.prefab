@@ -1879,7 +1879,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0 / 10
+  m_text: 0 / 15
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1512195881b34a848bd0f0b42bd63403, type: 2}
   m_sharedMaterial: {fileID: -7764936154231236356, guid: 1512195881b34a848bd0f0b42bd63403, type: 2}
@@ -4869,7 +4869,7 @@ PrefabInstance:
       objectReference: {fileID: 4775047259680635591}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: targetLimit
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: leftController
@@ -4889,7 +4889,7 @@ PrefabInstance:
       objectReference: {fileID: 877753046922362086}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: targetAccelBonus
-      value: 20
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 3802580825895211019, guid: 5ab5039ffc4fce249a5e874683f4ef4f, type: 3}
       propertyPath: engineAudioSource
