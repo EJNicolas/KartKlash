@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     public BoxCollider carBoxCollider;
     public UIManager UIManagerScript;
 
+
     [Header("Controls")]
     private bool triggerPressed;
     private float triggerValue;
@@ -50,9 +51,11 @@ public class CarController : MonoBehaviour
 
     public float cpuBumpForce = 50;
 
-    [Header("Engine Sounds")]
+    [Header("Sounds")]
+    public AudioSource carHit2;
     public AudioSource engineAudioSource;
     public AudioSource driftAudioSource;
+    public AudioSource audio;
     public AudioClip carHit;
 
     public float minimumPitch = 0.05f;
@@ -70,10 +73,11 @@ public class CarController : MonoBehaviour
     void Start() {
         transform.parent = null;
         engineAudioSource.pitch = minimumPitch;
-
+        audio = GetComponent<AudioSource>();
         engineAudioSource.volume = 0.3f;
         driftAudioSource.volume = 0f;
         resetTimerCounter = resetTimer;
+      
     }
 
     private void OnEnable() {
@@ -260,13 +264,14 @@ public class CarController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("CPU") && !RaceManager.instance.tutorialMode) {
+            audio.PlayOneShot(carHit, 1);
+            carHit2.Play();
             carRb.angularVelocity = Vector3.zero;
             other.gameObject.GetComponent<BotController>().TakeDamage(100);
             Vector3 knockback = new Vector3(1, 0, -1);
             if (other.GetContact(0).normal.x > 0) knockback.x *= -1;
             other.gameObject.GetComponent<Rigidbody>().AddForce(knockback * cpuBumpForce, ForceMode.VelocityChange);
-
-            engineAudioSource.PlayOneShot(carHit, 1);
+            
         }
     }
 
